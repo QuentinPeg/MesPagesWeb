@@ -109,7 +109,7 @@
                     <section>
                         <div class="grp">
                             <label for="Ville">Ville :</label>
-                            <input type="text" id="Ville" name="Ville" placeholder="Ville*">
+                            <input type="text" id="Ville" name="Ville" placeholder="Ville*" required>
                         </div>
                     </section>
 

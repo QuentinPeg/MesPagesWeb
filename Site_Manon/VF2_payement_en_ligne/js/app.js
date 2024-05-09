@@ -15,7 +15,7 @@ let card = elements.create('card', {
 
 card.mount('#card-element');
 
-card.addEventListener('change', function(event) {
+card.addEventListener('change', function (event) {
   let displayError = document.getElementById('card-errors');
   if (event.error) {
     displayError.textContent = event.error.message;
@@ -25,12 +25,12 @@ card.addEventListener('change', function(event) {
 });
 
 let form = document.getElementById('payment-form');
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', function (event) {
   event.preventDefault();
 
   envoyerMail();
 
-  stripe.createToken(card).then(function(result) {
+  stripe.createToken(card).then(function (result) {
     if (result.error) {
       let errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
@@ -52,7 +52,7 @@ function stripeTokenHandler(token) {
 }
 
 function envoyerMail() {
-  (function() {
+  (function () {
     emailjs.init("ixOrs32Cy-jH_Xqoi");
   })();
 
@@ -62,11 +62,12 @@ function envoyerMail() {
   let numero = document.querySelector("#numero").value;
   let adresse = document.querySelector("#Adresse").value;
   let codePostale = document.querySelector("#CodePostale").value;
+  let ville = document.querySelector('#Ville').value;
   let prixTotal = document.querySelector("#prixTotal").textContent;
 
   // Récupérer les valeurs des articles
   let recapArticles = "";
-  document.querySelectorAll("#recap-articles p").forEach(function(article, index) {
+  document.querySelectorAll("#recap-articles p").forEach(function (article, index) {
     let pack = article.id.replace(/\[\d+\] /g, '').replace(/\[\d+\] x?/g, "").trim();
     if (pack.startsWith('x')) {
       pack = pack.replace('x', '').trim();
@@ -91,7 +92,7 @@ Prix de la précommande
 ${prixTotal}
 Adresse de contact du client : ${email}
 Numéro de téléphone : ${numero}
-Adresse : ${adresse}, ${codePostale}
+Adresse : ${adresse}, ${codePostale},${ville}
 `;
 
   let parms = {

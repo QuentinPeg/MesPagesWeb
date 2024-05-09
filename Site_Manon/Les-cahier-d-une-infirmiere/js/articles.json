@@ -1,7 +1,7 @@
 [
     {
         "id": "packintegrale",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Pack_integral.png",
         "titre": "Pack intégral",
         "prix": {
             "A6": 250.00,
@@ -12,7 +12,7 @@
     },
     {
         "id": "packpremiereannee",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Pack_premiere_annee.png",
         "titre": "Pack Première Année",
         "prix": {
             "A6": 86.00,
@@ -23,7 +23,7 @@
     },
     {
         "id": "packdeuxiemeannee",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Pack_deuxieme_annee.png",
         "titre": "Pack Deuxième Année",
         "prix": {
             "A6": 99.00,
@@ -34,7 +34,7 @@
     },
     {
         "id": "packtroisiemeannee",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Pack_troisieme_annee.png",
         "titre": "Pack Troisième Année",
         "prix": {
             "A6": 69.00,
@@ -45,7 +45,7 @@
     },
     {
         "id": "packsemestre1",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Pack_semestre1.png",
         "titre": "Pack Semestre 1",
         "prix": {
             "A6": 69.00,
@@ -56,7 +56,7 @@
     },
     {
         "id": "packsemestre3",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Pack_semestre3.png",
         "titre": "Pack Semestre 3",
         "prix": {
             "A6": 71.00,
@@ -67,7 +67,7 @@
     },
     {
         "id": "soinsinfirmier",
-        "imageSrc": "../Images/Soin_infirmier.jpg",
+        "imageSrc": "../Images/Soins_infirmier.png",
         "titre": "Soins Infirmier",
         "prix": {
             "A6": 35.00,
@@ -78,7 +78,7 @@
     },
     {
         "id": "cyclevie",
-        "imageSrc": "../Images/Cycle_de_la_vie_et_grande_fonction.jpg",
+        "imageSrc": "../Images/Cycle_de_la_vie.png",
         "titre": "Cycle de la vie et grande fonction (UE 2.2 semestre 1)",
         "prix": {
             "A6": 30.00,
@@ -89,7 +89,7 @@
     },
     {
         "id": "biologiefondamentale",
-        "imageSrc": "../Images/Biologie_Fondamental.jpg",
+        "imageSrc": "../Images/Biologie_fondamental.png",
         "titre": "Biologie fondamentale (UE 2.1 semestre 1)",
         "prix": {
             "A6": 20.00,
@@ -100,7 +100,7 @@
     },
     {
         "id": "processtraumatique",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Processus_trauma.png",
         "titre": "Processus traumatique (UE 2.4 semestre 1)",
         "prix": {
             "A6": 23.00,
@@ -111,7 +111,7 @@
     },
     {
         "id": "processuspsychopathologique1",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Prcessus_psychoS2.png",
         "titre": "Processus psychopathologique (UE 2.6 semestre 2)",
         "prix": {
             "A6": 38.00,
@@ -122,7 +122,7 @@
     },
     {
         "id": "processuspsychopathologique2",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Prcessus_psychoS5.png",
         "titre": "Processus psychopathologique (UE 2.6 semestre 5)",
         "prix": {
             "A6": 26.00,
@@ -133,7 +133,7 @@
     },
     {
         "id": "processusobstructif",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Processus_obstructif.png",
         "titre": "Processus obstructif (UE 2.8 semestre 3)",
         "prix": {
             "A6": 17.00,
@@ -144,7 +144,7 @@
     },
     {
         "id": "processusinfectieux",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Processus_infectieux.png",
         "titre": "Processus infectieux (UE 2.5 semestre 3)",
         "prix": {
             "A6": 38.00,
@@ -155,7 +155,7 @@
     },
     {
         "id": "processusdegeneratif",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Processus_degeneratif.png",
         "titre": "Processus dégénératif (UE 2.7 semestre 4)",
         "prix": {
             "A6": 30.00,
@@ -166,7 +166,7 @@
     },
     {
         "id": "processustumoraux",
-        "imageSrc": "../Images/Icon-page.png",
+        "imageSrc": "../Images/Processus_tumoraux.png",
         "titre": "Processus tumoraux (UE 2.9 semestre 5)",
         "prix": {
             "A6": 35.00,

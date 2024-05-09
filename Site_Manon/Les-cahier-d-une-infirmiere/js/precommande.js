@@ -44,7 +44,6 @@ function afficherRecapArticles() {
 }
 
 
-
 // Ajout d'une fonction pour créer les options Plastifie avec la bonne sélection
 // Fonction pour créer les options Plastifie avec la bonne sélection
 function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
@@ -133,7 +132,7 @@ function calculerTotal() {
         // Utilisez le format et la plastification de la fenêtre flottante de la précommande s'ils existent
         var formatSelect = document.querySelector(`select[data-nom="${article.nom}"][data-quantite="${article.quantite}"][data-key="${article.nom}-${article.format}-Format"]`);
         var plastifieSelect = document.querySelector(`select[data-nom="${article.nom}"][data-quantite="${article.quantite}"][data-key="${article.nom}-${article.format}-Plastifie"]`);
-   
+
 
         // Assurez-vous que les sélecteurs existent avant de récupérer les valeurs
         var format = formatSelect ? formatSelect.value : article.format;
@@ -155,6 +154,7 @@ function calculerTotal() {
     }
 
     // Mettre à jour le total dans l'élément HTML correspondant en utilisant la fonction de formatage
+    document.getElementById('amount').value = total;
     document.getElementById("prixTotal").textContent = formaterPrix(total);
 }
 

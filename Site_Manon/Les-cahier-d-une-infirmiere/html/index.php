@@ -106,6 +106,12 @@
                                 required>
                         </div>
                     </section>
+                    <section>
+                        <div class="grp">
+                            <label for="Ville">Ville :</label>
+                            <input type="text" id="Ville" name="Ville" placeholder="Ville*" required>
+                        </div>
+                    </section>
 
 
                     <hr>
@@ -140,12 +146,12 @@
     <footer>
         <p>Une petite note sur moi :
             J'ai été étudiante infirmière, c'est à ce moment-là que ces fiches ont été créées. La base de ces fiches
-            s'est construit sur les apports théoriques vus en cours ainsi les apports que j'ai pu voir et apprendre
+            s'est construit sur les apports théoriques vus en cours et en stage ainsi les apports que j'ai pu voir et
+            apprendre
             en stage.
             Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation,
-            elles m'ont ainsi conduite jusqu'à l'obtention de mon diplôme. Maintenant diplômée, je travaille au sein
-            d'un
-            service d'urgences.</p>
+            et m'ont conduite jusqu'à l'obtention de mon diplôme. Une fois diplômée j'ai travaillé en service d'urgence
+            puis en hospitalisation à domicile.</p>
         <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
         <div>
             <a href="../html/conditions&mentions.html">

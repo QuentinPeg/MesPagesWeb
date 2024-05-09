@@ -61,6 +61,7 @@ function ajouterAuPanier(nomArticle, format = 'A5', plastifie = 'Non') {
     localStorage.setItem('panier', JSON.stringify(panier));
 
     // Appel pour mettre à jour le total
+    calculerTotal();
     document.getElementById("prixTotal").innerHTML = getPrixPanier();
 
     // Mettre à jour le récapitulatif après l'ajout
@@ -107,7 +108,7 @@ function supprimerArticle(event, boutonSupprimer) {
         if (nomArticle.startsWith('x')) {
             nomArticle = nomArticle.replace('x', '').trim();
         }
-    
+
 
         // Stocker l'identifiant de l'article à supprimer   
         var idArticleASupprimer = null;
@@ -127,6 +128,18 @@ function supprimerArticle(event, boutonSupprimer) {
 
 
         if (idArticleASupprimer) {
+            // Recherche de l'indice du premier crochet ouvrant
+            var debutCrochet = idArticleASupprimer.indexOf("[");
+            // Recherche de l'indice du premier crochet fermant après le crochet ouvrant
+            var finCrochet = idArticleASupprimer.indexOf("]", debutCrochet);
+
+            // Si les deux indices sont trouvés, extraire la valeur entre crochets et l'assigner à nbasupprimer
+            var nbasupprimer = 1;
+            nbasupprimer = idArticleASupprimer.substring(debutCrochet + 1, finCrochet);
+
+            if (nbasupprimer === "") {
+                nbasupprimer = 1;
+            }
             // Supprimer l'article correspondant du panier
             panierListe.removeChild(elementASupprimer);
             var index = panier.findIndex(article => article.nom === nomArticle);
@@ -141,13 +154,15 @@ function supprimerArticle(event, boutonSupprimer) {
             }
 
             // Mettre à jour le nombre d'articles dans la bulle du panier
-            nombreArticlesPanier--;
+            nombreArticlesPanier = nombreArticlesPanier - nbasupprimer;
             mettreAJourNombreArticlesPanier();
+
 
             // Stocker le panier dans localStorage
             localStorage.setItem('panier', JSON.stringify(panier));
 
             // Mettre à jour le total
+            document.getElementById('amount').value = getPrixPanier().replace('€', '').trim();
             document.getElementById("prixTotal").innerHTML = getPrixPanier();
         }
     }
@@ -184,7 +199,6 @@ function afficherPanier() {
 }
 
 function mettreAJourNombreArticlesPanier() {
-    var nombreArticlesPanier = document.getElementById('panier-liste').childElementCount;
     var bullePanier = document.getElementById('panier-bulle');
 
     // Mettre à jour le contenu de la bulle avec le nombre d'articles
@@ -214,6 +228,8 @@ function supprimerToutPanier() {
     localStorage.setItem('panier', JSON.stringify(panier));
 
     // Mettre à jour le total
+    document.getElementById('amount').value = 0;
+
     document.getElementById("prixTotal").innerHTML = '0 €'; // Réinitialiser le prix total à zéro
 
     // Mettre à jour le récapitulatif après la suppression de tout le panier
@@ -222,6 +238,12 @@ function supprimerToutPanier() {
 }
 
 function afficherPrecommande() {
+
+    // Valider l'ouverture de la précommande
+    if (!validerOuverturePreco()) {
+        return; // Si la validation échoue, ne pas continuer
+    }
+
     var precommandeFenetre = document.getElementById('precommande-fenetre');
     var panierFenetre = document.getElementById('panier-fenetre');
 
@@ -235,5 +257,35 @@ function afficherPrecommande() {
     afficherRecapArticles();
 
 }
+
+function validerOuverturePreco() {
+
+    // Obtenez les éléments de récapitulatif des articles
+    var elementsRecap = document.querySelectorAll('#recap-articles p');
+    var totalQuantite = 0;
+
+
+    // Vérifiez s'il y a des éléments dans le panier
+    if (elementsRecap.length === 0) {
+        alert('Votre panier est vide. Veuillez ajouter des articles.');
+        return false;
+    }
+
+    // Parcourez le panier pour calculer la somme des quantités
+    for (var i = 0; i < panier.length; i++) {
+        totalQuantite += panier[i].quantite;
+    }
+
+    // Vérifiez si la somme des quantités dépasse 10
+    if (totalQuantite > 10) {
+        alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
+        return false;
+    }
+
+    return true; // Si tout est valide, retourner true
+
+}
+
+
 
 

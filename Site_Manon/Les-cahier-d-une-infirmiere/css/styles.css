@@ -354,6 +354,10 @@ select {
     height: 26.000px;
 }
 
+form>hr {
+    border: 2px solid gray;
+}
+
 form p {
     padding-top: 0%;
     padding-bottom: 1%;
@@ -379,7 +383,9 @@ form p {
     background-color: #45a049;
 }
 
-
+#section-bouton{
+    margin-top: 10px;
+}
 
 #recap-articles {
     max-height: 300px;
@@ -390,8 +396,10 @@ form p {
 /*FOOTER*/
 footer {
     background-color: var(--header-bg-color);
-    margin-top: 5%;
+    margin-top: 15%;
     margin-bottom: 0px;
+    position: relative;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -409,12 +417,23 @@ footer>div {
     width: 100%;
 }
 
-footer>div>p {
+footer>div>p,
+footer>div>a>p {
+    color: black;
+    text-decoration: none;
     text-align: left;
     padding-left: 1%;
     margin-right: 10%;
     border-left: 5px solid #354b1c;
     margin-left: 3%;
+}
+
+footer>div>a {
+    text-decoration: none;
+}
+
+footer>div>a>p:hover {
+    text-decoration: underline;
 }
 
 footer>div>p,
@@ -454,11 +473,15 @@ footer>div>span>img {
     }
 
     .panier-fenetre {
-        top: calc(var(--header-height) + 20px);
+        top: calc(var(--header-height) - 20px);
     }
 
-    main {
-        top: calc(var(--header-height) + 20px);
+    .panier-fenetre.shrink {
+        top: calc(110px - 60px);
+    }
+
+    .ipage.shrink {
+        height: 50px;
     }
 
     .panier-link img {
@@ -526,4 +549,41 @@ footer>div>span>img {
     form>section:last-child {
         flex-direction: row;
     }
+}
+
+
+/* formulaire carte Stripe */
+
+/* formulaire carte Stripe */
+
+.StripeElement {
+    box-sizing: border-box;
+    height: 40px;
+    padding: 8px 12px;
+    /* Ajustez le padding pour correspondre à vos champs de saisie */
+    border: 1px solid black;
+    /* Ajoutez une bordure pour correspondre à vos champs de saisie */
+    background-color: white;
+    font-size: 16px;
+    color: #495057;
+    /* Ajustez la couleur du texte si nécessaire */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.StripeElement--focus {
+    border-color: black;
+    /* Ajustez la couleur de la bordure lorsqu'il est en focus */
+    box-shadow: 0 0 0 0.1rem black;
+    /* Ajustez l'ombre du focus */
+}
+
+.StripeElement--invalid {
+    border-color: red;
+    /* Ajustez la couleur de la bordure pour les saisies invalides */
+    box-shadow: 0 0 0 0.1rem red;
+    /* Ajustez l'ombre du focus */
+}
+
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
 }

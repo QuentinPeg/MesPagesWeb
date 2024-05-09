@@ -4,6 +4,12 @@
 
 }
 
+#entcontact>a {
+    color: black;
+    font-size: medium;
+    transition: font-size 0.3s ease;
+}
+
 #entcontact>a.shrink {
     font-size: small;
 }
@@ -33,10 +39,6 @@ header>a {
     transition: font-size 0.3s ease;
 }
 
-article>div>div>img {
-    width: 100%;
-    min-width: 300px;
-}
 
 article>section>section {
     display: flex;
@@ -44,6 +46,51 @@ article>section>section {
     justify-content: center;
     gap: 25px;
 }
+
+/* Style ddu carroussel*/
+.carousel {
+    display: flex;
+    overflow: hidden;
+    max-height: 500px;
+}
+
+.carousel img {
+    width: auto;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* Styles pour les flèches */
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+
+/**/
 
 .lire-suite-checkbox {
     display: none;
@@ -114,5 +161,6 @@ footer {
     main {
         flex-direction: column;
         padding-bottom: 20%;
+        align-items: center;
     }
 }

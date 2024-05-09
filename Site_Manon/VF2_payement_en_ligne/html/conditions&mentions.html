@@ -26,46 +26,62 @@
 
     </header>
     <main>
-        <h1>Me suivre ou me contacter</h1>
-        <form method="POST" class="contact-form">
-            <h2>Via le formulaire</h2>
-            <div class="form-group">
-                <label for="name">Nom :</label>
-                <input type="text" id="name" name="name" placeholder="Nom*" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email" placeholder="Email*" required>
-            </div>
+        <section>
+            <h1>Conditions d'utilisation</h1>
+            <p id="plien">
+                Les présentes conditions d'utilisation s'appliquent à tous les utilisateurs du site internet
+                <a href="https://les-cahiers-d-une-infirmiere.000webhostapp.com/">https://les-cahiers-d-une-infirmiere.000webhostapp.com/</a>.
+                En utilisant ce site, vous acceptez ces conditions d'utilisation dans leur intégralité. Si vous
+                n'acceptez pas ces conditions d'utilisation, n'utiliser pas ce site.
+            </p>
 
-            <div class="form-group">
-                <label for="message">Message :</label>
-                <textarea id="message" name="message" placeholder="Votre message*" required></textarea>
-            </div>
-            <button type="button" class="submit-btn" onclick="mailForm()">Envoyer</button>
-        </form>
-        <h2>Par mail</h2>
-        <p class="contact-info">Si vous souhaitez nous contacter par e-mail, vous pouvez le faire à l'adresse suivante :
-            <span class="mail-contact">lescahiersduneinfirmiere@gmail.com</span>
-        </p>
-
-        <h2>Mes réseaux</h2>
-
-        <h3>Sur Instagram</h3>
-        <p class="contact-info">Si vous souhaitez nous contacter ou nous suivre sur Instagram, vous pouvez
-            <a href="https://www.instagram.com/lescahiersduneinfirmiere/" target="_blank">cliquer ici</a>.
-        </p>
-
+            <h2>Propriété intellectuelle</h2>
+            <p>Les cahiers d'une infirmière et/ou ses concédants de licence détiennent les droits de propriété
+                intellectuelle sur le site et le contenu du site. Sous réserve des licences ci-dessous, tous ces droits
+                de
+                propriété
+                intellectuelle sont réservés.</p>
+            <h2>Licence d'utilisation du site</h2>
+            <p>Vous pouvez consulter, les pages du site pour votre usage personnel. Mais il est strictement iterdit
+                d'imprimer, ou de recopier les pages du site sans accord écrit. Pour toutes demande allez directement
+                sur la
+                page contact.</p>
+            <h2>Limitations de responsabilité</h2>
+            <p>Les cahiers d'une infirmière ne sera pas responsable envers vous (que ce soit sous la loi des contrats,
+                la
+                loi délictuelle ou autre) en relation avec le contenu du site, l'utilisation du site, les sites liés au
+                site
+                ou les informations publiées sur le site.</p>
+            <h2>Les applications externes utilisés</h2>
+            <p>Les cahiers d'une infirmière utilise des applications externes pour le bon fonctionnement du site. Ces
+                applications sont soumises à des conditions d'utilisation propre à chaque application. Les cahiers d'une
+                infirmière ne peut être tenu responsable des conditions d'utilisation de ces applications.
+            <ul>
+                <li>Stripe (Gestion de paiement en ligne)</li>
+                <li>Emailjs (Envoie des Email pour nous contacter ou pour une precommande)</li>
+            </ul>
+            </p>
+            <h1>Mentions légales</h1>
+            <h2>Propriétaire du site</h2>
+            <p>Les cahiers d'une infirmière appartient à Manon Peguin.</p>
+            <h2>Webmaster</h2>
+            <p>Quentin Peguin</p>
+            <h2>Hébergeur</h2>
+            <p>000webhostapp.com</p>
+            <h2>Adresse mail</h2>
+            <p>lescahiersduneinfirmiere@gmail.com</p>            
+        </section>
     </main>
-    <footer>
+
+        <footer>
         <p>Une petite note sur moi :
             J'ai été étudiante infirmière, c'est à ce moment-là que ces fiches ont été créées. La base de ces fiches
-            s'est construit sur les apports théoriques vus en cours ainsi les apports que j'ai pu voir et apprendre
+            s'est construit sur les apports théoriques vus en cours et en stage ainsi les apports que j'ai pu voir et
+            apprendre
             en stage.
             Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation,
-            elles m'ont ainsi conduite jusqu'à l'obtention de mon diplôme. Maintenant diplômée, je travaille au sein
-            d'un
-            service d'urgences.</p>
+            et m'ont conduite jusqu'à l'obtention de mon diplôme. Une fois diplômée j'ai travaillé en service d'urgence
+            puis en hospitalisation à domicile.</p>
         <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
         <div>
             <a href="../html/conditions&mentions.html">
@@ -102,28 +118,6 @@
         }
     });
 </script>
-<script>alert("Une erreur s\'est produite. Auncun montant n'a été débité. Veuillez nous contacté ou bien recommencer.");</script>
-<script>window.addEventListener("scroll", function () {
-        var header = document.querySelector("header");
-        var h1 = document.querySelector("h1");
-        var a = document.querySelector("#entcontact>a");
-        var imgipage = document.querySelector("img");
-
-        if (window.scrollY > 50) {
-            header.classList.add("shrink");
-            h1.classList.add("shrink");
-            a.classList.add("shrink");
-            imgipage.classList.add("shrink");
-
-        } else {
-            header.classList.remove("shrink");
-            h1.classList.remove("shrink");
-            a.classList.remove("shrink");
-            imgipage.classList.remove("shrink");
-
-        }
-    });
-</script>
 <script>
     function mailForm() {
         (function () {
@@ -137,7 +131,7 @@
 
 
         var message = `Vente de ${nom} ,
-    
+        
 Adresse de contact du clent : ${email},
 message : ${mess}`;
 
@@ -176,5 +170,4 @@ message : ${mess}`;
         }
     });
 </script>
-
 </html>
