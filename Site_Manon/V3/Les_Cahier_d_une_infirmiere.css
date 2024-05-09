@@ -1,0 +1,155 @@
+/* HEAD */
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 150%;
+}
+
+/* HEADER */
+/*HEADER*/
+header {
+    top:0;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    padding: 20px;
+    background-color: #9BB77A;
+    justify-content: space-evenly;
+
+}
+
+.LOGO {
+    top: 5px;
+    left: 5px;
+    position: absolute;
+    width: 110px;
+    height: auto;
+    border-radius: 25%;
+}
+
+header>p {
+    display: flex;
+    flex-direction: row;
+    margin : auto 110px auto 110px;
+}
+
+/* BODY */
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Mes articles */
+
+article {
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.titre_partie {
+    text-align: center;
+    font-size: 150%;
+    text-decoration: underline;
+    padding-top: 3%;
+}
+
+section>h1 {
+    margin-left: 2%;
+    font-size: 200%;
+}
+
+section>p {
+    margin-left: 2%;
+    text-align: left;
+}
+
+article>section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2% 1% 2% 1%;
+    border: solid 1px black;
+    border-radius: 15px;
+    background-color: #9BB77A;
+    max-width: 350px;
+    height: 400px;
+    padding-bottom: 1%;
+}
+
+article>section>img {
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+}
+
+article>section>h2,
+p {
+    text-align: center;
+}
+
+article>section>button {
+    background-color: white;
+}
+
+.précommande {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2,
+p {
+    font-size: 100%;
+}
+
+.bouton_article,
+.mon-bouton {
+    background-color: #baf675;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 3%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: white;
+    color: #354b1c;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #9BB77A;
+    margin-top: 5%;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer>p {
+    text-align: left;
+    padding-left: 1%;
+    margin-right: 10%;
+    border-left: 5px solid #354b1c;
+    margin-left: 3%;
+}
+
+footer>img {
+    width: 3%;
+    height: auto;
+    margin-left: 97%;
+    margin-top: auto;
+}

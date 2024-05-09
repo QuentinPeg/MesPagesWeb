@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Pack intégrale</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="../html/index.html"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
+                alt="Icon-page"></a>
+        <h1>Les cahiers d'une infirmière</h1>
+        <div id="entcontact">
+            <a href="Contact.html">CONTACT</a>
+        </div>
+    </header>
+    <main>
+        <article>
+            <section>
+                <img src="../Images/Processus_traumatique.jpg" alt="Image de l'article 1">
+            </section>
+        </article>
+
+        <article>
+            <section>
+                <h2>Processus traumatique (UE 2.4 semestre 1)</h2>
+                <p>Description : <br>
+                    Ce pack correspond à l’unité d’enseignement 2.4. Avec celui ci vous deviendrez incollable sur les
+                    fracture, entorse et traumatisme de l’organisme. Sur une trame (définition, facteurs favorisants,
+                    signes cliniques, examens complémentaires, axes thérapeutiques et complications), vous pourrez
+                    balayer l’ensemble des traumatisme que le corps humain peut subir de manière synthétique. Une
+                    fois professionnel vous pourrez vous en servir pour vous rafraîchir la mémoire, lorsqu’un patient
+                    se présentera à vous avec l’une de ses pathologies.
+                </p>
+
+                <p>Ce pack regroupe :</p>
+                <ul>
+                    <li>Fracture du fémur</li>
+                    <li>Luxation de la hanche</li>
+                    <li>Fracture de la jambe</li>
+                    <li>Fracture de la rotule</li>
+                    <li>Lésion ligamentaire du genou</li>
+                    <li>Entorse de la cheville</li>
+                    <li>Entorse des doigts</li>
+                    <li>Traumatisme de la main</li>
+                    <li>Entorse du poignet</li>
+                    <li>Fracture de l’humérus</li>
+                </ul>
+                <input type="checkbox" id="lireSuite1" class="lire-suite-checkbox">
+                <label for="lireSuite1" class="lire-suite-label">
+                    <span class="label-text"></span>
+                </label>
+                <ul class="suite">  
+                    <li>Fracture du poignet</li>
+                    <li>Fracture de la clavicule</li>
+                    <li>Luxation de l’épaule</li>
+                    <li>Traumatisme du coude</li>
+                    <li>Traumatisme abdominal</li>
+                    <li>Traumatisme thoracique</li>
+                    <li>Traumatisme crânien</li>
+                    <li>Traumatisme rachidien</li>
+                </ul>
+
+                <p class="prix">Prix :</p>
+                <ul>
+                    <li>A6 : 23 €</li>
+                    <li>A5 : 31 €</li>
+                    <li>Plastifié : +10%</li>
+                </ul>
+                <section>
+                    <a href="index.html"><button class="btn-retour">Voir d'autres
+                            articles</button></a>
+                    <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                </section>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>Une petite note sur moi :
+            J'ai été étudiante infirmière, c'est à ce moment la que ces fiches ont été créées. La base de ces fiches
+            s'est construite sur les apports théoriques vue en cours ainsi les apports que j'ai pu voir et apprendre en
+            stage.
+            Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation, elles
+            m'ont aini conduite jusqu'à l'obtention de mon diplôme. Maintenant diplomée, je travail au sein d'un service
+            d'urgences.</p>
+        <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
+    </footer>
+</body>
+<script>window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        var h1 = document.querySelector("h1");
+        var a = document.querySelector("#entcontact>a");
+        var imgipage = document.querySelector("img");
+
+        if (window.scrollY > 50) {
+            header.classList.add("shrink");
+            h1.classList.add("shrink");
+            a.classList.add("shrink");
+            imgipage.classList.add("shrink");
+
+        } else {
+            header.classList.remove("shrink");
+            h1.classList.remove("shrink");
+            a.classList.remove("shrink");
+            imgipage.classList.remove("shrink");
+
+        }
+    });
+</script>
+
+</html>

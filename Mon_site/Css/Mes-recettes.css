@@ -1,0 +1,113 @@
+/* MAIN */
+main {
+    position: relative;
+    width: 90%;
+    left: 10%;
+    padding-top: 194px;
+}
+
+main>nav {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: outset 10px darkgrey;
+    left: 5px;
+    top: 200px;
+}
+
+main>nav>ul {
+    margin: 0;
+    padding: 0;
+}
+
+main>nav>ul>li {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    width: 75px;
+    height: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+main>nav>ul>li>a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    width: 75px;
+    height: 50px;
+
+}
+
+main>section {
+    display: flex;
+    flex-wrap: wrap;
+    left: 10%;
+    top: 10%;
+    gap: 40px;
+    justify-content: space-between;
+    text-align: center;
+    padding-left: 10%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+}
+
+main>section>article {
+    border: solid 1px black;
+    border-radius: 25px;
+    width: 45%;
+}
+
+main>section>article>ul>li {
+    text-align: left;
+
+}
+
+main>nav>ul>li:hover {
+    background-color: black;
+    color: white;
+
+    a {
+        color: white;
+        cursor: pointer;
+    }
+}
+
+section>article>section>img {
+    width: 200px;
+    height: auto;
+    border-radius: 25px;
+    padding-bottom: 10px;
+}
+
+#Apéritifs {
+    background-color: rgb(241, 215, 167);
+}
+
+#Entrées {
+    background-color: rgb(234, 241, 167);
+}
+
+#Plats {
+    background-color: rgb(190, 241, 167);
+}
+
+#Dessert {
+    background-color: rgb(241, 167, 241);
+}
+
+#Boisson {
+    background-color: rgb(167, 199, 241);
+}
+
+
+/*FIN MAIN*/
+
+/*FOOTER*/
+
+/* FIN FOOTER*/

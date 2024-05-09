@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Images/IMG-PREF4.jpeg">
+    <link rel="stylesheet" href="../Css/global.css">
+    <link rel="stylesheet" href="../Css/Mes-passes-temps.css">
+    <title>Mon chez moi</title>
+</head>
+
+<body>
+    <header>
+        <section>
+            <img src="../Images/IMG-PREF4.jpeg" alt="Logo-de-Mon-Chez-Moi">
+            <div class="clock">
+                <img class="clock-face" src="../Images/cadran_horloge.png" alt="Cadran de l'horloge">
+                <div class="hour-hand" id="hour-hand"></div>
+                <div class="minute-hand" id="minute-hand"></div>
+                <div class="second-hand" id="second-hand"></div>
+                <div class="center"></div>
+            </div>
+            <script src="../js/script2.js"></script>
+            <h1>Mon chez moi</h1>
+            <div class="gcse-search"></div>
+            <div>
+                <div>
+                    <img src="../Images/IMG-PREF1.jpeg" alt="IMG-PREF1">
+                    <img src="../Images/IMG-PREF2.jpeg" alt="IMG-PREF2">
+                </div>
+                <div>
+                    <img src="../Images/IMG-PREF3.jpeg" alt="IMG-PREF3">
+                    <img src="../Images/IMG-PREF4.jpeg" alt="IMG-PREF4">
+                </div>
+            </div>
+        </section>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Acceuil</a></li>
+                <li><a href="./Mes-passes-temps.html">Mes passes temps</a></li>
+                <li><a href="./Mes-emplois-du-temps.html">Mes emplois du temps</a></li>
+                <li><a href="./Mes-recettes.html">Mes recettes</a></li>
+                <li><a href="./A-propos-de-moi.html">A propos de moi</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form id="passwordForm">
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" placeholder="Entrez le mot de passe" required>
+            <button type="button" onclick="checkPassword()">Valider</button>
+
+        </form>
+
+        <div id="lockedContent" style="display: none;">
+            <!-- Contenu verrouillé à afficher ici -->
+            <p>Mes projets </p>
+            <div>
+                <article>
+                    <a href="Projet_scolaire.html">
+                        <div class="image-container">
+                            <h2>Projet Scolaire</h2>
+                            <img src="Images/IMG-PREF1.jpeg" alt="IMG-PREF1">
+                            <img src="Images/IMG-PREF2.jpeg" alt="IMG-PREF2">
+                            <img src="Images/IMG-PREF3.jpeg" alt="IMG-PREF3">
+                            <img src="Images/IMG-PREF4.jpeg" alt="IMG-PREF4">
+                        </div>
+                    </a>
+                </article>
+                <article>
+                    <a href="Projet_scolaire.html">
+                        <div class="image-container">
+                            <h2>Projet informatique</h2>
+                            <img src="Images/IMG-PREF1.jpeg" alt="IMG-PREF1">
+                            <img src="Images/IMG-PREF2.jpeg" alt="IMG-PREF2">
+                            <img src="Images/IMG-PREF3.jpeg" alt="IMG-PREF3">
+                            <img src="Images/IMG-PREF4.jpeg" alt="IMG-PREF4">
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/securite.js"></script>
+
+</body>
+<script async src="https://cse.google.com/cse.js?cx=17e7b87c50d984572">
+</script>
+
+</html>

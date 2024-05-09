@@ -1,0 +1,41 @@
+.homeMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .fImage {
+        margin-top: 100px;
+        position: relative;
+        margin: 20px;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        div {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+
+            h1 {
+                font-size: 3.5vw;
+            }
+
+            button {
+                width: 20vw;
+                font-size: 2vw;
+                background-color: #343238;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+        }
+
+    }
+
+}

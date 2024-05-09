@@ -1,0 +1,26 @@
+.mailcontact{
+    font-weight: bold;
+}
+
+.contact{
+    text-align: left;
+    padding: 25px 0px 25px 0px ;
+    transition: font-size 0.3s ease;
+
+}
+
+#entcontact {
+    padding-right: 15px;
+    transition: font-size 0.3s ease;
+
+}
+
+header>a {
+    color: black;
+    font-size: medium;
+    transition: font-size 0.3s ease;
+}
+
+#entcontact>a.shrink {
+    font-size: small;
+}

@@ -1,0 +1,76 @@
+#entcontact {
+    padding-right: 15px;
+    transition: font-size 0.3s ease;
+
+}
+
+#entcontact>a.shrink {
+    font-size: small;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 45%;
+    min-width: 300px;
+
+}
+
+header>a {
+    color: black;
+    font-size: medium;
+    transition: font-size 0.3s ease;
+}
+
+article>section>img {
+    width: 100%;
+    min-width: 300px;
+}
+
+article>section>section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+}
+
+.btn-retour {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+}
+
+.btn-retour:hover {
+    background-color: #2980b9;
+}
+
+footer {
+    margin-top: 15%;
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        flex-direction: column;
+        padding-bottom: 20%;
+    }
+}

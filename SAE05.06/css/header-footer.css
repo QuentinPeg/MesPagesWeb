@@ -1,0 +1,254 @@
+/* HEADER */
+
+body {
+    margin: 0;
+    width: 100%;
+}
+
+header {
+    background-color: white;
+}
+
+#burgMenu {
+    display: none;
+}
+
+nav>a {
+    flex-basis: 300px;
+    transition: 300ms;
+}
+
+nav>a:hover,
+nav div.page ul li:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+nav>a img {
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 120px;
+}
+
+div.page ul li {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    transition: 200ms;
+    opacity: 0.7;
+}
+
+div.page ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    justify-content: space-around;
+}
+
+
+div.page {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+ul li>a {
+    text-decoration: dashed;
+    font-size: 20px;
+}
+
+header nav ul li a {
+    color: black;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+header label {
+    position: relative;
+    margin: 10px;
+    width: 55px;
+    height: 20px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+header button {
+    position: absolute;
+    height: 16px;
+    left: 5px;
+    bottom: 15%;
+    width: 33%;
+    background-color: white;
+    border-radius: 10px;
+    transition: 300ms;
+}
+
+@media screen and (max-width: 1000px) {
+    header nav {
+        display: none;
+    }
+
+    header {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    #burgMenu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 280px;
+        flex-grow: 1;
+    }
+
+    #burgMenu a {
+        width: 120px;
+    }
+
+    #burgMenu ul li {
+        padding: 10px;
+        transition: 200ms;
+    }
+
+    #burgMenu ul li:hover {
+        transform: scale(1.02);
+    }
+
+    #burgMenu a img {
+        width: 120px;
+    }
+
+    #burgMenu ul li:hover {
+        background-color: black;
+    }
+
+    #burgMenu ul li:hover>a {
+        color: white;
+    }
+
+    #burgMenu ul li a {
+        color: black;
+    }
+
+    #burgMenu ul {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #burgMenu label {
+        width: 9px;
+        padding: 10px;
+    }
+
+    #burgMenu label button {
+        width: 60%;
+    }
+}
+
+/* FIN HEADER */
+
+
+/* FOOTER */
+
+
+footer .ligne1 {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+footer div .colone1,
+.colone2,
+.colone3 {
+    padding: 30px 10px;
+}
+
+footer div .colone3 .container {
+    border-left: 2px solid #929292;
+    padding-left: 30px;
+}
+
+footer h2 {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: black;
+}
+
+footer ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+}
+
+footer li {
+    padding-bottom: 10px;
+}
+
+footer .ligne1 ul a {
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+}
+
+footer .ligne1 ul a:hover {
+    text-decoration: underline;
+}
+
+footer .ligne1 .colone3 {
+    font-size: 14px;
+    color: black;
+}
+
+footer .ligne2 {
+    background-color: white;
+}
+
+footer .ligne2 ul {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+}
+
+footer .ligne2 li:first-child {
+    border: none;
+}
+
+footer .ligne2 a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+}
+
+footer .ligne2 a:hover {
+    color: black;
+}
+
+footer .ligne2 li {
+    color: black;
+    font-size: 16px;
+    border-left: 2px solid #595959;
+    padding: 10px 20px;
+}
+
+/* FIN FOOTER */
+
+p {
+    font-size: 16px;
+}

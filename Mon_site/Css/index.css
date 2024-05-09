@@ -1,0 +1,30 @@
+/* MAIN */
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    gap: 10px;
+    background-color: white;
+}
+
+.Acc {
+    width: 100%;
+    height:100%;
+    border: 1px;
+    transition: 10s;
+}
+
+a {
+    transition: 250ms;
+    height: 150px;
+}
+
+a:hover {
+    transform: scale(1.03);
+
+    .Acc {
+        filter: hue-rotate(36deg);
+        -webkit-filter: hue-rotate(360deg);
+    }
+}

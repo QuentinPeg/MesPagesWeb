@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Pack Semestre 1</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="../html/index.php"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
+                alt="Icon-page"></a>
+        <h1>Les cahiers d'une infirmière</h1>
+        <div id="entcontact">
+            <a href="Contact.html">CONTACT</a>
+        </div>
+    </header>
+    <main>
+        <article>
+            <div id="carousel" class="carousel">
+                <img src="../Images/Pack_semestre1.png" alt="Image 1">
+                <img src="../Images/Pack_semestre1 (2).png" alt="Image 2">
+                <img src="../Images/Pack_semestre1 (3).png" alt="Image 3">
+                <img src="../Images/Pack_semestre1 (4).png" alt="Image 4">
+                <img src="../Images/Pack_semestre1 (5).png" alt="Image 5">
+            </div>
+            <button class="prev" onclick="prevImage()">&#10094;</button>
+            <button class="next" onclick="nextImage()">&#10095;</button>
+        </article>
+
+        <article>
+            <section>
+                <h2>Pack Semestre 1
+                </h2>
+                <p>Description : <br>Ce pack regroupe les cours du semestre 1 de la x année, il te servira durant toutes t'as formation.
+                    <br>Avec ce pack
+                    tu as toutes les cartes en mains pour réussir t'as formation. <br> Une fois diplômée elles te
+                    serviront toujours.</p>
+                    <p>Ce pack regroupe :</p>
+                    <ul>
+                        <li><a href="../html/Article-7.html">Soins infirmier</a></li>
+                        <li><a href="../html/Article-8.html">Cycle de la vie et grande fonction</a></li>
+                        <li><a href="../html/Article-9.html">Biologie fondamental</a></li>
+                        <li><a href="../html/Article-10.html">Processus traumatique</a></li>
+                    </ul>
+                <p class="prix">Prix :</p>
+                <ul>
+                    <li>A6 : 69 €</li>
+                    <li>A5 : 92 €</li>
+                    <li>Plastifié : +10%</li>
+                </ul>
+                <section>
+                    <a href="index.php"><button class="btn-retour">Voir d'autres
+                            articles</button></a>
+                    <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                </section>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>Une petite note sur moi :
+            J'ai été étudiante infirmière, c'est à ce moment-là que ces fiches ont été créées. La base de ces fiches
+            s'est construit sur les apports théoriques vus en cours et en stage ainsi les apports que j'ai pu voir et
+            apprendre
+            en stage.
+            Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation,
+            et m'ont conduite jusqu'à l'obtention de mon diplôme. Une fois diplômée j'ai travaillé en service d'urgence
+            puis en hospitalisation à domicile.</p>
+        <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
+        <div>
+            <a href="../html/conditions&mentions.html">
+                <p>Coder par Peguin Quentin</p>
+            </a>
+            <a href="../html/conditions&mentions.html">
+                <p>&copy; Tout droit d'auteur réservé</p>
+            </a>
+            <a href="../html/conditions&mentions.html">
+                <p>Conditions d'utilisation & Mentions légales</p>
+            </a>
+    </footer>
+</body>
+<script>window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        var h1 = document.querySelector("h1");
+        var a = document.querySelector("#entcontact>a");
+        var imgipage = document.querySelector("img");
+
+        if (window.scrollY > 50) {
+            header.classList.add("shrink");
+            h1.classList.add("shrink");
+            a.classList.add("shrink");
+            imgipage.classList.add("shrink");
+
+        } else {
+            header.classList.remove("shrink");
+            h1.classList.remove("shrink");
+            a.classList.remove("shrink");
+            imgipage.classList.remove("shrink");
+
+        }
+    });
+</script>
+<script>
+    var carousel = document.getElementById('carousel');
+    var scrollAmount = 0;
+    var scrollTime = 10000; // Temps de défilement en millisecondes
+
+    function rotateImages() {
+        scrollAmount++;
+        if (scrollAmount >= carousel.childElementCount) {
+            scrollAmount = 0;
+        }
+        carousel.scrollTo({
+            top: 0,
+            left: scrollAmount * carousel.offsetWidth,
+            behavior: 'smooth'
+        });
+    }
+
+    function prevImage() {
+        scrollAmount--;
+        if (scrollAmount < 0) {
+            scrollAmount = carousel.childElementCount - 1;
+        }
+        carousel.scrollTo({
+            top: 0,
+            left: scrollAmount * carousel.offsetWidth,
+            behavior: 'smooth'
+        });
+    }
+
+    function nextImage() {
+        scrollAmount++;
+        if (scrollAmount >= carousel.childElementCount) {
+            scrollAmount = 0;
+        }
+        carousel.scrollTo({
+            top: 0,
+            left: scrollAmount * carousel.offsetWidth,
+            behavior: 'smooth'
+        });
+    }
+
+    setInterval(rotateImages, scrollTime);
+</script>
+
+<script>
+    // Attendre que le contenu de la page soit chargé
+    document.addEventListener("DOMContentLoaded", function () {
+        // Sélectionner la div à supprimer en utilisant un sélecteur CSS
+        var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
+
+        // Vérifier si la div existe
+        if (divASupprimer) {
+            // Supprimer la div
+            divASupprimer.parentNode.removeChild(divASupprimer);
+        } else {
+            console.log("La div spécifiée n'existe pas.");
+        }
+    });
+</script>
+</html>

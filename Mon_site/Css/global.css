@@ -1,0 +1,159 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+    --header-height: 100px;
+    --header-heighttot:200px;   
+}
+/* HEADER */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: pink;
+    z-index: 10;
+}
+
+header>section>h1{
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+header>section>img {
+    height: var(--header-height);
+    width: auto;
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+
+header>section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+}
+
+header>div {
+    display: flex;
+    flex-direction: column;
+}
+
+header>section>div>div {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    flex-wrap: nowrap;
+    position: relative;
+    top: 5px;
+    right: 5px;
+}
+
+div>div>img {
+    width: auto;
+    height: 48px;
+}
+
+header>nav>ul {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    border: outset 10px darkgrey;
+    background-color: white;
+
+}
+
+header>nav>ul>li {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+header>nav>ul>li>a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    width: 150px;
+    height: 50px;
+
+}
+
+header>nav>ul>li:hover {
+    background-color: black;
+    color: white;
+
+    a {
+        color: white;
+        cursor: pointer;
+    }
+}
+
+
+/* FIN HEADER*/
+main{
+    padding-top: var(--header-heighttot);
+    background-image: url(../Images/bg1.jpeg);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+
+}
+/*Horloge*/
+.clock {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .clock-face {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .hour-hand, .minute-hand, .second-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 50% 100%;
+  }
+  
+  .hour-hand {
+    width: 4px;
+    height: 25px;
+    background-color:aliceblue;
+  }
+  
+  .minute-hand {
+    width: 3px;
+    height: 30px;
+    background-color: whitesmoke;
+  }
+  
+  .second-hand {
+    width: 2px;
+    height: 40px;
+    background-color: red;
+  }
+  
+  .center {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 50%;
+    top: calc(50% - 6px); /* Placer le centre au milieu */
+    left: calc(50% - 6px); /* Placer le centre au milieu */
+  }

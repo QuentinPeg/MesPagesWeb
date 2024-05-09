@@ -1,0 +1,261 @@
+/* Background */
+body {
+    background-image: url(../Images/background_cloud.jpg);
+    background-size: cover;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* MAIN */
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Groupes de 2 articles */
+main>.stdiv {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+/* Articles */
+.article {
+    justify-content: center;
+    width: 500px;
+    height: 550px;
+}
+
+.testconteneur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Orga dans les articles) */
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Positionnement des contient-ligne1 et contient-ligne2 */
+.contient-ligne1,
+.contient-ligne2 {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    opacity: 0;
+    transition: opacity 1s ease;
+
+}
+
+.testconteneur:hover>section>.contient-ligne1,
+.testconteneur:hover>section>.contient-ligne2 {
+    opacity: 1;
+}
+
+.testconteneur>section {
+    position: relative;
+    top: -375px;
+    width: auto;
+    height: 350px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.testconteneur>section>h2 {
+    margin: 0;
+    margin-top: 20px;
+    z-index: 20;
+    opacity: 1;
+    position: relative;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Photo dans dossier */
+.contient-ligne1>img,
+.contient-ligne2>img {
+    width: 150px;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* MES ENVELOPPES */
+.image-container {
+    position: relative;
+    width: 500px;
+    height: 530px;
+    overflow: hidden;
+}
+
+/* Mon enveloppe 1 (avant survol) */
+.image-container::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: url('../Images/envferme.png');
+    background-size: cover;
+    background-position: bottom;
+    transition: opacity 1s ease;
+    z-index: 1;
+    width: 500px;
+    height: 350px;
+}
+
+/* changement d'image avant survol */
+.image-container:hover::before {
+    opacity: 0;
+}
+
+/* Mon enveloppe 2 (après survol) */
+.image-container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: url('../Images/envouverte.png');
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 0;
+    width: 500px;
+    height: 530px;
+}
+
+/* changement d'image après survol */
+.image-container:hover::after {
+    opacity: 1;
+}
+
+/* Test formulaire*/
+
+.container {
+    max-height: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+
+}
+
+.form-group {
+    margin-bottom: 20px;
+
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    max-width: 90%;
+    height: 41px;
+    max-height: 41px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    main {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image-container {
+        width: 100vw;
+        align-items: center;
+    }
+
+    .image-container::before {
+        width: 100vw;
+        background-size: 100% contain;
+    }
+
+    /* Réduire la taille du fond des "enveloppes" dans .image-container */
+    .image-container::after {
+        width: 100vw;
+        background-size: 100vw auto;
+    }
+
+    .testconteneur {
+        width: 100vw;
+        height: auto;
+    }
+
+    .article,
+    .article>a {
+        justify-content: center;
+        width: auto;
+        height: auto;
+    }
+
+    
+    .contient-ligne1, .contient-ligne2{
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        opacity: 1;
+        
+    }
+
+}

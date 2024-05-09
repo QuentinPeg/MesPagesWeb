@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="Icon-page.png">
+    <script src="script.js"></script>
+    <title>Les cahiers d'une infirmière</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <img class="ipage" src="Logolescahiersduneinfirmiere.jpg" alt="Icon-page">
+        <h1>Les cahiers d'une infirmière</h1>
+        <span class="panier-link">
+            <img src="panier.png" alt="panier">
+            <span class="nombre-articles-panier" id="panier-bulle">0</span>
+        </span>
+        <!-- Ajoutez d'autres éléments de header selon vos besoins -->
+    </header>
+
+    <!-- Contenu principal -->
+    <main>
+        <p>Tu es étudiant ou diplômé.e et tu as besoin d'une piqure de rappel, ce site est fait pour toi !</p>
+        <!-- Section des articles -->
+        <!-- POUR METTRE EN SOLDE (NE PAS SUPPRIMER) <span class="solde-icon">Solde</span> -->
+        <h2 class="titre_partie">
+            Les packs
+        </h2>
+        <section class="articles">
+            <!-- Article 1 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 1">
+                <h2>Pack intégrale</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Pack intégrale')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 2 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 2">
+                <h2>Pack Première Année</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Pack Première Année')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 3 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 3">
+                <h2>Pack Deuxième Année</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Pack Deuxième Année')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 4 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 4">
+                <h2>Pack Troisième Année</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Pack Troisième Année')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 5 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 5">
+                <h2>Pack Semestre 1</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Pack Semestre 1')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 6 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 6">
+                <h2>Pack Semestre 3</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Pack Semestre 3')">Ajouter au
+                    panier</button>
+            </article>
+        </section>
+        <h2 class="titre_partie">
+            Les spécifications <!--(titre a trouver)-->
+        </h2>
+        <section class="specificationsarticles">
+            <!-- Article 7 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 7">
+                <h2>Soins Infirmier</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('Soins Infirmier')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 8 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 8">
+                <h2>Cycle de la vie et grande fonction (UE 2.2 semestre 1)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier"
+                    onclick="ajouterAuPanier('Cycle de la vie et grande fonction (UE 2.2 semestre 1)')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 9 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 2">
+                <h2>Biologie fondamentale (UE 2.1 semestre 1) </h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier"
+                    onclick="ajouterAuPanier('Biologie fondamentale (UE 2.1 semestre 1)')">Ajouter au
+                    panier</button>
+            </article>
+
+            <!-- Article 10 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>Processus traumatique (UE 2.4 semestre 1)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier"
+                    onclick="ajouterAuPanier('Processus traumatique (UE 2.4 semestre 1)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 11 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS PSYCHO-PATHOLOGIQUE (UE 2.6 semestre 2)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier"
+                    onclick="ajouterAuPanier('PROCESSUS PSYCHO-PATHOLOGIQUE (UE 2.6 semestre 2)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 12 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS PSYCHO-PATHOLOGIQUE (UE 2.6 semestre 5)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier"
+                    onclick="ajouterAuPanier('PROCESSUS PSYCHO-PATHOLOGIQUE (UE 2.6 semestre 5)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 13 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS OBSTRUCTIF (UE 2.8 semestre 3)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS OBSTRUCTIF (UE 2.8 semestre 3)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 14 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS INFECTIEUX (UE 2.5 semestre 3)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS INFECTIEUX (UE 2.5 semestre 3)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 15 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS DEGENERATIF (UE 2.7 semestre 4)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS DEGENERATIF (UE 2.7 semestre 4)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 16 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS TUMORAUX (UE 2.9 semestre 5)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS TUMORAUX (UE 2.9 semestre 5)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 17 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS TUMORAUX (UE 2.9 semestre 5)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS TUMORAUX (UE 2.9 semestre 5)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 18 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS TUMORAUX (UE 2.9 semestre 5)<h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS TUMORAUX (UE 2.9 semestre 5)')">Ajouter au
+                    panier</button>
+            </article>
+            <!-- Article 19 -->
+            <article>
+                <img src="Icon-page.png" alt="Exemple Image 10">
+                <h2>PROCESSUS TUMORAUX (UE 2.9 semestre 5)</h2>
+                <button class="btn-info">Plus d'informations</button>
+                <button class="btn-ajouter-panier" onclick="ajouterAuPanier('PROCESSUS TUMORAUX (UE 2.9 semestre 5)')">Ajouter au
+                    panier</button>
+            </article>
+
+
+        </section>
+
+        <!-- Fenêtre flottante du panier -->
+        <div class="panier-fenetre" id="panier-fenetre" style="display: none;">
+            <div class="panier">
+                <h2>Votre Panier</h2>
+                <ul id="panier-liste"></ul>
+                <button class="btn-precommander" onclick="precommander()">Précommander</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Une petite note sur moi :
+            J'ai été étudiante infirmière, c'est à ce moment là que ces fiches ont été créées. La base de ces fiches
+            s'est construite sur les apports théoriques vue en cours ainsi les apports que j'ai pu voir et apprendre
+            en stage.
+            Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation,
+            elles m'ont ainsi conduite jusqu'à l'obtention de mon diplôme. Maintenant diplomée, je travail au sein d'un
+            service d'urgences.</p>
+        <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
+        <img src="Instagram.png" alt="logo instagram">
+    </footer>
+
+</body>
+
+</html>

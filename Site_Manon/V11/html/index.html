@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Les cahiers d'une infirmière</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="../html/index.html"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
+                alt="Icon-page"></a>
+        <div id="vide"></div>
+        <h1>Les cahiers d'une infirmière</h1>
+        <div id="entete">
+            <a href="Contact.html">CONTACT</a>
+        </div>
+        <span class="panier-link">
+            <img src="../Images/panier.svg" alt="panier">
+            <span class="nombre-articles-panier" id="panier-bulle">0</span>
+        </span>
+    </header>
+
+
+    <!-- Contenu principal -->
+    <main>
+        <p>Tu es étudiant ou diplômé et tu as besoin d'une piqure de rappel, ce site est fait pour toi !</p>
+        <!-- Section des articles -->
+        <!-- POUR METTRE EN SOLDE (NE PAS SUPPRIMER) <span class="solde-icon">Solde</span> -->
+        <h2 class="titre_partie">
+            Les packs
+        </h2>
+        <section id="packs">
+        </section>
+
+        <h2 class="titre_partie">
+            Les spécifications <!--(titre a trouver)-->
+        </h2>
+        <section id="nonpacks">
+        </section>
+
+        <!-- Fenêtre flottante du panier -->
+        <div class="panier-fenetre" id="panier-fenetre" style="display: none;">
+            <div class="panier">
+                <h2>Votre Panier</h2>
+                <ul id="panier-liste"></ul>
+                <div class="boutons-panier">
+                    <button class="btn-supprimer-tout" onclick="supprimerToutPanier()">Supprimer tout le
+                        panier</button>
+                    <button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fenêtre flottante de précommande -->
+        <div class="precommande-fenetre" id="precommande-fenetre">
+            <div class="precommande-contenu">
+                <span class="precommande-fermer" onclick="fermerPrecommande()">&times;</span>
+                <h2>Formulaire de Précommande</h2>
+                <form id="formulaire-precommande">
+
+                    <h3>Récapitulatif des articles :</h3>
+                    <div id="recap-articles"></div>
+
+                    <section>
+                        <div class="grp">
+                            <label for="Nom">Nom :</label>
+                            <input type="text" id="Nom" name="Nom" placeholder="Nom*" required>
+                        </div>
+                        <div class="grp">
+                            <label for="Prénom">Prénom :</label>
+                            <input type="text" id="Prénom" name="Prénom" placeholder="Prénom*" required>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="grp">
+
+                            <label for="Email">Email :</label>
+                            <input type="email" id="Email" name="Email" placeholder="Email*" required>
+                        </div>
+                        <div class="grp">
+                            <label for="numero">Numéro de téléphone :</label>
+                            <input type="tel" id="numero" name="numero" placeholder="Numéro de téléphone*" required>
+
+                        </div>
+                    </section>
+                    <section>
+                        <div class="grp">
+
+                            <label for="Adresse">Adresse : </label>
+                            <input type="text" id="Adresse" name="Adresse" placeholder="Adresse*" required>
+                        </div>
+                        <div class="grp">
+                            <label for="CodePostale">Code Postale :</label>
+                            <input type="text" id="CodePostale" name="Code_Postale" placeholder="Code Postale*"
+                                required>
+                        </div>
+                    </section>
+
+
+                    <section>
+                        <button type="button" class="btn-fermer" onclick="fermerPrecommande()">Fermer</button>
+                        <div id="prixTotal">Total : <span>0 euros</span></div>
+                        <button type="button" onclick="envoyerPrecommande()" class="btn-envoyer">Envoyer</button>
+                    </section>
+
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Une petite note sur moi :
+            J'ai été étudiante infirmière, c'est à ce moment là que ces fiches ont été créées. La base de ces fiches
+            s'est construite sur les apports théoriques vue en cours ainsi les apports que j'ai pu voir et apprendre
+            en stage.
+            Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation,
+            elles m'ont ainsi conduite jusqu'à l'obtention de mon diplôme. Maintenant diplomée, je travaille au sein
+            d'un
+            service d'urgences.</p>
+        <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
+        <div>
+            <p>Coder par Peguin Quentin</p>
+            <p>&copy; Tout droit d'auteur réservé</p>
+            <span>
+                <img src="../Images/Instagram.png" alt="logo instagram">
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Charger les articles depuis le fichier JSON
+            fetch("../js/articles.json")
+                .then(response => response.json())
+                .then(articles => {
+                    // Filtrer les articles en packs et non packs
+                    const packs = articles.filter(article => article.estPack);
+                    const nonPacks = articles.filter(article => !article.estPack);
+
+                    // Afficher les articles packs dans la première section
+                    afficherArticles(packs, "packs");
+
+                    // Afficher les articles non packs dans la deuxième section
+                    afficherArticles(nonPacks, "nonpacks");
+
+                })
+                .catch(error => console.error("Erreur lors du chargement des articles :", error));
+
+        });
+
+        function afficherArticles(articles, sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) {
+                console.error("L'élément avec l'ID " + sectionId + " n'existe pas dans le DOM.");
+                return;
+            }
+            section.innerHTML = "";
+
+            articles.forEach(article => {
+                const articleDiv = document.createElement("article");
+                articleDiv.id = article.id;
+
+                const image = document.createElement("img");
+                image.src = article.imageSrc;
+                articleDiv.appendChild(image);
+
+                const title = document.createElement("h2");
+                title.textContent = article.titre;
+                articleDiv.appendChild(title);
+
+                const price = document.createElement("ul");
+                const priceA5 = document.createElement("li")
+                priceA5.textContent = "Prix : " + article.prix.A5 + " € (A5)";
+                price.appendChild(priceA5);
+
+                const priceA6 = document.createElement("li")
+                priceA6.textContent = "Prix : " + article.prix.A6 + " € (A6)";
+                price.appendChild(priceA6);
+                articleDiv.appendChild(price);
+
+                const sectionbutton = document.createElement("section");
+
+                const link = document.createElement("a");
+                link.href = article.lien;
+
+                const buttoninf = document.createElement("button");
+                buttoninf.classList.add("btn-info");
+                buttoninf.textContent = ("Plus d'information");
+                link.appendChild(buttoninf);
+                sectionbutton.appendChild(link);
+
+                const buttonadd = document.createElement("button");
+                buttonadd.classList.add("btn-ajouter-panier");
+                buttonadd.textContent = "Ajouter au panier";
+                buttonadd.onclick = function () {
+                    ajouterAuPanier(article.titre, article.format, article.plastifie);
+
+                };
+                sectionbutton.appendChild(buttonadd);
+
+                articleDiv.appendChild(sectionbutton);
+
+                section.appendChild(articleDiv);
+            });
+        }
+
+        function fermerPrecommande() {
+            var precommandeFenetre = document.getElementById('precommande-fenetre');
+
+            // Masquer la fenêtre de précommande
+            precommandeFenetre.style.display = 'none';
+        }
+        /**
+         * 
+         * TOUT ce qui parle du prix 
+         */
+
+        function obtenirPrixArticle(nomArticle, format, plastifie) {
+            var prixtot = 0; // Initialisez la variable prixtot à 0
+            for (var i = 0; i < panier.length; i++) {
+                var article = panier[i];
+                var prixart;
+                if (article.nom === nomArticle && article.format === format && article.plastifie === plastifie) {
+                    // Vérifiez si l'article correspond aux critères spécifiés
+                    prixart = article.prix;
+                    prixtot += prixart * article.quantite; // Ajoutez le prix de l'article multiplié par sa quantité
+                }
+            }
+            return prixtot;
+        }
+
+        function calculerTotal() {
+            var total = 0;
+            for (var i = 0; i < panier.length; i++) {
+                var article = panier[i];
+                total += article.prix * article.quantite;
+            }
+            var totalElement = document.getElementById('prixTotal');
+            totalElement.textContent = formaterPrix(total);
+        }
+
+
+        // Fonction pour formater le prix avec une virgule si nécessaire
+        function formaterPrix(prix) {
+            var prixFormate = prix % 1 !== 0 ? prix.toFixed(2).replace('.', ',') : prix.toFixed(0);
+            return prixFormate + ' €';
+        }
+
+        function afficherRecapArticles() {
+
+            var recapArticlesDiv = document.getElementById('recap-articles');
+            recapArticlesDiv.textContent = '';
+
+            // Utiliser ces éléments pour chaque article dans le panier
+            for (var i = 0; i < panier.length; i++) {
+                var article = panier[i];
+                var quantite = article.quantite;
+                var nom = article.nom;
+                var articleText = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+
+                var articleElement = document.createElement('p');
+                articleElement.textContent = articleText;
+
+                // Créer les éléments label et select pour chaque article
+                var labelFormat = document.createElement('label');
+                labelFormat.textContent = 'Format :';
+                var selectFormat = document.createElement('select');
+                selectFormat.name = 'format'; // Nom du champ pour l'envoi du formulaire, si nécessaire
+                var optionA5 = document.createElement('option');
+                optionA5.value = 'A5';
+                optionA5.textContent = 'A5';
+                var optionA6 = document.createElement('option');
+                optionA6.value = 'A6';
+                optionA6.textContent = 'A6';
+                selectFormat.appendChild(optionA5);
+                selectFormat.appendChild(optionA6);
+
+                var labelPlastifie = document.createElement('label');
+                labelPlastifie.textContent = 'Plastifié :';
+                var selectPlastifie = document.createElement('select');
+                selectPlastifie.name = 'plastifie'; // Nom du champ pour l'envoi du formulaire, si nécessaire
+                var optionNon = document.createElement('option');
+                optionNon.value = 'Non';
+                optionNon.textContent = 'Non';
+                var optionOui = document.createElement('option');
+                optionOui.value = 'Oui';
+                optionOui.textContent = 'Oui';
+                selectPlastifie.appendChild(optionNon);
+                selectPlastifie.appendChild(optionOui);
+
+                // Ajouter les éléments label et select à l'élément d'article
+                articleElement.appendChild(labelFormat);
+                articleElement.appendChild(selectFormat);
+                articleElement.appendChild(labelPlastifie);
+                articleElement.appendChild(selectPlastifie);
+
+                recapArticlesDiv.appendChild(articleElement);
+            }
+
+        }
+
+        var panierAffiche = false;
+        var nombreArticlesPanier = 0;
+        var panier = [];
+
+        function togglePanier(e) {
+            e.stopPropagation();
+
+            var panierFenetre = document.getElementById('panier-fenetre');
+            var precommandeFenetre = document.getElementById('precommande-fenetre');
+            panierAffiche = !panierAffiche;
+
+            if (panierAffiche) {
+                panierFenetre.style.display = 'flex';
+                precommandeFenetre.style.display = 'none'; // Masquer la précommande lors de l'ouverture du panier
+            } else {
+                panierFenetre.style.display = 'none';
+            }
+        }
+
+        function fermerPanierSiClicExterieur(e) {
+            var panierFenetre = document.getElementById('panier-fenetre');
+
+            if (!panierFenetre.contains(e.target)) {
+                panierAffiche = false;
+                panierFenetre.style.display = 'none';
+                document.removeEventListener('click', fermerPanierSiClicExterieur);
+            }
+        }
+
+        function ajouterAuPanier(nomArticle, format = 'A5', plastifie = 'Non', articles) {
+            var articleExistant = panier.find(article => article.nom === nomArticle && article.format === format && article.plastifie === plastifie);
+
+            console.log("Avant ajout au panier - nom:", nomArticle, "format:", format, "plastifie:", plastifie);
+            if (articleExistant) {
+                // Si l'article existe déjà, augmenter la quantité
+                articleExistant.quantite++;
+                articleExistant.prix = obtenirPrixArticle(nomArticle, format, plastifie, articles); // Mettre à jour le prix avec le paramètre plastification
+                mettreAJourQuantiteArticle(articleExistant);
+            } else {
+                // Sinon, ajouter un nouvel article au panier avec le format et la plastification spécifiés
+                var nouvelArticle = {
+                    nom: nomArticle,
+                    format: format,
+                    plastifie: plastifie,
+                    quantite: 1,
+                    prix: obtenirPrixArticle(nomArticle, format, plastifie, articles)
+                };
+
+
+                console.log("Nouvel article ajouté au panier - nom:", nomArticle, "format:", format, "plastifie:", plastifie);
+
+                panier.push(nouvelArticle);
+                ajouterElementAuPanier(nouvelArticle);
+
+                // Après avoir ajouté l'article au panier, recalculez le total
+                calculerTotal();
+
+            }
+
+            console.log("Après ajout au panier - panier:", panier);
+
+            // Mettre à jour le nombre d'articles dans la bulle du panier
+            nombreArticlesPanier++;
+            mettreAJourNombreArticlesPanier();
+            document.getElementById('panier-bulle').textContent = nombreArticlesPanier;
+
+            // Stocker le panier dans localStorage
+            localStorage.setItem('panier', JSON.stringify(panier));
+
+            // Mettre à jour le récapitulatif après l'ajout
+            afficherRecapArticles();
+        }
+
+        function ajouterElementAuPanier(article) {
+            var panierListe = document.getElementById('panier-liste');
+            var nouvelArticle = document.createElement('li');
+
+            // Ajout du bouton de suppression avec un appel à la fonction supprimerArticle
+            nouvelArticle.innerHTML = `
+            [${article.quantite}] ${article.nom}
+            <button class="btn-supprimer-article" onclick="supprimerArticle(event, this)">&#10006;</button>
+            <span class="plastifie" data-value="${article.plastifie}"></span>
+        `;
+
+            panierListe.appendChild(nouvelArticle);
+        }
+
+        document.querySelector('.panier-link').addEventListener('click', togglePanier);
+
+        function mettreAJourQuantiteArticle(article) {
+            var panierListe = document.getElementById('panier-liste');
+            var elementsArticles = panierListe.getElementsByTagName('li');
+
+            for (var i = 0; i < elementsArticles.length; i++) {
+                var elementArticle = elementsArticles[i];
+
+                if (elementArticle.textContent.includes(article.nom)) {
+                    // Mettre à jour la quantité de l'article dans le panier
+                    elementArticle.innerHTML = `[${article.quantite}] x${article.nom}
+                    <button class="btn-supprimer-article" onclick="supprimerArticle(event, this)">&#10006;</button>`;
+                    break;  // Sortir de la boucle une fois que l'article est mis à jour
+                }
+            }
+        }
+
+        function supprimerArticle(event, boutonSupprimer) {
+            var panierListe = document.getElementById('panier-liste');
+            var elementASupprimer = boutonSupprimer.parentNode;
+
+            if (elementASupprimer) {
+                var nomArticle = elementASupprimer.firstChild.textContent.trim(); // Récupérer le nom de l'article
+                panierListe.removeChild(elementASupprimer);
+
+                // Supprimer l'article correspondant du panier
+                var index = panier.findIndex(article => article.nom === nomArticle);
+                if (index !== -1) {
+                    panier.splice(index, 1);
+                }
+                // Mettre à jour le nombre d'articles dans la bulle du panier
+                nombreArticlesPanier--;
+                mettreAJourNombreArticlesPanier();
+
+                // Stocker le panier dans localStorage
+                localStorage.setItem('panier', JSON.stringify(panier));
+
+                // Mettre à jour le récapitulatif après la suppression
+                afficherRecapArticles();
+            }
+
+            // Si la liste est vide, masquer la fenêtre flottante du panier
+            if (panierListe.childElementCount === 0) {
+                masquerPanier();
+            }
+
+            // Empêcher la propagation du clic au conteneur du panier
+            event.stopPropagation();
+
+            // Mettre à jour le récapitulatif après la suppression
+            afficherRecapArticles();
+
+            // Après avoir ajouté l'article au panier, recalculez le total
+            calculerTotal();
+
+        }
+
+        function masquerPanier() {
+            var panierFenetre = document.getElementById('panier-fenetre');
+            panierFenetre.style.display = 'none';
+            document.removeEventListener('click', fermerPanierSiClicExterieur);
+        }
+
+        function afficherPanier() {
+            var panierFenetre = document.getElementById('panier-fenetre');
+            panierFenetre.style.display = 'flex';
+            document.addEventListener('click', fermerPanierSiClicExterieur);
+            // Mettre à jour le total
+            calculerTotal();
+        }
+
+        function mettreAJourNombreArticlesPanier() {
+            var nombreArticlesPanier = document.getElementById('panier-liste').childElementCount;
+            var bullePanier = document.getElementById('panier-bulle');
+
+            // Mettre à jour le contenu de la bulle avec le nombre d'articles
+            bullePanier.textContent = nombreArticlesPanier;
+
+            // Afficher ou masquer la bulle en fonction du nombre d'articles
+            bullePanier.style.display = nombreArticlesPanier > 0 ? 'flex' : 'none';
+        }
+
+        function supprimerToutPanier() {
+            var panierListe = document.getElementById('panier-liste');
+            panierListe.innerHTML = ''; // Supprimer tous les éléments de la liste
+
+            // Réinitialiser le tableau panier
+            panier = [];
+
+            // Mettre à jour le nombre d'articles dans la bulle du panier
+            nombreArticlesPanier = 0;
+            mettreAJourNombreArticlesPanier();
+
+            // Masquer la fenêtre flottante du panier
+            masquerPanier();
+
+            // Stockez le panier dans localStorage
+            localStorage.setItem('panier', JSON.stringify(panier));
+
+            // Mettre à jour le récapitulatif après la suppression de tout le panier
+            afficherRecapArticles();
+        }
+
+        function afficherPrecommande() {
+            var precommandeFenetre = document.getElementById('precommande-fenetre');
+            var panierFenetre = document.getElementById('panier-fenetre');
+
+            // Masquer la fenêtre du panier
+            masquerPanier();
+
+            // Afficher la fenêtre de précommande
+            precommandeFenetre.style.display = 'flex';
+
+            // Afficher le récapitulatif des articles
+            afficherRecapArticles();
+        }
+
+
+    </script>
+    <script>window.addEventListener("scroll", function () {
+            var header = document.querySelector("header");
+            var h1 = document.querySelector("h1");
+            var a = document.querySelector("#entete>a");
+            var imgipage = document.querySelector("img");
+            var imgipanier = document.querySelector(".panier-link img");
+            var nb = document.querySelector(".nombre-articles-panier");
+            var panier = document.querySelector(".panier-fenetre");
+
+            if (window.scrollY > 50) {
+                header.classList.add("shrink");
+                h1.classList.add("shrink");
+                a.classList.add("shrink");
+                imgipage.classList.add("shrink");
+                imgipanier.classList.add("shrink");
+                nb.classList.add("shrink");
+                panier.classList.add("shrink");
+            } else {
+                header.classList.remove("shrink");
+                h1.classList.remove("shrink");
+                a.classList.remove("shrink");
+                imgipage.classList.remove("shrink");
+                imgipanier.classList.remove("shrink");
+                nb.classList.remove("shrink");
+                panier.classList.remove("shrink");
+            }
+        });
+    </script>
+</body>
+
+</html>

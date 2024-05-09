@@ -1,0 +1,256 @@
+    /* HEADER */
+    header {
+        display: flex;
+        flex-direction: row;
+        background-color: #2B75B6;
+        height: max-content;
+        position: relative;
+    }
+
+    header>div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: left;
+        margin-top: 1%;
+        margin-right: 1%;
+        gap: 25px;
+        width: 150px;
+        height: auto;
+    }
+
+    header>div>img {
+        margin: 0;
+        width: auto;
+        height: 150px;
+        border-radius: 50%;
+    }
+
+    header>section {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        position: relative;
+    }
+
+    header>section>h1 {
+        font-size: 40px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    header>section>p {
+        padding-left: 15%;
+    }
+
+    /* Bouton du menu hamburger */
+    .menu-icon {
+        display: none;
+        /* Par défaut, masqué sur grand écran */
+    }
+
+    #menu-toggle {
+        display: none;
+        /* Masquer la case à cocher par défaut */
+    }
+
+    @media only screen and (min-width: 1000px) {
+
+        /* NAV */
+        nav {
+            position: fixed;
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 15px;
+            text-align: center;
+            background-color: lightblue;
+            border: solid 5px white;
+            width: 10%;
+            height: auto;
+            left: -95.5%;
+            right: 0;
+            top: 15%;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            z-index: 10;
+            transition: left 0.5s ease;
+        }
+
+        nav:hover {
+            left: -87.5%;
+        }
+
+        nav a {
+            font-size: 125%;
+            text-decoration: none;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav img {
+            max-width: 70px;
+            padding-bottom: 10px;
+        }
+
+        .contenu-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    }
+
+    /* FOOTER */
+    footer {
+        padding: 15px;
+        width: 100%;
+        background-color: #2b93b6;
+        position: relative;
+        bottom: 0;
+        display: flex;
+        flex-direction: row;
+    }
+
+    /* Test formulaire*/
+    .container {
+        max-height: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        max-width: 150%;
+        height: 41px;
+        max-height: 41px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Responsive */
+    @media only screen and (max-width: 1000px) {
+        .menu-icon {
+            display: block;
+            position: fixed;
+            background-color: lightblue;
+            /* Couleur de fond du menu hamburger */
+            top: 0;
+            left: 0;
+            padding: 5px 10px;
+            /* Espacement interne du menu hamburger */
+            font-size: 35px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        header {
+            padding-top: 20px;
+        }
+
+        /* Réinitialiser le style de la barre de navigation pour les petits écrans */
+        nav {
+            position: fixed;
+            display: none;
+            background-color: lightblue;
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            text-align: center;
+            top: 0;
+            left: 0;
+            z-index: 30;
+        }
+
+        /* Afficher la barre de navigation lorsque la classe "active" est appliquée */
+        nav.active {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Style pour les liens de navigation */
+        nav.active a {
+            font-size: 125%;
+            text-decoration: none;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav.active a:hover {
+            text-decoration: underline solid;
+        }
+
+        /* Style pour les images dans la barre de navigation */
+        nav.active img {
+            max-width: 70px;
+            padding-bottom: 10px;
+        }
+
+        /* Style pour le contenu de la barre de navigation */
+        nav.active .contenu-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        form {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer {
+            padding: 0px !important;
+        }
+    }

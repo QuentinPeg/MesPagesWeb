@@ -1,0 +1,55 @@
+/* MAIN */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#prochainsMatchs {
+    color: black;
+    width: 90%;
+    padding: 0;
+    text-align: center;
+    position: relative;
+}
+
+#iframetest {
+    padding-top: 5%;
+    border: 0;
+    width: 800px;
+    height: 300px;
+    padding-bottom: 100px;
+}
+
+#iframelec{
+    padding-top: 5%;
+    border: 0;
+    width: 500px;
+    height: 475px;
+    padding-bottom: 100px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#prochainsMatchs p {
+    padding: 0px 10px 0px 10px;
+}
+
+#slick-slide.slick-current.slick-active {
+    margin: 0;
+    padding: 0;
+}
+
+.carousel-container {
+    overflow: hidden;
+}
+
+.carousel-slide {
+    display: none;
+}
+
+/*FIN MAIN*/
+
+/*FOOTER*/
+
+/* FIN FOOTER*/

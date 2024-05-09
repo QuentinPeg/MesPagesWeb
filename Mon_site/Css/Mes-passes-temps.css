@@ -1,0 +1,119 @@
+/* MAIN */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form>button{
+    margin-top: 10px;
+    background-color: aquamarine;
+    border-radius: 25px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Groupes de 2 articles */
+main>div {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+/* Articles */
+article {
+    justify-content: center;
+    width: 500px;
+    height: 550px;
+}
+
+/* Orga dans les articles) */
+article>div  {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap :100px;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;
+    margin-top: 20px;
+    z-index: 2;
+    position: absolute;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Photo dans dossier */
+article>a>div>img {
+    width: 100px;
+    height: auto;
+    z-index: 1;
+}
+
+/* MES ENVELLOPES */
+.image-container {
+    position: relative;
+    width: 500px;
+    height: 530px;
+    overflow: hidden;
+}
+
+/* Mon envellope 1 (avant survol) */
+.image-container::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: url('../Images/envferme.png');
+    background-size: cover;
+    background-position: bottom;
+    transition: opacity 1s ease;
+    z-index: 1;
+    width: 500px;
+    height: 350px;
+}
+
+/* changement d'image avant survol */
+.image-container:hover::before {
+    opacity: 0;
+}
+
+/* Mon envellope 2 (après survol) */
+.image-container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: url('../Images/envouverte.png');
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 0;
+    width: 500px;
+    height: 530px;
+}
+
+/* changement d'image après survol */
+
+.image-container:hover::after {
+    opacity: 1;
+}
+
+/*FIN MAIN*/
+
+/*FOOTER*/
+
+/* FIN FOOTER*/

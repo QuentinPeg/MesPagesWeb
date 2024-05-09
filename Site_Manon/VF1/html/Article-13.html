@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Pack intégrale</title>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="../html/index.html"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
+                alt="Icon-page"></a>
+        <h1>Les cahiers d'une infirmière</h1>
+        <div id="entcontact">
+            <a href="Contact.html">CONTACT</a>
+        </div>
+    </header>
+    <main>
+        <article>
+            <section>
+                <img src="../Images/Processus_obstructif.jpg" alt="Image de l'article 1">
+            </section>
+        </article>
+
+        <article>
+            <section>
+                <h2>Processus obstructif (UE 2.8 semestre 3)
+                </h2>
+                <p>Ce pack regroupe :</p>
+                <ul>
+                    <li>Pathologies cardiaques :
+                      <ul>
+                        <li>Athérosclérose</li>
+                        <li>Infarctus du myocarde</li>
+                        <li>Phlébite</li>
+                        <li>Embolie pulmonaire</li>
+                        <li>Accident vasculaire cérébral</li>
+                      </ul>
+                    </li>
+                    <li>Pathologies pulmonaires :
+                      <ul>
+                        <li>Asthme</li>
+                        <li>Œdème aigu du poumon</li>
+                        <li>Bronchopneumopathie chronique obstructive</li>
+                      </ul>
+                    </li>
+                    <li>Pathologies digestives :
+                      <ul>
+                        <li>Occlusion intestinale</li>
+                        <li>Lithiase biliaire</li>
+                        <li>Lithiase rénale</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+                <p class="prix">Prix :</p>
+                <ul>
+                    <li>A6 : 17 €</li>
+                    <li>A5 : 25 €</li>
+                    <li>Plastifié : +10%</li>
+                </ul>
+                <section>
+                    <a href="index.html"><button class="btn-retour">Voir d'autres
+                            articles</button></a>
+                    <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                </section>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>Une petite note sur moi :
+            J'ai été étudiante infirmière, c'est à ce moment la que ces fiches ont été créées. La base de ces fiches
+            s'est construite sur les apports théoriques vue en cours ainsi les apports que j'ai pu voir et apprendre en
+            stage.
+            Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation, elles
+            m'ont aini conduite jusqu'à l'obtention de mon diplôme. Maintenant diplomée, je travail au sein d'un service
+            d'urgences.</p>
+        <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
+    </footer>
+</body>
+<script>window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        var h1 = document.querySelector("h1");
+        var a = document.querySelector("#entcontact>a");
+        var imgipage = document.querySelector("img");
+
+        if (window.scrollY > 50) {
+            header.classList.add("shrink");
+            h1.classList.add("shrink");
+            a.classList.add("shrink");
+            imgipage.classList.add("shrink");
+
+        } else {
+            header.classList.remove("shrink");
+            h1.classList.remove("shrink");
+            a.classList.remove("shrink");
+            imgipage.classList.remove("shrink");
+
+        }
+    });
+</script>
+
+</html>
