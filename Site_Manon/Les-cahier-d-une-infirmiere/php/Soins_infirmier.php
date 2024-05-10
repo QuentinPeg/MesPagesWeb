@@ -1,60 +1,93 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE php>
+<php lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/article.css">
     <link rel="icon" href="../Images/Icon-page.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../Css/Carrousel1.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/Carrousel2.css" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/article.css">
 
-    <title>Pack première année</title>
+
+    <title>Soins Infirmier</title>
 </head>
 
 <body>
 
     <!-- Header -->
     <header>
-        <a href="../html/index.php"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
+        <a href="../php/index.php"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
                 alt="Icon-page"></a>
         <h1>Les cahiers d'une infirmière</h1>
         <div id="entcontact">
-            <a href="Contact.html">CONTACT</a>
+            <a href="Contact.php">CONTACT</a>
         </div>
     </header>
     <main>
         <article>
             <div id="carousel" class="carousel">
-                <img src="../Images/Pack_premiere_annee.png" alt="Image 1">
-                <img src="../Images/Pack_premiere_annee2.png" alt="Image 2">
-                <img src="../Images/Pack_premiere_annee3.png" alt="Image 3">
-                <img src="../Images/Pack_premiere_annee4.png" alt="Image 4">
-                <img src="../Images/Pack_premiere_annee5.png" alt="Image 5">
-                <button class="prev" onclick="prevImage()">&#10094;</button>
-                <button class="next" onclick="nextImage()">&#10095;</button>
+                <img src="../Images/Soins_infirmier.png" alt="Image 1">
+                <img src="../Images/Soins_infirmier1.png" alt="Image 2">
             </div>
+            <button class="prev" onclick="prevImage()">&#10094;</button>
+            <button class="next" onclick="nextImage()">&#10095;</button>
         </article>
 
         <article>
             <section>
-                <h2>Pack Première Année</h2>
-                <p>Description : <br>Ce pack regroupe les cours de la première année, il te servira durant toutes t'as
-                    formation. <br>Avec ce pack
-                    tu as toutes les cartes en mains pour réussir t'as formation. <br> Une fois diplômée elles te
-                    serviront toujours.</p>
+                <h2>Soins Infirmier</h2>
+                <p>Description : <br>
+                    Le pack soins infirmiers regroupe un ensemble de fiches techniques utile à votre pratique
+                    infirmière. Ce pack pourra vous suivre tout au long de votre formation pour apprendre la théorie
+                    des soins réaliser. Il vous servira également une fois diplômé d’aide mémoire pour les soins. Une
+                    fois professionnel vous pourrez vous en servir pour vous rafraîchir la mémoire si un étudiant vous
+                    pose une question ou si vous avez un trou de mémoire.</p>
                 <p>Ce pack regroupe :</p>
                 <ul>
-                    <li><a href="../html/Article-7.html">Soins infirmier</a></li>
-                    <li><a href="../html/Article-8.html">Cycle de la vie et grande fonction</a></li>
-                    <li><a href="../html/Article-9.html">Biologie fondamental</a></li>
-                    <li><a href="../html/Article-10.html">Processus traumatique</a></li>
-                    <li><a href="../html/Article-11.html">Processus psychopathologiques semestre 2</a></li>
+                    <li>Normes de références des éléments figurés du sang et des veines</li>
+                    <li>Les bilans sanguins les plus courants</li>
+                    <li>La voie veineuse périphérique</li>
+                    <li>La voie veineuse centrale</li>
+                    <li>Le cathéter artériel</li>
+                    <li>La gazométrie</li>
+                    <li>Les débits</li>
+                    <li>Les différents sites d’injections</li>
+                    <li>Les surveillances de la transfusion</li>
+                    <li>Le test de contrôle ultime ABtest Card®</li>
+                    <li>Valeurs et normes de références</li>
+                    <li>Les différentes hémorragies</li>
+                    <li>L’électrocardiogramme (ECG)</li>
+                </ul>
+                <input type="checkbox" id="lireSuite1" class="lire-suite-checkbox">
+                <label for="lireSuite1" class="lire-suite-label">
+                    <span class="label-text"></span>
+                </label>
+                <ul class="suite">
+                    <li>Les différentes techniques d’imagerie</li>
+                    <li>L’intubation orotrachéales</li>
+                    <li>La trachéotomie/ trachéostomie</li>
+                    <li>La sonde nasogastrique</li>
+                    <li>La sonde vésicale</li>
+                    <li>Les surveillances du drain de redon</li>
+                    <li>Les surveillances cliniques en réanimation</li>
+                    <li>La surveillance neurologique</li>
+                    <li>La surveillance respiratoire</li>
+                    <li>La ventilation non invasive VNI</li>
+                    <li>Les différents modes de ventilation</li>
+                    <li>Les différentes douleurs abdominales</li>
+                    <li>Les différentes douleurs thoraciques</li>
+                    <li>RASS</li>
+                    <li>Echelle BPS</li>
+                    <li>Score de Cushman</li>
+                    <li>L’oxygénation par membrane extra corporelle</li>
                 </ul>
                 <p class="prix">Prix :</p>
                 <ul>
-                    <li>A6 : 86 € </li>
-                    <li>A5 : 117 € </li>
+                    <li>A6 : 35 €</li>
+                    <li>A5 : 43 €</li>
                     <li>Plastifié : +10%</li>
                 </ul>
                 <section>
@@ -65,7 +98,7 @@
             </section>
         </article>
     </main>
-        <footer>
+    <footer>
         <p>Une petite note sur moi :
             J'ai été étudiante infirmière, c'est à ce moment-là que ces fiches ont été créées. La base de ces fiches
             s'est construit sur les apports théoriques vus en cours et en stage ainsi les apports que j'ai pu voir et
@@ -76,17 +109,19 @@
             puis en hospitalisation à domicile.</p>
         <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
         <div>
-            <a href="../html/conditions&mentions.html">
+            <a href="../php/conditions&mentions.php">
                 <p>Coder par Peguin Quentin</p>
             </a>
-            <a href="../html/conditions&mentions.html">
+            <a href="../php/conditions&mentions.php">
                 <p>&copy; Tout droit d'auteur réservé</p>
             </a>
-            <a href="../html/conditions&mentions.html">
+            <a href="../php/conditions&mentions.php">
                 <p>Conditions d'utilisation & Mentions légales</p>
             </a>
     </footer>
 </body>
+
+
 <script>window.addEventListener("scroll", function () {
         var header = document.querySelector("header");
         var h1 = document.querySelector("h1");
@@ -167,5 +202,4 @@
         }
     });
 </script>
-
-</html>
+</php>

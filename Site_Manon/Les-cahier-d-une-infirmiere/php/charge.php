@@ -53,17 +53,17 @@ if (isset($_POST['stripeToken'], $_POST['amount'], $_POST['Nom'], $_POST['Préno
     } catch (\Stripe\Exception\CardException $e) {
         $response = ["payment" => "error", "amount" => 0, "message" => $e->getMessage()];
 
-        header("Location: paiement_refusee.html");
+        header("Location: paiement_refusee.php");
         exit();
 
     } catch (\Exception $e) {
         $response = ["payment" => "error", "amount" => 0, "message" => $e->getMessage()];
-        header("Location: paiement_refusee.html");
+        header("Location: paiement_refusee.php");
         exit();
     }
 }
 
-header("Location: confirmation_paiement.html");
+header("Location: confirmation_paiement.php");
 exit();
 
 

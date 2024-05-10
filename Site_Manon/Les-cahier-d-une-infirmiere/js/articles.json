@@ -7,7 +7,7 @@
             "A6": 250.00,
             "A5": 290.00
         },
-        "lien": "Article-1.html",
+        "lien": "Pack_integral.php",
         "estPack": true
     },
     {
@@ -18,7 +18,7 @@
             "A6": 86.00,
             "A5": 117.00
         },
-        "lien": "Article-2.html",
+        "lien": "Pack_premiere_annee.php",
         "estPack": true
     },
     {
@@ -29,7 +29,7 @@
             "A6": 99.00,
             "A5": 130.00
         },
-        "lien": "Article-3.html",
+        "lien": "Pack_deuxieme_annee.php",
         "estPack": true
     },
     {
@@ -40,7 +40,7 @@
             "A6": 69.00,
             "A5": 96.00
         },
-        "lien": "Article-4.html",
+        "lien": "Pack_troisieme_annee.php",
         "estPack": true
     },
     {
@@ -51,7 +51,7 @@
             "A6": 69.00,
             "A5": 92.00
         },
-        "lien": "Article-5.html",
+        "lien": "Pack_semestre_1.php",
         "estPack": true
     },
     {
@@ -62,7 +62,7 @@
             "A6": 71.00,
             "A5": 86.00
         },
-        "lien": "Article-6.html",
+        "lien": "Pack_semestre_3.php",
         "estPack": true
     },
     {
@@ -73,7 +73,7 @@
             "A6": 35.00,
             "A5": 43.00
         },
-        "lien": "Article-7.html",
+        "lien": "Soins_infirmier.php",
         "estPack": false
     },
     {
@@ -84,7 +84,7 @@
             "A6": 30.00,
             "A5": 38.00
         },
-        "lien": "Article-8.html",
+        "lien": "Cycle_de_la_vie_et_de_la_grande_fonction.php",
         "estPack": false
     },
     {
@@ -95,7 +95,7 @@
             "A6": 20.00,
             "A5": 28.00
         },
-        "lien": "Article-9.html",
+        "lien": "Biologie_fondamental.php",
         "estPack": false
     },
     {
@@ -106,7 +106,7 @@
             "A6": 23.00,
             "A5": 31.00
         },
-        "lien": "Article-10.html",
+        "lien": "Processus_traumatique.php",
         "estPack": false
     },
     {
@@ -117,7 +117,7 @@
             "A6": 38.00,
             "A5": 30.00
         },
-        "lien": "Article-11.html",
+        "lien": "Processus_psychopathologique_S2.php",
         "estPack": false
     },
     {
@@ -128,7 +128,7 @@
             "A6": 26.00,
             "A5": 18.00
         },
-        "lien": "Article-12.html",
+        "lien": "Processus_psychopathologique_S5.php",
         "estPack": false
     },
     {
@@ -139,7 +139,7 @@
             "A6": 17.00,
             "A5": 25.00
         },
-        "lien": "Article-13.html",
+        "lien": "Processus_obstructif.php",
         "estPack": false
     },
     {
@@ -150,7 +150,7 @@
             "A6": 38.00,
             "A5": 46.00
         },
-        "lien": "Article-14.html",
+        "lien": "Processus_infectieux.php",
         "estPack": false
     },
     {
@@ -161,7 +161,7 @@
             "A6": 30.00,
             "A5": 38.00
         },
-        "lien": "Article-15.html",
+        "lien": "Processus_degeneratif.php",
         "estPack": false
     },
     {
@@ -172,7 +172,7 @@
             "A6": 35.00,
             "A5": 43.00
         },
-        "lien": "Article-16.html",
+        "lien": "Processus_tumoraux.php",
         "estPack": false
     }
 ]
