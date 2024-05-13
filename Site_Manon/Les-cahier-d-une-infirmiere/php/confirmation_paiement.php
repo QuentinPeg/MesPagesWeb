@@ -1,4 +1,5 @@
-<?php include 'header.php'; ?>
+<?php include 'header.php';
+session_abort(); ?>
 <link rel="stylesheet" href="../css/paiement.css">
 <title>Les cahiers d'une infirmière</title>
 

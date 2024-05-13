@@ -16,7 +16,7 @@ $dotenv->load();
 
 $response = ["payment" => "error", "amount" => 0];
 
-if (isset($_POST['stripeToken'], $_POST['amount'], $_POST['Nom'], $_POST['Prénom'], $_POST['Email'], $_POST['numero'], $_POST['Adresse'], $_POST['Code_Postale'])) {
+if (isset($_POST['stripeToken'], $_POST['amount'], $_POST['Nom'], $_POST['Prénom'], $_POST['Email'], $_POST['numero'], $_POST['Adresse'], $_POST['Code_Postale'], $_POST['Ville'])) {
     $token = $_POST['stripeToken'];
     $amount = $_POST['amount'];
     $Nom = $_POST['Nom'];
@@ -25,6 +25,7 @@ if (isset($_POST['stripeToken'], $_POST['amount'], $_POST['Nom'], $_POST['Préno
     $numero = $_POST['numero'];
     $Adresse = $_POST['Adresse'];
     $Code_Postale = $_POST['Code_Postale'];
+    $Ville = $_POST['Ville'];
 
     $amount = $amount * 100;
 
@@ -43,6 +44,7 @@ if (isset($_POST['stripeToken'], $_POST['amount'], $_POST['Nom'], $_POST['Préno
                 'numero' => $numero,
                 'Adresse' => $Adresse,
                 'Code_Postale' => $Code_Postale,
+                'Ville'=> $Ville,
                 'Prix de la commande' => $amount / 100 . ' euros',
             ]
         ]);
@@ -65,5 +67,3 @@ if (isset($_POST['stripeToken'], $_POST['amount'], $_POST['Nom'], $_POST['Préno
 
 header("Location: confirmation_paiement.html");
 exit();
-
-

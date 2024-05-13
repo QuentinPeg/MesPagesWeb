@@ -7,7 +7,7 @@ function AboutUsPage() {
         <div className='aboutUs bg-pink-50 dark:bg-gray-800 py-32 w-full flex items-center flex-col'>
             <div className='w-10/12'>
                 <section className="pb-8 flex flex-wrap justify-evenly align-middle gap-10" >
-                    <ResultatLOL pageUrl={"https://lol.fandom.com/wiki/LEC/2024_Season/Spring_Season"}/>
+                    <ResultatLOL pageUrl={"https://stats.sheepesports.com/league/lec/2024/spring"}/>
                 </section>
             </div>
         </div>

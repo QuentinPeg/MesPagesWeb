@@ -27,6 +27,8 @@ function fermerPanierSiClicExterieur(e) {
     }
 }
 
+
+
 function ajouterAuPanier(nomArticle, format = 'A5', plastifie = 'Non') {
     var panierListe = document.getElementById('panier-liste');
     var articleExistant = panier.find(article => article.nom === nomArticle && article.format === format && article.plastifie === plastifie);
@@ -82,7 +84,6 @@ function ajouterElementAuPanier(article) {
     panierListe.appendChild(nouvelArticle);
 }
 
-
 function mettreAJourQuantiteArticle(article) {
     var panierListe = document.getElementById('panier-liste');
     var elementsArticles = panierListe.getElementsByTagName('li');
@@ -100,6 +101,7 @@ function mettreAJourQuantiteArticle(article) {
 }
 
 function supprimerArticle(event, boutonSupprimer) {
+    console.log("je tente de supprimer l'article")
     var panierListe = document.getElementById('panier-liste');
     var elementASupprimer = boutonSupprimer.parentNode;
 

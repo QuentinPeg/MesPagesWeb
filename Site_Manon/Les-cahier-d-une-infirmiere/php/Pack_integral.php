@@ -31,11 +31,14 @@
             <p>Ce pack regroupe :</p>
             <ul>
                 <li><a href="../php/Soins_infirmier.php">Soins infirmier</a></li>
-                <li><a href="../php/Cycle_de_la_vie_et_de_la_grande_fonction.php">Cycle de la vie et grande fonction</a></li>
+                <li><a href="../php/Cycle_de_la_vie_et_de_la_grande_fonction.php">Cycle de la vie et grande fonction</a>
+                </li>
                 <li><a href="../php/Biologie_fondamental.php">Biologie fondamental</a></li>
                 <li><a href="../php/Processus_traumatique.php">Processus traumatique</a></li>
-                <li><a href="../php/Processus_psychopathologique_S2.php">Processus psychopathologiques semestre 2</a></li>
-                <li><a href="../php/Processus_psychopathologique_S5.php">Processus psychopathologiques semestre 5</a></li>
+                <li><a href="../php/Processus_psychopathologique_S2.php">Processus psychopathologiques semestre 2</a>
+                </li>
+                <li><a href="../php/Processus_psychopathologique_S5.php">Processus psychopathologiques semestre 5</a>
+                </li>
                 <li><a href="../php/Processus_obstructif.php">Processus obstructif</a></li>
                 <li><a href="../php/Processus_infectieux.php">Processus infectieux</a></li>
                 <li><a href="../php/Processus_degeneratif.php">Processus dégénératif</a></li>

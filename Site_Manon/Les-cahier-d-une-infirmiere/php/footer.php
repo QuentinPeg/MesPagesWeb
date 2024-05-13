@@ -1,4 +1,4 @@
-<!-- Fenêtre flottante du panier -->
+<!-- Fenêtre flottante du panier 
 <div class="panier-fenetre" id="panier-fenetre" style="display: none;">
     <div class="panier">
         <h2>Votre Panier</h2>
@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<!-- Fenêtre flottante de précommande -->
+ /*Fenêtre flottante de précommande */
 <div class="precommande-fenetre" id="precommande-fenetre">
     <div class="precommande-contenu">
         <span class="precommande-fermer" onclick="fermerPrecommande()">&times;</span>
@@ -88,6 +88,10 @@
 
     </div>
 </div>
+-->
+
+<!-- Fenêtre flottante du panier -->
+<?php include 'panier.php'; ?>
 
 </main>
 

@@ -6,7 +6,7 @@ import 'flowbite-react'; // Import the flowbite css
 
 function App() {
   return (
-    <main className='bg-gray-50 dark:bg-gray-800'>
+    <main className='bg-gray-50 dark:bg-gray-800 min-h-screen'>
       <Router>
         <Navbar />
         <Routes>
