@@ -27,8 +27,6 @@ function fermerPanierSiClicExterieur(e) {
     }
 }
 
-
-
 function ajouterAuPanier(nomArticle, format = 'A5', plastifie = 'Non') {
     var panierListe = document.getElementById('panier-liste');
     var articleExistant = panier.find(article => article.nom === nomArticle && article.format === format && article.plastifie === plastifie);
@@ -176,11 +174,6 @@ function supprimerArticle(event, boutonSupprimer) {
     afficherRecapArticles();
 }
 
-
-
-
-
-
 function masquerPanier() {
     var panierFenetre = document.getElementById('panier-fenetre');
     panierFenetre.style.display = 'none';
@@ -282,7 +275,3 @@ function validerOuverturePreco() {
     return true; // Si tout est valide, retourner true
 
 }
-
-
-
-

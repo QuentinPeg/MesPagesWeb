@@ -106,7 +106,7 @@ Adresse : ${adresse}, ${codePostale},${ville}
 
   emailjs.send(serviceID, templateID, parms)
     .then(res => {
-      alert("Précommande envoyé !\n Nous vous recontacteront sous 3 jours \n (envoi de la commande en moins d'une semaine)");
+      alert("Précommande envoyé !\n La nous vous recontacteront sous 3 jours \n (envoi de la commande en moins d'une semaine)");
     })
     .catch(error => {
       alert("Une erreur est survenu lors de l'envoi du mail de la précommande,\n Veuillez nous excuser, si le paiement a bien été confirmé, veuillez nous contacter pour confirmer la commande. \n > Page Contact > :", error);
