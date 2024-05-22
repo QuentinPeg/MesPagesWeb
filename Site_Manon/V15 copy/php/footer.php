@@ -90,38 +90,38 @@
 </div>
 
 <div id="cartModal" class="cartModal"
-        style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black;">
-        <ul id="cartContent">
-            <!-- Le contenu du panier sera inséré ici -->
-        </ul>
+    style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black;">
+    <ul id="cartContent">
+        <!-- Le contenu du panier sera inséré ici -->
+    </ul>
 
 
-<button onclick="hideCart()">Fermer</button>
-    </div>
+    <button onclick="hideCart()">Fermer</button>
+</div>
 
-    <script>
-        function showCart() {
-            var modal = document.getElementById('cartModal');
-            modal.style.display = 'flex';
-            // Récupérer le contenu du panier et l'afficher dans la fenêtre modale
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        document.getElementById('cartContent').innerHTML = xhr.responseText;
-                    } else {
-                        console.error('Erreur de chargement du contenu du panier');
-                    }
+<script>
+    function showCart() {
+        var modal = document.getElementById('cartModal');
+        modal.style.display = 'flex';
+        // Récupérer le contenu du panier et l'afficher dans la fenêtre modale
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.getElementById('cartContent').innerHTML = xhr.responseText;
+                } else {
+                    console.error('Erreur de chargement du contenu du panier');
                 }
-            };
-            xhr.open('GET', 'afficher_panier.php', true);
-            xhr.send();
-        }
+            }
+        };
+        xhr.open('GET', 'afficher_panier.php', true);
+        xhr.send();
+    }
 
-        function hideCart() {
-            document.getElementById('cartModal').style.display = 'none';
-        }
-    </script>
+    function hideCart() {
+        document.getElementById('cartModal').style.display = 'none';
+    }
+</script>
 </main>
 <footer>
     <p>Une petite note sur moi :
@@ -189,7 +189,7 @@
 <script>
     var carousel = document.getElementById('carousel');
     var scrollAmount = 0;
-    var scrollTime = 10000; // Temps de défilement en millisecondes
+    var scrollTime = 20000; // Temps de défilement en millisecondes
 
     function rotateImages() {
         scrollAmount++;
@@ -230,8 +230,6 @@
     setInterval(rotateImages, scrollTime);
 </script>
 
-
-
 <script>
     // Attendre que le contenu de la page soit chargé
     document.addEventListener("DOMContentLoaded", function () {
@@ -247,50 +245,51 @@
         }
     });
 </script>
+
 <script>
-        function afficherPrecommande() {
-            if (!validerOuverturePreco()) {
-                return;
-            }
-
-            var precommandeFenetre = document.getElementById('precommande-fenetre');
-            var panierFenetre = document.getElementById('panier-fenetre');
-
-            // Masquer la fenêtre du panier
-            panierFenetre.style.display = 'none';
-
-            // Afficher la fenêtre de précommande
-            precommandeFenetre.style.display = 'flex';
-
-            // Réinitialiser le récapitulatif des articles
-            afficherRecapArticles();
+    function afficherPrecommande() {
+        if (!validerOuverturePreco()) {
+            return;
         }
 
-        function validerOuverturePreco() {
-            var elementsRecap = document.querySelectorAll('#recap-articles p');
-            var totalQuantite = 0;
+        var precommandeFenetre = document.getElementById('precommande-fenetre');
+        var panierFenetre = document.getElementById('panier-fenetre');
 
-            if (elementsRecap.length === 0) {
-                alert('Votre panier est vide. Veuillez ajouter des articles.');
-                return false;
-            }
+        // Masquer la fenêtre du panier
+        panierFenetre.style.display = 'none';
 
-            for (var i = 0; i < panier.length; i++) {
-                totalQuantite += panier[i].quantite;
-            }
+        // Afficher la fenêtre de précommande
+        precommandeFenetre.style.display = 'flex';
 
-            if (totalQuantite > 10) {
-                alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
-                return false;
-            }
+        // Réinitialiser le récapitulatif des articles
+        afficherRecapArticles();
+    }
 
-            return true;
+    function validerOuverturePreco() {
+        var elementsRecap = document.querySelectorAll('#recap-articles p');
+        var totalQuantite = 0;
+
+        if (elementsRecap.length === 0) {
+            alert('Votre panier est vide. Veuillez ajouter des articles.');
+            return false;
         }
 
-        function afficherRecapArticles() {
-            // Implémentation de la fonction pour réinitialiser le récapitulatif des articles
+        for (var i = 0; i < panier.length; i++) {
+            totalQuantite += panier[i].quantite;
         }
-    </script>
+
+        if (totalQuantite > 10) {
+            alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function afficherRecapArticles() {
+        // Implémentation de la fonction pour réinitialiser le récapitulatif des articles
+    }
+</script>
 
 </body>
 
