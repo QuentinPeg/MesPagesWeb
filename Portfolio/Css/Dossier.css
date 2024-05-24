@@ -62,6 +62,13 @@ article>.grpspecification {
     margin-bottom: 10px;
 }
 
+div>img {
+    margin: 0;
+    width: auto;
+    height: 150px;
+    border-radius: 50%;
+}
+
 article>a>img {
     width: calc(0.35*100vw);
     border-radius: 10px;
@@ -82,7 +89,7 @@ article>a>iframe {
 }
 
 
-.aiframe{
+.aiframe {
     height: calc(0.35* 100vh);
 }
 
@@ -148,22 +155,25 @@ article>a>iframe {
         max-width: none;
         /* Réinitialiser la largeur maximale */
     }
+
     article>a>img {
         width: calc(0.65*100vw);
         border-radius: 10px;
-    
+
     }
-    
+
     article>a {
         width: calc(0.65*100vw);
     }
-    article>ul{
+
+    article>ul {
         padding-left: 10% !important;
     }
-    .aiframe{
+
+    .aiframe {
         height: calc(0.65* 100vh);
     }
-    
+
     article>a>iframe {
         width: 100vw;
         height: 100vh;
@@ -172,4 +182,28 @@ article>a>iframe {
         transform: scale(0.65);
         pointer-events: none;
     }
+}
+
+article>.star-rating {
+    /* Taille des étoiles */
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: default;
+    color: gold;
+    /* Couleur des étoiles pleines */
+    margin: 0 5px;
+}
+
+.star.empty {
+    color: lightgray;
+    /* Couleur des étoiles vides */
 }
