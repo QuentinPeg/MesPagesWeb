@@ -16,8 +16,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 }
 
 $cart = getCart();
-?>
 
+function renderCart($cart) {
+    ob_start();
+    ?>
+    <h1>Votre panier</h1>
+    <ul>
+        <?php foreach ($cart as $productId => $quantity): ?>
+            <li>
+                Produit <?php echo $productId; ?>:
+                <form style="display:inline;">
+                    <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
+                    <button type="button" onclick="updateCart('decrement', '<?php echo $productId; ?>')">-</button>
+                    <?php echo $quantity; ?>
+                    <button type="button" onclick="updateCart('increment', '<?php echo $productId; ?>')">+</button>
+                </form>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    
+    <!-- Formulaire pour vider le panier -->
+    <button type="button" onclick="clearCart()">Vider le panier</button>
+    
+    <p><a href="index.php">Retour à la page d'accueil</a></p>
+    <p><a href="contact.php">Continuer ma commande</a></p>
+    <?php
+    return ob_get_clean();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo renderCart($cart);
+} else {
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,28 +56,7 @@ $cart = getCart();
     <title>Afficher le panier</title>
 </head>
 <body>
-    <h1>Votre panier</h1>
-    <ul>
-        <?php foreach ($cart as $productId => $quantity): ?>
-            <li>
-                Produit <?php echo $productId; ?>:
-                <form action="afficher_panier.php" method="post" style="display:inline;">
-                    <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
-                    <button type="submit" name="action" value="decrement">-</button>
-                    <?php echo $quantity; ?>
-                    <button type="submit" name="action" value="increment">+</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-    
-    <!-- Formulaire pour vider le panier -->
-    <form action="afficher_panier.php" method="post">
-        <input type="hidden" name="action" value="clear_cart">
-        <input type="submit" value="Vider le panier">
-    </form>
-    
-    <p><a href="index.php">Retour à la page d'accueil</a></p>
-    <p><a href="contact.php">Continuer ma commande</a></p>
+    <?php echo renderCart($cart); ?>
 </body>
 </html>
+<?php } ?>
