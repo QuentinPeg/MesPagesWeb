@@ -89,6 +89,12 @@ article>section>section {
     right: 10px;
 }
 
+section>a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
 /**/
 
@@ -136,7 +142,7 @@ article>section>section {
 
 .btn-retour {
     display: flex;
-    width: 100%;
+    width: fit-content;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 12px;
@@ -151,6 +157,27 @@ article>section>section {
 
 .btn-retour:hover {
     background-color: #2980b9;
+}
+
+.btn-ajouter-article {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: #7bba7f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+}
+
+.btn-ajouter-article:hover {
+    background-color: #659f69;
 }
 
 footer {

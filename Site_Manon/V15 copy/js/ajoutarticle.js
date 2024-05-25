@@ -64,7 +64,7 @@ function afficherArticles(articles, sectionId) {
         buttonadd.textContent = "Ajouter au panier";
         buttonadd.addEventListener('click', function () {
             addToCart(article.titre, 1); // Ici, 1 représente la quantité prédéfinie
-            console.log("Article ajouté au panier : " + article.titre + " (quantité : )"+ 1 );
+            
         });
         sectionbutton.appendChild(buttonadd);
 
@@ -74,16 +74,5 @@ function afficherArticles(articles, sectionId) {
     });
 }
 
-// Fonction pour ajouter un article au panier
-function addToCart(titre, quantity) {
-    // Envoyer une requête AJAX pour ajouter l'article au panier
 
-    fetch('index.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'product_title=' + titre + '&quantity=' + quantity
-    })
-}
 

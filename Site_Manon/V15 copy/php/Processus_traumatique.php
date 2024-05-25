@@ -61,7 +61,9 @@
             <section>
                 <a href="index.php"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                <button class="btn-ajouter-article"
+                    onclick="addToCart('Processus traumatique (UE 2.4 semestre 1)', 1)">Ajouter au
+                    panier</button>
             </section>
         </section>
     </article>

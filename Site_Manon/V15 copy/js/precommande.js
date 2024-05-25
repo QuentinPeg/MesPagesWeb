@@ -110,7 +110,6 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
     return selectFormat;
 }
 
-
 function createOption(value, text, selectedValue) {
     var option = document.createElement('option');
     option.setAttribute('value', value);
@@ -120,8 +119,6 @@ function createOption(value, text, selectedValue) {
     }
     return option;
 }
-
-
 
 function calculerTotal() {
     var total = 0;
@@ -157,8 +154,6 @@ function calculerTotal() {
     document.getElementById('amount').value = total;
     document.getElementById("prixTotal").textContent = formaterPrix(total);
 }
-
-
 
 // Fonction pour formater le prix avec une virgule si nécessaire
 function formaterPrix(prix) {
@@ -234,7 +229,6 @@ var articlesPrix = {
     },
 };
 
-
 function obtenirPrixArticle(nomArticle, format) {
     var prix = 0;
 
@@ -307,4 +301,123 @@ function getPrixPanier() {
     }
 
     return total + ' €';
+}
+// Fonction pour ajouter un article au panier
+function addToCart(titre, quantity) {
+    // Envoyer une requête AJAX pour ajouter l'article au panier
+
+    fetch('index.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'product_title=' + titre + '&quantity=' + quantity
+    })
+    mettreAJourNombreArticlesPanier(); // Mettre à jour le nombre d'articles dans la bulle du panier
+}
+
+// Mettre à jour le nombre d'articles dans la bulle du panier dans l'en-tête
+function mettreAJourNombreArticlesPanier() {
+    var bullePanier = document.getElementById('panier-bulle');
+    var totalQuantity = 0;
+    var items = document.querySelectorAll('.panier-fenetre li');
+
+    items.forEach(item => {
+        // Trouver le texte dans chaque élément de la liste
+        var text = item.textContent;
+        // Utiliser une expression régulière pour extraire les nombres après les ':'
+        var match = text.match(/(\d+)/);
+        // Si une correspondance est trouvée, ajouter la quantité à la quantité totale
+        if (match && match[1]) {
+            totalQuantity += parseInt(match[1]);
+            console.log(totalQuantity);
+        }
+    });
+
+    // Mettre à jour le contenu de la bulle avec le nombre total d'articles
+    bullePanier.textContent = totalQuantity;
+
+    // Afficher ou masquer la bulle en fonction du nombre d'articles
+    bullePanier.style.display = totalQuantity > 0 ? 'flex' : 'none';
+}
+
+// Fonction pour mettre à jour le nombre d'articles dans la bulle de l'en-tête
+function updateCartQuantityHeader() {
+    fetch('afficher_panier.php')
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const items = doc.querySelectorAll('li');
+            let totalQuantity = 0;
+            items.forEach(item => {
+                // Trouver le texte dans chaque élément de la liste
+                const text = item.textContent;
+                // Utiliser une expression régulière pour extraire les nombres après les ':'
+                const match = text.match(/:\s*(\d+)/);
+                // Si une correspondance est trouvée, ajouter la quantité à la quantité totale
+                if (match && match[1]) {
+                    totalQuantity += parseInt(match[1]);
+                }
+            });
+
+            document.getElementById('panier-bulle').textContent = totalQuantity;
+            mettreAJourNombreArticlesPanier(); // Mettre à jour l'affichage de la bulle
+        })
+        .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
+}
+
+// Mettre à jour le nombre d'articles dans la bulle de l'en-tête au chargement de la page
+window.addEventListener('load', mettreAJourNombreArticlesPanier());
+
+// Mettre à jour le nombre d'articles dans la bulle de l'en-tête lorsqu'un article est ajouté ou supprimé
+document.addEventListener('DOMContentLoaded', updateCartQuantityHeader);
+
+function afficherPrecommande() {
+
+    // Valider l'ouverture de la précommande
+    if (!validerOuverturePreco()) {
+        return; // Si la validation échoue, ne pas continuer
+    }
+
+    var precommandeFenetre = document.getElementById('precommande-fenetre');
+    var panierFenetre = document.getElementById('panier-fenetre');
+
+    // Masquer la fenêtre du panier
+    masquerPanier();
+
+    // Afficher la fenêtre de précommande
+    precommandeFenetre.style.display = 'flex';
+
+    // Réinitialiser le récapitulatif des articles
+    afficherRecapArticles();
+
+}
+
+function validerOuverturePreco() {
+
+    // Obtenez les éléments de récapitulatif des articles
+    var elementsRecap = document.querySelectorAll('#recap-articles p');
+    var totalQuantite = 0;
+
+
+    // Vérifiez s'il y a des éléments dans le panier
+    if (elementsRecap.length === 0) {
+        alert('Votre panier est vide. Veuillez ajouter des articles.');
+        return false;
+    }
+
+    // Parcourez le panier pour calculer la somme des quantités
+    for (var i = 0; i < panier.length; i++) {
+        totalQuantite += panier[i].quantite;
+    }
+
+    // Vérifiez si la somme des quantités dépasse 10
+    if (totalQuantite > 10) {
+        alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
+        return false;
+    }
+
+    return true; // Si tout est valide, retourner true
+
 }

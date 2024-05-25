@@ -25,10 +25,12 @@
             <p>Ce pack regroupe :</p>
             <ul>
                 <li><a href="../php/Soins_infirmier.php">Soins infirmier</a></li>
-                <li><a href="../php/Cycle_de_la_vie_et_de_la_grande_fonction.php">Cycle de la vie et grande fonction</a></li>
+                <li><a href="../php/Cycle_de_la_vie_et_de_la_grande_fonction.php">Cycle de la vie et grande fonction</a>
+                </li>
                 <li><a href="../php/Biologie_fondamental.php">Biologie fondamental</a></li>
                 <li><a href="../php/Processus_traumatique.php">Processus traumatique</a></li>
-                <li><a href="../php/Processus_psychopathologique_S2.php">Processus psychopathologiques semestre 2</a></li>
+                <li><a href="../php/Processus_psychopathologique_S2.php">Processus psychopathologiques semestre 2</a>
+                </li>
             </ul>
             <p class="prix">Prix :</p>
             <ul>
@@ -39,7 +41,8 @@
             <section>
                 <a href="index.php"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                <button class="btn-ajouter-article" onclick="addToCart('Pack Première Année', 1)">Ajouter au
+                    panier</button>
             </section>
         </section>
     </article>
