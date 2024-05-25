@@ -636,3 +636,27 @@ footer>div>span>img {
     list-style-type: disc;
 
 }
+
+ul {
+    padding-left: 0;
+}
+
+/* Styling pour les boutons + et - */
+.btn-quantite {
+    background-color: var(--header-bg-color); /* Couleur de fond */
+    border: #000 solid 1px;
+    color: black; /* Couleur du texte */
+    padding: 8px 12px; /* Remplissage du bouton */
+    text-align: center; /* Alignement du texte */
+    text-decoration: none; /* Pas de décoration de texte */
+    display: inline-block; /* Affichage en ligne */
+    font-size: 16px; /* Taille de la police */
+    margin: 4px 2px; /* Marge autour du bouton */
+    cursor: pointer; /* Curseur pointeur */
+    border-radius: 4px; /* Bordure arrondie */
+}
+
+/* Styling pour les boutons + et - au survol */
+.btn-quantite:hover {
+    background-color: var(--main-bg-color); /* Couleur de fond au survol */
+}
