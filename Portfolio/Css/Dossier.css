@@ -207,3 +207,10 @@ article>.star-rating {
     color: lightgray;
     /* Couleur des étoiles vides */
 }
+
+
+.obligatoire{
+    color: gray;
+    font-style: italic;
+    height: fit-content;
+}

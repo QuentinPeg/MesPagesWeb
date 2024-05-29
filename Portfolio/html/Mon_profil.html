@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../Images/Icon-page.png">
-    <title>Portfolio | Peguin Quentin</title>
+    <title>Portfolio | Quentin Peguin</title>
     <link rel="stylesheet" href="../Css/Dossier.css">
     <link rel="stylesheet" href="../Css/header_footer_nav.css">
-
 </head>
 
 <body>
@@ -32,7 +31,7 @@
         </div>
         <br>
         <div class="contenu-nav">
-            <a href="../html/Projets_famillaux.html"> Projets familiaux </a>
+            <a href="../html/Projets_familiaux.html"> Projets familiaux </a>
         </div>
         <br>
         <div class="contenu-nav">
@@ -50,32 +49,14 @@
             <div>
                 <img src="../Images/photoprofil.jpeg" alt="Photo de profil">
             </div>
-            <p>Je m'appelle Quentin Peguin, j'ai 19ans et je suis en BUT informatique a Grenoble</p>
-            <p>Ce portfolio a été conçu dans le but de rassembler mes différent projet informatique. Que j'ai pu
-                réaliser
-                avec l'IUT mais aussi en dehors pendant mon temps personnel. Pendant mon parcours j'ai pu apprendre a
-                coder des pages internet, choses qui ne m'intéressait pas avant. J'ai pu apprendre a coder en HTML, CSS,
-                JS et un peu en PHP. Ce qui m'a permit de faire des pages internet notamment mon plus gros projets un
-                site pour ma soeur.
-            </p>
+            <p>Je m'appelle Quentin Peguin, j'ai 19 ans et je suis en BUT informatique à Grenoble.</p>
+            <p>Ce portfolio a été conçu dans le but de rassembler mes différents projets informatiques. J'ai pu réaliser ces projets avec l'IUT mais aussi en dehors, pendant mon temps personnel. Pendant mon parcours, j'ai appris à coder des pages internet, ce qui ne m'intéressait pas avant. J'ai appris à coder en HTML, CSS, JS et un peu en PHP. Cela m'a permis de créer des pages internet, notamment mon plus gros projet, un site pour ma sœur.</p>
         </article>
         <article>
-            <h2>
-                Mes compétences
-            </h2>
-            <div class="star-rating">
-                <h3>Html :</h3>
-                <div class="stars" data-rating="3">
-                    <span class="star full">&#9733;</span>
-                    <span class="star full">&#9733;</span>
-                    <span class="star full">&#9733;</span>
-                    <span class="star empty">&#9734;</span>
-                    <span class="star empty">&#9734;</span>
-                </div>
-            </div>
+            <h2>Mes compétences</h2>
             <div class="star-rating">
                 <h3>HTML :</h3>
-                <div class="stars" data-rating="3">
+                <div class="stars" data-rating="4">
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
@@ -85,7 +66,7 @@
             </div>
             <div class="star-rating">
                 <h3>CSS :</h3>
-                <div class="stars" data-rating="3">
+                <div class="stars" data-rating="4">
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
@@ -95,7 +76,7 @@
             </div>
             <div class="star-rating">
                 <h3>JS :</h3>
-                <div class="stars" data-rating="3">
+                <div class="stars" data-rating="2">
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
                     <span class="star empty">&#9734;</span>
@@ -105,7 +86,7 @@
             </div>
             <div class="star-rating">
                 <h3>PHP :</h3>
-                <div class="stars" data-rating="3">
+                <div class="stars" data-rating="2">
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
                     <span class="star empty">&#9734;</span>
@@ -115,7 +96,7 @@
             </div>
             <div class="star-rating">
                 <h3>JAVA :</h3>
-                <div class="stars" data-rating="3">
+                <div class="stars" data-rating="2">
                     <span class="star full">&#9733;</span>
                     <span class="star full">&#9733;</span>
                     <span class="star empty">&#9734;</span>
@@ -126,44 +107,43 @@
         </article>
         <div class="container">
             <h2>Me contacter</h2>
+            <span class="obligatoire">Les champs avec * sont obligatoires pour envoyer un message. <br><br></span>
             <form method="POST">
                 <div class="form-group">
                     <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" required>
+                    <input type="text" id="nom" name="nom" placeholder="Nom*" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email :</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="Email*" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Message :</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <textarea id="message" name="message" placeholder="Message*" required></textarea>
                 </div>
                 <button type="submit">Envoyer</button>
             </form>
         </div>
     </main>
     <footer>
-        <p>
-            &copy; Mon Portfolio
-        </p>
+        <p>&copy; Mon Portfolio</p>
     </footer>
-</body>
-<script src="../js/navbar.js"></script>
-<script>
-    // Attendre que le contenu de la page soit chargé
-    document.addEventListener("DOMContentLoaded", function () {
-        // Sélectionner la div à supprimer en utilisant un sélecteur CSS
-        var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
+    <script src="../js/navbar.js"></script>
+    <script>
+        // Attendre que le contenu de la page soit chargé
+        document.addEventListener("DOMContentLoaded", function () {
+            // Sélectionner la div à supprimer en utilisant un sélecteur CSS
+            var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
 
-        // Vérifier si la div existe
-        if (divASupprimer) {
-            // Supprimer la div
-            divASupprimer.parentNode.removeChild(divASupprimer);
-        } else {
-            console.log("La div spécifiée n'existe pas.");
-        }
-    });
-</script>
+            // Vérifier si la div existe
+            if (divASupprimer) {
+                // Supprimer la div
+                divASupprimer.parentNode.removeChild(divASupprimer);
+            } else {
+                console.log("La div spécifiée n'existe pas.");
+            }
+        });
+    </script>
+</body>
 
 </html>

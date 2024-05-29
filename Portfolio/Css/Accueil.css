@@ -1,14 +1,26 @@
 /* Background */
+
+
+html,
 body {
-    background-image: url(../Images/background_cloud.jpg);
-    background-size: cover;
+    height: 100%;
     margin: 0;
     overflow-x: hidden;
+    /* Évite la barre de défilement horizontale */
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-image: url(../Images/background_cloud.jpg);
+    background-size: cover;
+}
+
 
 /* MAIN */
 
 main {
+    flex: 1;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -249,13 +261,14 @@ button:hover {
         height: auto;
     }
 
-    
-    .contient-ligne1, .contient-ligne2{
+
+    .contient-ligne1,
+    .contient-ligne2 {
         display: flex;
         flex-direction: row;
         gap: 30px;
         opacity: 1;
-        
+
     }
 
 }
