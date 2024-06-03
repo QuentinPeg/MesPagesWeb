@@ -14,15 +14,17 @@
     <header>
         <section>
             <h1>Mon portfolio</h1>
-            <p>En tant que jeune étudiant en informatique, je consacre mon temps au développement de projets personnels
-                et professionnels dans le but de m'enrichir culturellement. Passionné par l'informatique et les données,
-                mon ambition est de créer de nombreux sites web ! Mon objectif professionnel est de travailler dans les
-                domaines de la cybersécurité ou des réseaux. Le thème de mon site web tourne autour des nuages et des
-                enveloppes, symbolisant ainsi le cloud.</p>
+            <p>Jeune étudiant en informatique, je consacre une grande partie de mon temps au développement de projets
+                personnels
+                et professionnels dans le but d'enrichir mes compétences. Passionné par l'informatique et le réseau,
+                mon objectif professionnel est de travailler dans le
+                domaine de la cybersécurité ou du réseau. En créant et maintenant quelque sites web.</p>
+            <p>Le thème de mon site web tourne autour des nuages et des
+                enveloppes, symbolisant ainsi le cloud et la transmission de données.</p>
         </section>
         <div>
             <img src="../Images/photoprofil.jpeg" alt="Photo de profil">
-            <p>Quentin Peguin<br> 19 ans</p>
+            <p>Quentin Peguin<br> <span id="age"></span> ans</p>
         </div>
         <!-- Bouton pour le menu hamburger -->
         <input type="checkbox" id="menu-toggle">
@@ -48,7 +50,7 @@
         </div>
         <br>
         <div class="contenu-nav">
-            <a href="../html/Mon_Profil.html">Profil & Contact</a>
+            <a href="../html/Mon_profil.html">Profil & Contact</a>
         </div>
     </nav>
 
@@ -112,7 +114,7 @@
                 </a>
             </div>
             <div class="article">
-                <a href="Mon_Profil.html">
+                <a href="Mon_profil.html">
                     <div class="testconteneur">
                         <div class="image-container"></div>
                         <section>
@@ -133,24 +135,43 @@
     </main>
 
     <footer>
-        <p>&copy; Mon Portfolio</p>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>À propos</h3>
+                <p>Quentin Peguin, étudiant en informatique passionné par le développement web, la cybersécurité et les
+                    réseaux.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../html/Accueil.html">Accueil</a></li>
+                    <li><a href="../html/Projets_Academiques.html">Projets Académiques</a></li>
+                    <li><a href="../html/Projets_Familiaux.html">Projets Familiaux</a></li>
+                    <li><a href="../html/Mes_Pages_Personnelles.html">Mes Pages Personnelles</a></li>
+                    <li><a href="../html/Mon_profil.html">Profil & Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h3>Contact</h3>
+                <p>Rendez-vous sur la page : <a class="liennoir" href="../html/Mon_profil.html">Profil & Contact</a>
+                </p>
+                <p>ou</p>
+                <p>Email: <a class="liennoir"
+                        onclick="copyEmail()">quentin.peguin&#64;etu&#46;univ-grenoble-alpes.fr</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Quentin Peguin | Tous droits réservés</p>
+        </div>
     </footer>
-    <script src="../js/navbar.js"></script>
-    <script>
-        // Attendre que le contenu de la page soit chargé
-        document.addEventListener("DOMContentLoaded", function () {
-            // Sélectionner la div à supprimer en utilisant un sélecteur CSS
-            var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
 
-            // Vérifier si la div existe
-            if (divASupprimer) {
-                // Supprimer la div
-                divASupprimer.parentNode.removeChild(divASupprimer);
-            } else {
-                console.log("La div spécifiée n'existe pas.");
-            }
-        });
-    </script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/email.js"></script>
+    <script src="../js/age.js"></script>
+    <script src="../js/webhost.js"></script>
+
+
 </body>
 
 </html>
