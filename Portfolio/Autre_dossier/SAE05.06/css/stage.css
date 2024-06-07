@@ -1,0 +1,172 @@
+main {
+    background-image: url("../img/fond-hardis.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-size: 16px;
+}
+
+main>div>article {
+    width: 100%;
+    height: auto;
+    padding: 0px 20px 5px 20px;
+    background-color: white;
+}
+
+h1 {
+    margin: 0;
+    font-size: 65px;
+
+}
+
+#emailhardis {
+    text-decoration: underline;
+    cursor: text;
+
+}
+
+main>div>img {
+    width: 500px;
+    height: 340px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    padding-bottom: 100px;
+}
+
+main>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+    width: 90%;
+    transition: 400ms;
+}
+
+main>div:hover {
+    transform: scale(1.01);
+    box-shadow: 4px 5px 1px black;
+}
+
+h4 {
+    text-decoration: underline;
+}
+
+.lire-suite-checkbox {
+    display: none;
+}
+
+.lire-suite-label {
+    color: gray;
+    background-color: white;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 15px;
+}
+
+.lire-suite-label .label-text:after {
+    content: "Lire la suite";
+}
+
+.lire-suite-checkbox:checked~.lire-suite-label .label-text:after {
+    content: "Réduire";
+}
+
+.lire-suite-label:hover {
+    text-decoration: underline;
+}
+
+.lire-suite-checkbox:checked~.suite {
+    display: block;
+}
+
+.suite {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.lire-suite-checkbox:checked~.suite {
+    max-height: 1000px;
+    transition: max-height 0.5s ease-in;
+}
+
+.formulaire {
+    background-image: url("../img/fond-hardis.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.formulaire fieldset {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.formulaire form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form div textarea {
+    flex-grow: 1;
+    max-width: 200px;
+    max-height: 300px;
+}
+
+.formulaire form p>input {
+    width: 100%;
+}
+
+.formulaire form p {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.formulaire form div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 1000px) {
+    main div {
+        flex-wrap: wrap;
+    }
+
+    main>div {
+        justify-content: center;
+    }
+
+    main>.Div2 {
+        flex-direction: column-reverse;
+    }
+
+    main>div>img {
+        width: 80%;
+        height: auto;
+    }
+
+    main {
+        height: auto;
+        padding-bottom: 100px;
+    }
+
+    h1 {
+        font-size: 60px;
+    }
+
+}
