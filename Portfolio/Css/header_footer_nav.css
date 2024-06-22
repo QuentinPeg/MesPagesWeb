@@ -32,6 +32,9 @@ header>div>img {
     height: 150px;
     border-radius: 50%;
 }
+.souligne{
+    text-decoration: underline;
+}
 
 header>section {
     display: flex;
