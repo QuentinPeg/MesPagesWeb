@@ -1,9 +1,25 @@
-function fermerPrecommande() {
-    var precommandeFenetre = document.getElementById('precommande-fenetre');
+document.addEventListener('DOMContentLoaded', function() {
+    // Écouteur de clic sur le document
+    document.addEventListener('click', function(event) {
+        const panierLink = document.querySelector('.panier-link');
+        const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
 
-    // Masquer la fenêtre de précommande
-    precommandeFenetre.style.display = 'none';
-}
+        // Vérifie si l'élément cliqué est le panier ou un enfant du panier
+        if (!panierLink.contains(event.target) && !panier.contains(event.target)) {
+            // Code pour fermer le panier
+            panier.style.display = 'none';
+        }
+    });
+
+    // Écouteur de clic spécifique pour l'image du panier pour ouvrir le panier
+    const panierLink = document.querySelector('.panier-link');
+    panierLink.addEventListener('click', function(event) {
+        const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
+        // Code pour ouvrir le panier
+        panier.style.display = 'block';
+        event.stopPropagation(); // Empêche l'événement de se propager au document
+    });
+});
 
 function afficherRecapArticles() {
     var recapArticlesDiv = document.getElementById('recap-articles');
@@ -316,33 +332,11 @@ function addToCart(titre, quantity) {
     mettreAJourNombreArticlesPanier(); // Mettre à jour le nombre d'articles dans la bulle du panier
 }
 
-// Mettre à jour le nombre d'articles dans la bulle du panier dans l'en-tête
+
 function mettreAJourNombreArticlesPanier() {
+    console.log("Mettre à jour le nombre d'articles dans la bulle du panier");
     var bullePanier = document.getElementById('panier-bulle');
-    var totalQuantity = 0;
-    var items = document.querySelectorAll('.panier-fenetre li');
-
-    items.forEach(item => {
-        // Trouver le texte dans chaque élément de la liste
-        var text = item.textContent;
-        // Utiliser une expression régulière pour extraire les nombres après les ':'
-        var match = text.match(/(\d+)/);
-        // Si une correspondance est trouvée, ajouter la quantité à la quantité totale
-        if (match && match[1]) {
-            totalQuantity += parseInt(match[1]);
-            console.log(totalQuantity);
-        }
-    });
-
-    // Mettre à jour le contenu de la bulle avec le nombre total d'articles
-    bullePanier.textContent = totalQuantity;
-
-    // Afficher ou masquer la bulle en fonction du nombre d'articles
-    bullePanier.style.display = totalQuantity > 0 ? 'flex' : 'none';
-}
-
-// Fonction pour mettre à jour le nombre d'articles dans la bulle de l'en-tête
-function updateCartQuantityHeader() {
+    
     fetch('afficher_panier.php')
         .then(response => response.text())
         .then(data => {
@@ -350,28 +344,35 @@ function updateCartQuantityHeader() {
             const doc = parser.parseFromString(data, 'text/html');
             const items = doc.querySelectorAll('li');
             let totalQuantity = 0;
-            items.forEach(item => {
-                // Trouver le texte dans chaque élément de la liste
-                const text = item.textContent;
-                // Utiliser une expression régulière pour extraire les nombres après les ':'
-                const match = text.match(/:\s*(\d+)/);
-                // Si une correspondance est trouvée, ajouter la quantité à la quantité totale
-                if (match && match[1]) {
-                    totalQuantity += parseInt(match[1]);
-                }
-            });
 
-            document.getElementById('panier-bulle').textContent = totalQuantity;
-            mettreAJourNombreArticlesPanier(); // Mettre à jour l'affichage de la bulle
+            items.forEach(item => {
+                const text = item.textContent;
+                console.log("Texte de l'élément :", text);
+                // Utilise une expression régulière pour capturer le nombre entre les signes "-" et "+"
+                const match = text.match(/-\s*(\d+)\s*\+/);
+                if (match && match[1]) {
+                    console.log("Match trouvé :", match[1]);
+                    const quantity = parseInt(match[1], 10); // Assurez-vous de convertir le résultat en nombre
+                    console.log("Quantité trouvée :", quantity);
+                    totalQuantity += quantity;
+                }
+            });            console.log("Nombre total d'articles dans le panier :", totalQuantity);
+            bullePanier.textContent = totalQuantity;
+
+            // Mettre à jour le contenu de la bulle avec le nombre total d'articles
+            // Afficher ou masquer la bulle en fonction du nombre d'articles
+            if (totalQuantity > 0) {
+                bullePanier.style.display = 'block';
+            } else {
+                bullePanier.style.display = 'none';
+            }
         })
         .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
 }
 
+
 // Mettre à jour le nombre d'articles dans la bulle de l'en-tête au chargement de la page
 window.addEventListener('load', mettreAJourNombreArticlesPanier());
-
-// Mettre à jour le nombre d'articles dans la bulle de l'en-tête lorsqu'un article est ajouté ou supprimé
-document.addEventListener('DOMContentLoaded', updateCartQuantityHeader);
 
 function afficherPrecommande() {
 

@@ -63,7 +63,7 @@ function afficherArticles(articles, sectionId) {
         buttonadd.classList.add("btn-ajouter-panier");
         buttonadd.textContent = "Ajouter au panier";
         buttonadd.addEventListener('click', function () {
-            addToCart(article.titre, 1); // Ici, 1 représente la quantité prédéfinie
+            addToCart(article.titre, 1);
             
         });
         sectionbutton.appendChild(buttonadd);
