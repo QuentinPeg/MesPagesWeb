@@ -1,7 +1,20 @@
 <?php
 session_start();
 
-function addToCart($id, $quantity) {
+
+function mettreAJourNombreArticlesPanier()
+{
+    $nombreArticles = 0;
+    if (isset($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $id => $quantity) {
+            $nombreArticles += $quantity;
+        }
+    }
+    $_SESSION['nombreArticles'] = $nombreArticles;
+}
+
+function addToCart($id, $quantity)
+{
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
     }
@@ -10,33 +23,54 @@ function addToCart($id, $quantity) {
     } else {
         $_SESSION['cart'][$id] = $quantity;
     }
+    mettreAJourNombreArticlesPanier();
 }
 
-function removeFromCart($id) {
+function removeFromCart($id)
+{
     if (isset($_SESSION['cart'][$id])) {
         unset($_SESSION['cart'][$id]);
     }
+    mettreAJourNombreArticlesPanier();
 }
 
-function clearCart() {
+function clearCart()
+{
     $_SESSION['cart'] = array();
+    mettreAJourNombreArticlesPanier();
+
 }
 
-function getCart() {
+function getCart()
+{
     return isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 }
 
-function incrementCartQuantity($id) {
+function incrementCartQuantity($id)
+{
     if (isset($_SESSION['cart'][$id])) {
         $_SESSION['cart'][$id]++;
     }
+    mettreAJourNombreArticlesPanier();
+
 }
 
-function decrementCartQuantity($id) {
+function decrementCartQuantity($id)
+{
     if (isset($_SESSION['cart'][$id]) && $_SESSION['cart'][$id] > 1) {
         $_SESSION['cart'][$id]--;
     } else {
         removeFromCart($id);
     }
+    mettreAJourNombreArticlesPanier();
 }
-?>
+
+// À la fin de panier.php ou après les modifications du panier
+echo "<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var panierBulle = document.getElementById('panier-bulle');
+    if (panierBulle) {
+        panierBulle.textContent = '".$_SESSION['nombreArticles']."';
+    }
+});
+</script>";
