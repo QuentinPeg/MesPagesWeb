@@ -11,6 +11,7 @@ function afficherRecapArticles() {
 
     for (var i = 0; i < panier.length; i++) {
         var article = panier[i];
+        console.log("Article :", article);
         var quantite = article.quantite;
         var nom = article.nom;
         var keyFormat = `${nom}-${article.format}-Format`;

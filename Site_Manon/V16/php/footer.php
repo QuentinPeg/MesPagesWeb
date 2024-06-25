@@ -145,6 +145,9 @@
         </a>
 </footer>
 <script src="../js/precommande.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+
 </body>
 
 </html>

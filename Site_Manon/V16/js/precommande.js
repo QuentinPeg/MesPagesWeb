@@ -43,6 +43,66 @@ function afficherRecapArticles() {
     }
 }
 
+function ajouterRecapArticles() {
+    var recapArticlesDiv = document.getElementById('recap-articles');
+    recapArticlesDiv.textContent = '';
+
+    console.log("Ajouter les articles du panier à la fenêtre flottante de la précommande");
+    fetch('afficher_panier.php')
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const items = doc.querySelectorAll('li');
+            var i = 0;
+            items.forEach(item => {
+                const text = item.textContent;
+                console.log("Texte de l'élément :", text);
+                // Utilise une expression régulière pour capturer le nombre entre les signes "-" et "+"
+                const match = text.match(/-\s*(\d+)\s*\+/);
+                if (match && match[1]) {
+                    console.log("Match trouvé :", match[1]);
+                    const quantity = parseInt(match[1], 10); // Assurez-vous de convertir le résultat en nombre
+                    console.log("Quantité trouvée :", quantity);
+                    var quantite = quantity;
+                    var nom = item.textContent.split('-')[0].trim();
+                    var keyFormat = `${nom}-${item.textContent.split('-')[1].trim()}-Format`;
+                    var keyPlastifie = `${nom}-${item.textContent.split('-')[1].trim()}-Plastifie`;
+
+                    var articleText = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+
+                    var articleElement = document.createElement('p');
+                    articleElement.id = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+                    articleElement.textContent = articleText;
+
+                    var labelFormat = document.createElement('label');
+                    labelFormat.textContent = 'Format :';
+                    var selectFormat = createFormatSelect(nom, quantite, keyFormat, item.textContent.split('-')[1].trim());
+
+                    var labelPlastifie = document.createElement('label');
+                    labelPlastifie.textContent = 'Plastifié :';
+                    var selectPlastifie = createPlastifieSelect(nom, quantite, keyPlastifie, article.plastifie);
+
+                    // Ajout des attributs data-format et data-plastifie
+                    selectFormat.setAttribute('data-format', labelFormat.textContent);
+                    selectPlastifie.setAttribute('data-plastifie', labelPlastifie.textContent);
+
+                    articleElement.appendChild(labelFormat);
+                    articleElement.appendChild(selectFormat);
+                    articleElement.appendChild(labelPlastifie);
+                    articleElement.appendChild(selectPlastifie);
+
+                    recapArticlesDiv.appendChild(articleElement);
+
+                }
+                i++;
+            }); console.log("Nombre total d'articles dans le panier :", totalQuantity);
+
+        })
+        .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
+}
+
+
 
 // Ajout d'une fonction pour créer les options Plastifie avec la bonne sélection
 // Fonction pour créer les options Plastifie avec la bonne sélection
@@ -321,7 +381,7 @@ function addToCart(titre, quantity) {
 function mettreAJourNombreArticlesPanier() {
     console.log("Mettre à jour le nombre d'articles dans la bulle du panier");
     var bullePanier = document.getElementById('panier-bulle');
-    
+
     fetch('afficher_panier.php')
         .then(response => response.text())
         .then(data => {
@@ -341,7 +401,7 @@ function mettreAJourNombreArticlesPanier() {
                     console.log("Quantité trouvée :", quantity);
                     totalQuantity += quantity;
                 }
-            });            console.log("Nombre total d'articles dans le panier :", totalQuantity);
+            }); console.log("Nombre total d'articles dans le panier :", totalQuantity);
             bullePanier.textContent = totalQuantity;
 
             // Mettre à jour le contenu de la bulle avec le nombre total d'articles
@@ -353,6 +413,7 @@ function mettreAJourNombreArticlesPanier() {
             }
         })
         .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
+    ajouterRecapArticles();
 }
 function updateCart(action, productTitle) {
     fetch('afficher_panier.php', {
@@ -362,15 +423,16 @@ function updateCart(action, productTitle) {
         },
         body: `action=${action}&product_title=${productTitle}`
     })
-    .then(response => response.text())
-    .then(data => {
-        // Met à jour le contenu du panier
-        document.getElementById('panier-liste').innerHTML = data;
+        .then(response => response.text())
+        .then(data => {
+            // Met à jour le contenu du panier
+            document.getElementById('panier-liste').innerHTML = data;
 
-        // Met à jour le nombre d'articles dans la bulle du panier
-        mettreAJourNombreArticlesPanier();
-    })
-    .catch(error => console.error('Erreur:', error));
+            // Met à jour le nombre d'articles dans la bulle du panier
+            mettreAJourNombreArticlesPanier();
+        })
+        .catch(error => console.error('Erreur:', error));
+    ajouterRecapArticles();
 }
 
 
@@ -421,9 +483,9 @@ function masquerPanier() {
     panierFenetre.style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Écouteur de clic sur le document
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const panierLink = document.querySelector('.panier-link');
         const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
 
@@ -436,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Écouteur de clic spécifique pour l'image du panier pour ouvrir le panier
     const panierLink = document.querySelector('.panier-link');
-    panierLink.addEventListener('click', function(event) {
+    panierLink.addEventListener('click', function (event) {
         const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
         // Code pour ouvrir le panier
         panier.style.display = 'block';
@@ -447,8 +509,8 @@ document.addEventListener('DOMContentLoaded', function() {
 var boutonsSupprimerTout = document.getElementsByClassName('btn-supprimer-tout');
 
 // Ajoute un événement 'click' à chaque bouton
-Array.from(boutonsSupprimerTout).forEach(function(bouton) {
-    bouton.addEventListener('click', function() {
+Array.from(boutonsSupprimerTout).forEach(function (bouton) {
+    bouton.addEventListener('click', function () {
         fetch('afficher_panier.php', {
             method: 'POST',
             headers: {
@@ -456,14 +518,14 @@ Array.from(boutonsSupprimerTout).forEach(function(bouton) {
             },
             body: 'action=clear_cart'
         })
-        .then(response => response.text())
-        .then(data => {
-            // Met à jour le contenu du panier
-            document.getElementById('panier-liste').innerHTML = data;
+            .then(response => response.text())
+            .then(data => {
+                // Met à jour le contenu du panier
+                document.getElementById('panier-liste').innerHTML = data;
 
-            // Met à jour le nombre d'articles dans la bulle du panier
-            mettreAJourNombreArticlesPanier();
-        })
-        .catch(error => console.error('Erreur:', error));
+                // Met à jour le nombre d'articles dans la bulle du panier
+                mettreAJourNombreArticlesPanier();
+            })
+            .catch(error => console.error('Erreur:', error));
     });
 });
