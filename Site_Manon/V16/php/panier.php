@@ -65,12 +65,3 @@ function decrementCartQuantity($id)
     mettreAJourNombreArticlesPanier();
 }
 
-// À la fin de panier.php ou après les modifications du panier
-echo "<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var panierBulle = document.getElementById('panier-bulle');
-    if (panierBulle) {
-        panierBulle.textContent = '".$_SESSION['nombreArticles']."';
-    }
-});
-</script>";

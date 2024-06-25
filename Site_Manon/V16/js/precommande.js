@@ -378,54 +378,43 @@ function updateCart(action, productTitle) {
 // Mettre à jour le nombre d'articles dans la bulle de l'en-tête au chargement de la page
 window.addEventListener('load', mettreAJourNombreArticlesPanier());
 
-function afficherPrecommande() {
+function obtenirNombreArticlesPanier() {
+    var bullePanier = document.getElementById('panier-bulle');
+    var nombreArticles = parseInt(bullePanier.textContent, 10);
+    return isNaN(nombreArticles) ? 0 : nombreArticles;
+}
 
-    // Valider l'ouverture de la précommande
-    if (!validerOuverturePreco()) {
-        return; // Si la validation échoue, ne pas continuer
+function afficherPrecommande() {
+    var nombreArticles = obtenirNombreArticlesPanier();
+
+    if (!validerOuverturePreco(nombreArticles)) {
+        return;
     }
 
     var precommandeFenetre = document.getElementById('precommande-fenetre');
     var panierFenetre = document.getElementById('panier-fenetre');
 
-    // Masquer la fenêtre du panier
     masquerPanier();
 
-    // Afficher la fenêtre de précommande
     precommandeFenetre.style.display = 'flex';
 
-    // Réinitialiser le récapitulatif des articles
     afficherRecapArticles();
-
 }
 
-function validerOuverturePreco() {
-
-    // Obtenez les éléments de récapitulatif des articles
-    var elementsRecap = document.querySelectorAll('#recap-articles p');
-    var totalQuantite = 0;
-
-
-    // Vérifiez s'il y a des éléments dans le panier
-    if (elementsRecap.length === 0) {
+function validerOuverturePreco(nombreArticles) {
+    if (nombreArticles === 0) {
         alert('Votre panier est vide. Veuillez ajouter des articles.');
         return false;
     }
 
-    // Parcourez le panier pour calculer la somme des quantités
-    for (var i = 0; i < panier.length; i++) {
-        totalQuantite += panier[i].quantite;
-    }
-
-    // Vérifiez si la somme des quantités dépasse 10
-    if (totalQuantite > 10) {
+    if (nombreArticles > 10) {
         alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
         return false;
     }
 
-    return true; // Si tout est valide, retourner true
-
+    return true;
 }
+
 
 function masquerPanier() {
     var panierFenetre = document.getElementById('panier-fenetre');
@@ -451,5 +440,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
         // Code pour ouvrir le panier
         panier.style.display = 'block';
+    });
+});
+
+// Sélectionne tous les éléments avec la classe 'btn-supprimer-tout'
+var boutonsSupprimerTout = document.getElementsByClassName('btn-supprimer-tout');
+
+// Ajoute un événement 'click' à chaque bouton
+Array.from(boutonsSupprimerTout).forEach(function(bouton) {
+    bouton.addEventListener('click', function() {
+        fetch('afficher_panier.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'action=clear_cart'
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Met à jour le contenu du panier
+            document.getElementById('panier-liste').innerHTML = data;
+
+            // Met à jour le nombre d'articles dans la bulle du panier
+            mettreAJourNombreArticlesPanier();
+        })
+        .catch(error => console.error('Erreur:', error));
     });
 });
