@@ -64,7 +64,6 @@ function afficherArticles(articles, sectionId) {
         buttonadd.textContent = "Ajouter au panier";
         buttonadd.addEventListener('click', function () {
             addToCart(article.titre, 1);
-            
         });
         sectionbutton.appendChild(buttonadd);
 
