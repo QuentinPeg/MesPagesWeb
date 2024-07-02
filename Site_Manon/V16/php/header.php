@@ -2,12 +2,22 @@
 session_start();
 include 'panier.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_title']) && isset($_POST['quantity'])) {
-    $product_title = $_POST['product_title'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id']) && isset($_POST['quantity']) && isset($_POST['format']) && isset($_POST['plastifie'])) {
+    $product_id = $_POST['product_id'];
     $quantity = $_POST['quantity'];
-    addToCart($product_title, $quantity);
-    // Répondre avec une confirmation que l'article a été ajouté
-    echo json_encode(['success' => true]);
+    $format = $_POST['format'];
+    $plastifie = $_POST['plastifie'];
+
+    if (!empty($product_id) && is_numeric($quantity) && $quantity > 0) {
+        try {
+            addToCart($product_id, $quantity, $format, $plastifie);
+            echo json_encode(['success' => true]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Invalid data']);
+    }
     exit;
 }
 ?>
@@ -20,14 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_title']) && is
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script src="../js/app.js"></script>
+    <script src="../js/precommande.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <a href="../php/index.php"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg"
-                alt="Icon-page"></a>
+        <a href="../php/index.php"><img class="ipage" src="../Images/Logolescahiersduneinfirmiere.jpg" alt="Icon-page"></a>
         <div id="vide"></div>
         <h1>Les cahiers d'une infirmière</h1>
         <div id="entete">
@@ -38,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_title']) && is
                 <img src="../Images/panier.svg" alt="panier">
                 <span class="nombre-articles-panier" id="panier-bulle">0</span>
                 <span class="nombre-articles-header" id="nombre-articles-header"></span>
-
             </span>
         </a>
     </header>
+

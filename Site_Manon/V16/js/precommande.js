@@ -1,7 +1,5 @@
 function fermerPrecommande() {
     var precommandeFenetre = document.getElementById('precommande-fenetre');
-
-    // Masquer la fenêtre de précommande
     precommandeFenetre.style.display = 'none';
 }
 
@@ -9,83 +7,37 @@ function afficherRecapArticles() {
     var recapArticlesDiv = document.getElementById('recap-articles');
     recapArticlesDiv.textContent = '';
 
-    for (var i = 0; i < panier.length; i++) {
-        var article = panier[i];
-        var quantite = article.quantite;
-        var nom = article.nom;
-        var keyFormat = `${nom}-${article.format}-Format`;
-        var keyPlastifie = `${nom}-${article.format}-Plastifie`;
-
-        var articleText = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
-
-        var articleElement = document.createElement('p');
-        articleElement.id = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
-        articleElement.textContent = articleText;
-
-        var labelFormat = document.createElement('label');
-        labelFormat.textContent = 'Format :';
-        var selectFormat = createFormatSelect(nom, quantite, keyFormat, article.format);
-
-        var labelPlastifie = document.createElement('label');
-        labelPlastifie.textContent = 'Plastifié :';
-        var selectPlastifie = createPlastifieSelect(nom, quantite, keyPlastifie, article.plastifie);
-
-        // Ajout des attributs data-format et data-plastifie
-        selectFormat.setAttribute('data-format', article.format);
-        selectPlastifie.setAttribute('data-plastifie', article.plastifie);
-
-        articleElement.appendChild(labelFormat);
-        articleElement.appendChild(selectFormat);
-        articleElement.appendChild(labelPlastifie);
-        articleElement.appendChild(selectPlastifie);
-
-        recapArticlesDiv.appendChild(articleElement);
-    }
-}
-
-function ajouterRecapArticles() {
-    var recapArticlesDiv = document.getElementById('recap-articles');
-    recapArticlesDiv.textContent = '';
-
-    console.log("Ajouter les articles du panier à la fenêtre flottante de la précommande");
     fetch('afficher_panier.php')
         .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
             const items = doc.querySelectorAll('li');
-            var i = 0;
+
             items.forEach(item => {
-                const text = item.textContent;
-                console.log("Texte de l'élément :", text);
-                // Utilise une expression régulière pour capturer le nombre entre les signes "-" et "+"
-                const match = text.match(/-\s*(\d+)\s*\+/);
-                if (match && match[1]) {
-                    console.log("Match trouvé :", match[1]);
-                    const quantity = parseInt(match[1], 10); // Assurez-vous de convertir le résultat en nombre
-                    console.log("Quantité trouvée :", quantity);
-                    var quantite = quantity;
-                    var nom = item.textContent.split('-')[0].trim();
-                    var keyFormat = `${nom}-${item.textContent.split('-')[1].trim()}-Format`;
-                    var keyPlastifie = `${nom}-${item.textContent.split('-')[1].trim()}-Plastifie`;
+                const form = item.querySelector('form');
+                if (form) {
+                    const productTitle = form.querySelector('input[name="product_title"]').value;
+                    const format = form.querySelector('input[name="format"]').value;
+                    const plastifie = form.querySelector('input[name="plastifie"]').value;
+                    const quantity = parseInt(form.textContent.match(/\d+/)[0], 10);
 
-                    var articleText = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+                    const articleText = `[${quantity}] x ${productTitle}`;
 
-                    var articleElement = document.createElement('p');
-                    articleElement.id = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+                    const articleElement = document.createElement('p');
+                    articleElement.id = `${productTitle}-${format}-${plastifie}`;
                     articleElement.textContent = articleText;
 
-                    var labelFormat = document.createElement('label');
+                    const labelFormat = document.createElement('label');
                     labelFormat.textContent = 'Format :';
-                    var selectFormat = createFormatSelect(nom, quantite, keyFormat, item.textContent.split('-')[1].trim());
+                    const selectFormat = createFormatSelect(productTitle, quantity, `${productTitle}-${format}-Format`, format);
 
-                    var labelPlastifie = document.createElement('label');
+                    const labelPlastifie = document.createElement('label');
                     labelPlastifie.textContent = 'Plastifié :';
-                    var selectPlastifie = createPlastifieSelect(nom, quantite, keyPlastifie, article.plastifie);
+                    const selectPlastifie = createPlastifieSelect(productTitle, quantity, `${productTitle}-${plastifie}-Plastifie`, plastifie);
 
-                    // Ajout des attributs data-format et data-plastifie
-                    selectFormat.setAttribute('data-format', labelFormat.textContent);
-                    selectPlastifie.setAttribute('data-plastifie', labelPlastifie.textContent);
+                    selectFormat.setAttribute('data-format', format);
+                    selectPlastifie.setAttribute('data-plastifie', plastifie);
 
                     articleElement.appendChild(labelFormat);
                     articleElement.appendChild(selectFormat);
@@ -93,57 +45,19 @@ function ajouterRecapArticles() {
                     articleElement.appendChild(selectPlastifie);
 
                     recapArticlesDiv.appendChild(articleElement);
-
                 }
-                i++;
-            }); console.log("Nombre total d'articles dans le panier :", totalQuantity);
-
+            });
         })
-        .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
-}
+        .catch(error => console.error("Erreur lors du chargement des articles :", error));
 
-
-
-// Ajout d'une fonction pour créer les options Plastifie avec la bonne sélection
-// Fonction pour créer les options Plastifie avec la bonne sélection
-function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
-    var selectPlastifie = document.createElement('select');
-    selectPlastifie.setAttribute('data-nom', nom);
-    selectPlastifie.setAttribute('data-quantite', quantite);
-    selectPlastifie.setAttribute('data-key', key); // Utiliser la clé fournie comme attribut data-key
-
-    var optionNon = createOption('Non', 'Non', selectedPlastifie);
-    var optionOui = createOption('Oui', 'Oui', selectedPlastifie);
-
-    selectPlastifie.appendChild(optionNon);
-    selectPlastifie.appendChild(optionOui);
-
-    // Sélectionnez la bonne option en fonction de la plastification actuelle de l'article
-    selectPlastifie.value = selectedPlastifie;
-
-    selectPlastifie.addEventListener('change', function (event) {
-        var selectedPlastifie = event.target.value;
-        var key = event.target.getAttribute('data-key');
-        var articleIndex = panier.findIndex(a => `${a.nom}-${a.format}-Plastifie` === key); // Vérifier la clé Plastifié
-        if (articleIndex !== -1) {
-            panier[articleIndex].plastifie = selectedPlastifie;
-        }
-
-        // Mettre à jour l'attribut data-plastifie avec le nouveau plastifié sélectionné
-        event.target.setAttribute('data-plastifie', selectedPlastifie);
-
-        calculerTotal();
-    });
-
-
-    return selectPlastifie;
+    calculerTotal;
 }
 
 function createFormatSelect(nom, quantite, key, selectedFormat) {
     var selectFormat = document.createElement('select');
     selectFormat.setAttribute('data-nom', nom);
     selectFormat.setAttribute('data-quantite', quantite);
-    selectFormat.setAttribute('data-key', key); // Utiliser la clé fournie comme attribut data-key
+    selectFormat.setAttribute('data-key', key);
 
     var optionA5 = createOption('A5', 'A5', selectedFormat);
     var optionA6 = createOption('A6', 'A6', selectedFormat);
@@ -155,19 +69,73 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
     selectFormat.addEventListener('change', function (event) {
         var selectedFormat = event.target.value;
         var key = event.target.getAttribute('data-key');
-        var articleIndex = panier.findIndex(a => `${a.nom}-${a.plastifie}-Format` === key); // Vérifier la clé Format
-        if (articleIndex !== -1) {
-            panier[articleIndex].format = selectedFormat;
-        }
+        var articleId = key.split('-')[0];
+        var plastifie = document.querySelector(`select[data-nom="${nom}"][data-plastifie]`).value;
 
-        // Mettre à jour l'attribut data-format avec le nouveau format sélectionné
-        event.target.setAttribute('data-format', selectedFormat);
-
-        calculerTotal();
+        // Update cart with new format
+        updateCart('update_format', nom, selectedFormat, plastifie);
     });
-
+    calculerTotal;
 
     return selectFormat;
+}
+
+function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
+    var selectPlastifie = document.createElement('select');
+    selectPlastifie.setAttribute('data-nom', nom);
+    selectPlastifie.setAttribute('data-quantite', quantite);
+    selectPlastifie.setAttribute('data-key', key);
+
+    var optionNon = createOption('Non', 'Non', selectedPlastifie);
+    var optionOui = createOption('Oui', 'Oui', selectedPlastifie);
+
+    selectPlastifie.appendChild(optionNon);
+    selectPlastifie.appendChild(optionOui);
+    selectPlastifie.value = selectedPlastifie;
+
+    selectPlastifie.addEventListener('change', function (event) {
+        var selectedPlastifie = event.target.value;
+        var key = event.target.getAttribute('data-key');
+        var articleId = key.split('-')[0];
+        var format = document.querySelector(`select[data-nom="${nom}"][data-format]`).value;
+
+        // Update cart with new plastification
+        updateCart('update_plastifie', nom, format, selectedPlastifie);
+    });
+    calculerTotal;
+
+    return selectPlastifie;
+}
+
+
+
+
+function calculerTotal() {
+    var total = 0;
+    // Récupérer tous les éléments de l'article dans le récapitulatif
+    const articles = document.querySelectorAll('#recap-articles > p');
+
+    articles.forEach(article => {
+        const id = article.id;
+        const quantity = parseInt(article.textContent.match(/\[(\d+)\]/)[1], 10);
+        const format = article.querySelector('select[data-format]').value;
+        const plastifie = article.querySelector('select[data-plastifie]').value;
+
+        // Utiliser l'ID pour extraire le nom de l'article pour obtenir le prix
+        const nomArticle = id.split('-')[0];
+        var prixUnitaire = obtenirPrixArticle(nomArticle, format);
+
+        // Appliquer la logique de plastification
+        if (plastifie === 'Oui') {
+            prixUnitaire += prixUnitaire * 0.10; // Augmentez le prix de 10% si plastifié
+        }
+
+        total += prixUnitaire * quantity;
+    });
+
+    // Mettre à jour le total dans l'élément HTML correspondant
+    document.getElementById('amount').value = total;
+    document.getElementById("prixTotal").textContent = formaterPrix(total);
 }
 
 function createOption(value, text, selectedValue) {
@@ -180,48 +148,10 @@ function createOption(value, text, selectedValue) {
     return option;
 }
 
-function calculerTotal() {
-    var total = 0;
-
-    for (var i = 0; i < panier.length; i++) {
-        var article = panier[i];
-
-        // Utilisez le format et la plastification de la fenêtre flottante de la précommande s'ils existent
-        var formatSelect = document.querySelector(`select[data-nom="${article.nom}"][data-quantite="${article.quantite}"][data-key="${article.nom}-${article.format}-Format"]`);
-        var plastifieSelect = document.querySelector(`select[data-nom="${article.nom}"][data-quantite="${article.quantite}"][data-key="${article.nom}-${article.format}-Plastifie"]`);
-
-
-        // Assurez-vous que les sélecteurs existent avant de récupérer les valeurs
-        var format = formatSelect ? formatSelect.value : article.format;
-        var plastifie = plastifieSelect ? plastifieSelect.value : article.plastifie;
-
-        // Condition de plastification
-        var prixUnitaire = obtenirPrixArticle(article.nom, format, plastifie);
-        var prixUnitairePlastifie = obtenirPrixArticle(article.nom, format, 'Oui');
-        if (plastifie === 'Oui') {
-            // Augmentez le prix de 10% par rapport au prix plastifié
-            prixUnitaire += prixUnitaire * 0.10;
-            article.plastifie = 'Non';
-        } else if (plastifie === 'Non') {
-            // Appliquer une réduction de 10% si l'article était initialement plastifié
-            prixUnitaire = prixUnitairePlastifie;
-        }
-
-        total += prixUnitaire * article.quantite;
-    }
-
-    // Mettre à jour le total dans l'élément HTML correspondant en utilisant la fonction de formatage
-    document.getElementById('amount').value = total;
-    document.getElementById("prixTotal").textContent = formaterPrix(total);
-}
-
-// Fonction pour formater le prix avec une virgule si nécessaire
 function formaterPrix(prix) {
-    var prixFormate = prix % 1 !== 0 ? prix.toFixed(2).replace('.', ',') : prix.toFixed(0);
-    return prixFormate + ' €';
+    return prix % 1 !== 0 ? prix.toFixed(2).replace('.', ',') + ' €' : prix.toFixed(0) + ' €';
 }
 
-// Définir les prix des articles
 var articlesPrix = {
     'Pack intégral': {
         'A6': 250,
@@ -350,36 +280,58 @@ function obtenirPrixArticle(nomArticle, format) {
 
 }
 
-// Fonction pour obtenir le prix total du panier
-function getPrixPanier() {
-    var total = 0;
-
-    for (var i = 0; i < panier.length; i++) {
-        var article = panier[i];
-        var prixUnitaire = obtenirPrixArticle(article.nom, article.format, article.plastifie);
-        total += prixUnitaire * article.quantite;
-    }
-
-    return total + ' €';
-}
 // Fonction pour ajouter un article au panier
-function addToCart(titre, quantity) {
-    // Envoyer une requête AJAX pour ajouter l'article au panier
-
+function addToCart(id, quantity, format, plastifie) {
     fetch('index.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'product_title=' + titre + '&quantity=' + quantity
+        body: 'product_id=' + encodeURIComponent(id) +
+            '&quantity=' + encodeURIComponent(quantity) +
+            '&format=' + encodeURIComponent(format) +
+            '&plastifie=' + encodeURIComponent(plastifie)
     })
-    mettreAJourNombreArticlesPanier(); // Mettre à jour le nombre d'articles dans la bulle du panier
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                mettreAJourNombreArticlesPanier();
+            } else {
+                console.error('Error adding item to cart:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    calculerTotal();
+}
+function showCart() {
+    var modal = document.getElementById('panier-fenetre');
+    modal.style.display = 'block';
+    fetch('afficher_panier.php')
+        .then(response => response.text())
+        .then(data => document.getElementById('panier-liste').innerHTML = data);
+    calculerTotal();
 }
 
-// Mettre à jour le nombre d'articles dans la bulle du panier dans l'en-tête
+function clearCart() {
+    const formData = new FormData();
+    formData.append('action', 'clear_cart');
+    fetch('afficher_panier.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => document.getElementById('panier-liste').innerHTML = data);
+    mettreAJourNombreArticlesPanier();
+}
 // Mettre à jour le nombre d'articles dans la bulle du panier dans l'en-tête
 function mettreAJourNombreArticlesPanier() {
-    console.log("Mettre à jour le nombre d'articles dans la bulle du panier");
     var bullePanier = document.getElementById('panier-bulle');
 
     fetch('afficher_panier.php')
@@ -392,20 +344,14 @@ function mettreAJourNombreArticlesPanier() {
 
             items.forEach(item => {
                 const text = item.textContent;
-                console.log("Texte de l'élément :", text);
-                // Utilise une expression régulière pour capturer le nombre entre les signes "-" et "+"
                 const match = text.match(/-\s*(\d+)\s*\+/);
                 if (match && match[1]) {
-                    console.log("Match trouvé :", match[1]);
-                    const quantity = parseInt(match[1], 10); // Assurez-vous de convertir le résultat en nombre
-                    console.log("Quantité trouvée :", quantity);
+                    const quantity = parseInt(match[1], 10);
                     totalQuantity += quantity;
                 }
-            }); console.log("Nombre total d'articles dans le panier :", totalQuantity);
+            });
             bullePanier.textContent = totalQuantity;
 
-            // Mettre à jour le contenu de la bulle avec le nombre total d'articles
-            // Afficher ou masquer la bulle en fonction du nombre d'articles
             if (totalQuantity > 0) {
                 bullePanier.style.display = 'block';
             } else {
@@ -413,32 +359,30 @@ function mettreAJourNombreArticlesPanier() {
             }
         })
         .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
-    ajouterRecapArticles();
+    afficherRecapArticles();
 }
-function updateCart(action, productTitle) {
+
+function updateCart(action, productTitle, format, plastifie) {
     fetch('afficher_panier.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `action=${action}&product_title=${productTitle}`
+        body: `action=${action}&product_title=${productTitle}&format=${format}&plastifie=${plastifie}`
     })
         .then(response => response.text())
         .then(data => {
-            // Met à jour le contenu du panier
             document.getElementById('panier-liste').innerHTML = data;
-
-            // Met à jour le nombre d'articles dans la bulle du panier
-            mettreAJourNombreArticlesPanier();
         })
-        .catch(error => console.error('Erreur:', error));
-    ajouterRecapArticles();
+        .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
+    calculerTotal();
+
 }
 
 
 
 // Mettre à jour le nombre d'articles dans la bulle de l'en-tête au chargement de la page
-window.addEventListener('load', mettreAJourNombreArticlesPanier());
+window.addEventListener('load', mettreAJourNombreArticlesPanier);
 
 function obtenirNombreArticlesPanier() {
     var bullePanier = document.getElementById('panier-bulle');
@@ -459,6 +403,7 @@ function afficherPrecommande() {
     masquerPanier();
 
     precommandeFenetre.style.display = 'flex';
+    calculerTotal();
 
     afficherRecapArticles();
 }
@@ -477,38 +422,30 @@ function validerOuverturePreco(nombreArticles) {
     return true;
 }
 
-
 function masquerPanier() {
     var panierFenetre = document.getElementById('panier-fenetre');
     panierFenetre.style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Écouteur de clic sur le document
     document.addEventListener('click', function (event) {
         const panierLink = document.querySelector('.panier-link');
-        const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
+        const panier = document.getElementById('panier-fenetre');
 
-        // Vérifie si l'élément cliqué est le panier ou un enfant du panier
         if (!panierLink.contains(event.target) && !panier.contains(event.target)) {
-            // Code pour fermer le panier
             panier.style.display = 'none';
         }
     });
 
-    // Écouteur de clic spécifique pour l'image du panier pour ouvrir le panier
     const panierLink = document.querySelector('.panier-link');
     panierLink.addEventListener('click', function (event) {
-        const panier = document.getElementById('panier-fenetre'); // Remplacez 'votreIdDuPanier' par l'ID de votre élément de panier
-        // Code pour ouvrir le panier
+        const panier = document.getElementById('panier-fenetre');
         panier.style.display = 'block';
     });
 });
 
-// Sélectionne tous les éléments avec la classe 'btn-supprimer-tout'
 var boutonsSupprimerTout = document.getElementsByClassName('btn-supprimer-tout');
 
-// Ajoute un événement 'click' à chaque bouton
 Array.from(boutonsSupprimerTout).forEach(function (bouton) {
     bouton.addEventListener('click', function () {
         fetch('afficher_panier.php', {
@@ -520,10 +457,7 @@ Array.from(boutonsSupprimerTout).forEach(function (bouton) {
         })
             .then(response => response.text())
             .then(data => {
-                // Met à jour le contenu du panier
                 document.getElementById('panier-liste').innerHTML = data;
-
-                // Met à jour le nombre d'articles dans la bulle du panier
                 mettreAJourNombreArticlesPanier();
             })
             .catch(error => console.error('Erreur:', error));

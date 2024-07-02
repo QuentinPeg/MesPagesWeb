@@ -13,3 +13,4 @@
     <section id="nonpacks"></section>
 
     <?php include 'footer.php'; ?>
+</main>
