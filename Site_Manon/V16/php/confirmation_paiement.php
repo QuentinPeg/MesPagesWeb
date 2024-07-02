@@ -1,82 +1,45 @@
-<?php include 'header.php';
-session_abort(); ?>
+<?php include 'header.php'; ?>
+
 <link rel="stylesheet" href="../css/paiement.css">
 <title>Les cahiers d'une infirmière</title>
 
 <main>
     <h1>Merci de votre commande</h1>
-    <p>Votre commande a été accepté, elle sera préparé et envoyé au cours de la semaine, nous vous recontacterons si
-        nécéssaire...</p>
+    <p>Votre commande a été acceptée, elle sera préparée et envoyée au cours de la semaine, nous vous recontacterons si nécessaire...</p>
     <a href="index.php">
-        <img src="../Images/Logolescahiersduneinfirmiere.jpg" alt="Les cahiers d'un infirmière"></a>
+        <img src="../Images/Logolescahiersduneinfirmiere.jpg" alt="Les cahiers d'une infirmière"></a>
 
-
-    <p>Pour revenir a la page d'accueil cliquer sur le bouton ci dessous</p>
+    <p>Pour revenir à la page d'accueil, cliquez sur le bouton ci-dessous</p>
     <section>
         <a href="index.php"><button class="btn-retour">Accueil</button></a>
-        <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
     </section>
 </main>
-<footer>
-    <p>Une petite note sur moi :
-        J'ai été étudiante infirmière, c'est à ce moment-là que ces fiches ont été créées. La base de ces fiches
-        s'est construit sur les apports théoriques vus en cours et en stage ainsi les apports que j'ai pu voir et
-        apprendre
-        en stage.
-        Ces fiches m'ont permis d'étudier et de réviser mes partiels pendant mes trois années de formation,
-        et m'ont conduite jusqu'à l'obtention de mon diplôme. Une fois diplômée j'ai travaillé en service d'urgence
-        puis en hospitalisation à domicile.</p>
-    <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
-    <div>
-        <a href="../php/conditions&mentions.php">
-            <p>Coder par Peguin Quentin</p>
-        </a>
-        <a href="../php/conditions&mentions.php">
-            <p>&copy; Tout droit d'auteur réservé</p>
-        </a>
-        <a href="../php/conditions&mentions.php">
-            <p>Conditions d'utilisation & Mentions légales</p>
-        </a>
-</footer>
-
-
-</body>
-<script>window.addEventListener("scroll", function () {
-        var header = document.querySelector("header");
-        var h1 = document.querySelector("h1");
-        var a = document.querySelector("#entcontact>a");
-        var imgipage = document.querySelector("img");
-
-        if (window.scrollY > 50) {
-            header.classList.add("shrink");
-            h1.classList.add("shrink");
-            a.classList.add("shrink");
-            imgipage.classList.add("shrink");
-
-        } else {
-            header.classList.remove("shrink");
-            h1.classList.remove("shrink");
-            a.classList.remove("shrink");
-            imgipage.classList.remove("shrink");
-
-        }
-    });
-</script>
-
 <script>
-    // Attendre que le contenu de la page soit chargé
     document.addEventListener("DOMContentLoaded", function () {
-        // Sélectionner la div à supprimer en utilisant un sélecteur CSS
-        var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
-
-        // Vérifier si la div existe
-        if (divASupprimer) {
-            // Supprimer la div
-            divASupprimer.parentNode.removeChild(divASupprimer);
-        } else {
-            console.log("La div spécifiée n'existe pas.");
-        }
+        envoyerMail();
     });
-</script>
 
-</php>
+    function envoyerMail() {
+        let storedMailData = localStorage.getItem('mailData');
+        if (storedMailData) {
+            let mailData = JSON.parse(storedMailData);
+
+            emailjs.init("ixOrs32Cy-jH_Xqoi");
+
+            let serviceID = "service_b1jfzdk";
+            let templateID = "template_qcjv2ql";
+
+            emailjs.send(serviceID, templateID, mailData)
+                .then(res => {
+                    alert("Précommande envoyée !\n Nous vous recontacterons sous 3 jours \n (envoi de la commande en moins d'une semaine)");
+                    localStorage.removeItem('mailData');
+                })
+                .catch(error => {
+                    alert("Une erreur est survenue lors de l'envoi du mail de la précommande,\n Veuillez nous excuser, si le paiement a bien été confirmé, veuillez nous contacter pour confirmer la commande. \n > Page Contact > :", error);
+                });
+        } else {
+            console.log("Aucune donnée à envoyer.");
+        }
+    }
+</script>
+<?php include 'footer.php'; ?>

@@ -54,7 +54,9 @@
             </section>
             <hr>
             <input type="hidden" id="amount" name="amount" value="0">
-            <div id="card-element"></div>
+            <div id="card-number-element"></div>
+            <div id="card-expiry-element"></div>
+            <div id="card-cvc-element"></div>
             <div id="card-errors" role="alert"></div>
             <section id="section-bouton">
                 <button type="button" class="btn-fermer" onclick="fermerPrecommande()">Fermer</button>

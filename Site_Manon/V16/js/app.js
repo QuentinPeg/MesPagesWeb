@@ -8,29 +8,45 @@ let style = {
   }
 };
 
-let card = elements.create('card', {
+let cardNumber = elements.create('cardNumber', {
   style: style,
-  hidePostalCode: true,
+});
+let cardExpiry = elements.create('cardExpiry', {
+  style: style,
+});
+let cardCvc = elements.create('cardCvc', {
+  style: style,
 });
 
-card.mount('#card-element');
+cardNumber.mount('#card-number-element');
+cardExpiry.mount('#card-expiry-element');
+cardCvc.mount('#card-cvc-element');
 
-card.addEventListener('change', function (event) {
+cardNumber.addEventListener('change', function (event) {
+  displayError(event);
+});
+cardExpiry.addEventListener('change', function (event) {
+  displayError(event);
+});
+cardCvc.addEventListener('change', function (event) {
+  displayError(event);
+});
+
+function displayError(event) {
   let displayError = document.getElementById('card-errors');
   if (event.error) {
     displayError.textContent = event.error.message;
   } else {
     displayError.textContent = '';
   }
-});
+}
 
 let form = document.getElementById('payment-form');
 form.addEventListener('submit', function (event) {
   event.preventDefault();
+  chargerMail();
 
-  envoyerMail();
-
-  stripe.createToken(card).then(function (result) {
+  stripe.createToken(cardNumber).then(function (result) {
     if (result.error) {
       let errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
@@ -51,11 +67,9 @@ function stripeTokenHandler(token) {
   form.submit();
 }
 
-function envoyerMail() {
-  (function () {
-    emailjs.init("ixOrs32Cy-jH_Xqoi");
-  })();
+let mailData = null;
 
+function chargerMail() {
   let nom = document.querySelector("#Nom").value;
   let prenom = document.querySelector("#Prénom").value;
   let email = document.querySelector("#Email").value;
@@ -64,21 +78,19 @@ function envoyerMail() {
   let codePostale = document.querySelector("#CodePostale").value;
   let ville = document.querySelector('#Ville').value;
   let prixTotal = document.querySelector("#prixTotal").textContent;
-
-  // Récupérer les valeurs des articles
+  const articles = document.querySelectorAll('#recap-articles > p');
   let recapArticles = "";
-  document.querySelectorAll("#recap-articles p").forEach(function (article, index) {
-    let pack = article.id.replace(/\[\d+\] /g, '').replace(/\[\d+\] x?/g, "").trim();
-    if (pack.startsWith('x')) {
-      pack = pack.replace('x', '').trim();
-    }
-    let selectFormat = article.querySelector("select[data-key='" + pack + "-A5-Format']");
-    let selectPlastifie = article.querySelector("select[data-key='" + pack + "-A5-Plastifie']");
+
+  articles.forEach(article => {
+    let pack = article.id.split('-')[0].trim();
+    let selectFormat = article.querySelector(`select[data-nom="${pack}"][data-key$="Format"]`);
+    let selectPlastifie = article.querySelector(`select[data-nom="${pack}"][data-key$="Plastifie"]`);
+
     if (selectFormat && selectPlastifie) {
       let quantite = selectFormat.getAttribute('data-quantite');
-      let format = selectFormat.getAttribute('data-format');
-      let plastifie = selectPlastifie.getAttribute('data-plastifie');
-      recapArticles += quantite + " x " + pack + " Format: " + format + " Plastifié: " + plastifie + "\n";
+      let format = selectFormat.options[selectFormat.selectedIndex].value;
+      let plastifie = selectPlastifie.options[selectPlastifie.selectedIndex].value;
+      recapArticles += `${quantite} x ${pack} Format: ${format} Plastifié: ${plastifie}\n`;
     }
   });
 
@@ -95,20 +107,11 @@ Numéro de téléphone : ${numero}
 Adresse : ${adresse}, ${codePostale},${ville}
 `;
 
-  let parms = {
+  mailData = {
     sendername: nom,
     replyto: email,
     message: message
   };
 
-  let serviceID = "service_b1jfzdk";
-  let templateID = "template_qcjv2ql";
-
-  emailjs.send(serviceID, templateID, parms)
-    .then(res => {
-      alert("Précommande envoyé !\n La nous vous recontacteront sous 3 jours \n (envoi de la commande en moins d'une semaine)");
-    })
-    .catch(error => {
-      alert("Une erreur est survenu lors de l'envoi du mail de la précommande,\n Veuillez nous excuser, si le paiement a bien été confirmé, veuillez nous contacter pour confirmer la commande. \n > Page Contact > :", error);
-    });
+  localStorage.setItem('mailData', JSON.stringify(mailData));
 }
