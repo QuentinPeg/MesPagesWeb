@@ -77,4 +77,5 @@ function decrementCartQuantity($id, $format, $plastifie)
     }
     mettreAJourNombreArticlesPanier();
 }
+
 ?>
