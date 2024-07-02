@@ -63,7 +63,7 @@
                 <a href="index.php"><button class="btn-retour">Voir d'autres
                         articles</button></a>
                 <button class="btn-ajouter-article"
-                    onclick="addToCart('Processus obstructif (UE 2.8 semestre 3)', 1)">Ajouter au
+                    onclick="addToCart('Processus obstructif (UE 2.8 semestre 3)', 1, 'A5', 'Non')">Ajouter au
                     panier</button>
             </section>
         </section>

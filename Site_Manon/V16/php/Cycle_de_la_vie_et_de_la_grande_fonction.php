@@ -50,7 +50,7 @@
             <section>
                 <a href="index.php"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <button class="btn-ajouter-article" onclick="addToCart('Cycle de la vie et grande fonction (UE 2.2 semestre 1)', 1)">Ajouter au
+                <button class="btn-ajouter-article" onclick="addToCart('Cycle de la vie et grande fonction (UE 2.2 semestre 1)', 1, 'A5', 'Non')">Ajouter au
                     panier</button>
             </section>
         </section>

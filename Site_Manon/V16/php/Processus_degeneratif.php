@@ -65,7 +65,7 @@
                 <a href="index.php"><button class="btn-retour">Voir d'autres
                         articles</button></a>
                 <button class="btn-ajouter-article"
-                    onclick="addToCart('Processus dégénératif (UE 2.7 semestre 4)', 1)">Ajouter au
+                    onclick="addToCart('Processus dégénératif (UE 2.7 semestre 4)', 1, 'A5', 'Non')">Ajouter au
                     panier</button>
             </section>
         </section>
