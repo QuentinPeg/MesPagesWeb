@@ -30,14 +30,17 @@ try {
         <ul id="panier-liste">
             <?php foreach ($cart as $productId => $details): ?>
                 <li>
-                    <?php echo $details['id'] . " (" . $details['format'] . " - " . $details['plastifie'] . ") : "; ?>
+                    <?php echo $details['id'] . "<br>(Format : " . $details['format'] . " - Plastifié : " . $details['plastifie'] . ") : "; ?>
                     <form style="display:inline;">
                         <input type="hidden" name="product_title" value="<?php echo $details['id']; ?>">
                         <input type="hidden" name="format" value="<?php echo $details['format']; ?>">
                         <input type="hidden" name="plastifie" value="<?php echo $details['plastifie']; ?>">
-                        <button type="button" class="btn-quantite" onclick="updateCart('decrement', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">-</button>
+                        <br>
+                        <button type="button" class="btn-quantite"
+                            onclick="updateCart('decrement', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">-</button>
                         <?php echo $details['quantity']; ?>
-                        <button type="button" class="btn-quantite" onclick="updateCart('increment', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">+</button>
+                        <button type="button" class="btn-quantite"
+                            onclick="updateCart('increment', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">+</button>
                     </form>
                 </li>
             <?php endforeach; ?>
@@ -52,14 +55,17 @@ try {
         ?>
         <!DOCTYPE html>
         <html lang="fr">
+
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Afficher le panier</title>
         </head>
+
         <body>
             <?php echo renderCart($cart); ?>
         </body>
+
         </html>
     <?php }
 } catch (Exception $e) {
@@ -67,7 +73,8 @@ try {
     error_log($e->getMessage());
 }
 
-function updateCartFormat($product_title, $new_format) {
+function updateCartFormat($product_title, $new_format)
+{
     foreach ($_SESSION['cart'] as &$item) {
         if ($item['id'] == $product_title) {
             $item['format'] = $new_format;
@@ -75,7 +82,8 @@ function updateCartFormat($product_title, $new_format) {
     }
 }
 
-function updateCartPlastifie($product_title, $new_plastifie) {
+function updateCartPlastifie($product_title, $new_plastifie)
+{
     foreach ($_SESSION['cart'] as &$item) {
         if ($item['id'] == $product_title) {
             $item['plastifie'] = $new_plastifie;
