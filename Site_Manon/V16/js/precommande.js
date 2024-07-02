@@ -362,22 +362,26 @@ function mettreAJourNombreArticlesPanier() {
     afficherRecapArticles();
 }
 
+
 function updateCart(action, productTitle, format, plastifie) {
     fetch('afficher_panier.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `action=${action}&product_title=${productTitle}&format=${format}&plastifie=${plastifie}`
+        body: `action=${action}&product_title=${encodeURIComponent(productTitle)}&format=${encodeURIComponent(format)}&plastifie=${encodeURIComponent(plastifie)}`
     })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('panier-liste').innerHTML = data;
-        })
-        .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
-    calculerTotal();
-
+    .then(response => response.json())
+    .then(cart => {
+        // Re-render the cart items
+        mettreAJourNombreArticlesPanier(); // Ensure this function is called to update the cart bubble
+        showCart();
+        calculerTotal(); // Recalculate the total
+    })
+    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
 }
+
+
 
 
 

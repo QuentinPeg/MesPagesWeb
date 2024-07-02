@@ -75,19 +75,37 @@ try {
 
 function updateCartFormat($product_title, $new_format)
 {
-    foreach ($_SESSION['cart'] as &$item) {
+    foreach ($_SESSION['cart'] as $key => $item) {
         if ($item['id'] == $product_title) {
+            // Construire la nouvelle clé avec le nouveau format
+            $new_key = $product_title . '-' . $new_format . '-' . $item['plastifie'];
+            // Mettre à jour l'article avec le nouveau format
             $item['format'] = $new_format;
+            // Supprimer l'ancienne entrée
+            unset($_SESSION['cart'][$key]);
+            // Ajouter l'article mis à jour avec la nouvelle clé
+            $_SESSION['cart'][$new_key] = $item;
+            break; // Sortir de la boucle une fois l'article trouvé et mis à jour
         }
     }
+    mettreAJourNombreArticlesPanier();
 }
 
 function updateCartPlastifie($product_title, $new_plastifie)
 {
-    foreach ($_SESSION['cart'] as &$item) {
+    foreach ($_SESSION['cart'] as $key => $item) {
         if ($item['id'] == $product_title) {
+            // Construire la nouvelle clé avec le nouveau plastifié
+            $new_key = $product_title . '-' . $item['format'] . '-' . $new_plastifie;
+            // Mettre à jour l'article avec le nouveau plastifié
             $item['plastifie'] = $new_plastifie;
+            // Supprimer l'ancienne entrée
+            unset($_SESSION['cart'][$key]);
+            // Ajouter l'article mis à jour avec la nouvelle clé
+            $_SESSION['cart'][$new_key] = $item;
+            break; // Sortir de la boucle une fois l'article trouvé et mis à jour
         }
     }
+    
+    mettreAJourNombreArticlesPanier();
 }
-?>
