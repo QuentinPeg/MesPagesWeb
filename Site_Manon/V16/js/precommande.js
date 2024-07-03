@@ -328,6 +328,7 @@ function clearCart() {
     })
         .then(response => response.text())
         .then(data => document.getElementById('panier-liste').innerHTML = data);
+    mettreAJourNombreArticlesPanier;
     mettreAJourNombreArticlesPanier();
 }
 // Mettre à jour le nombre d'articles dans la bulle du panier dans l'en-tête
@@ -376,6 +377,7 @@ function updateCart(action, productTitle, format, plastifie) {
         .then(data => {
             document.getElementById('panier-liste').innerHTML = data;
             calculerTotal(); // Assurez-vous que le total est recalculé après la mise à jour du panier
+            mettreAJourNombreArticlesPanier();
         })
         .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
 }
