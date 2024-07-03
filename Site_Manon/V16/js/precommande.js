@@ -311,12 +311,20 @@ function addToCart(id, quantity, format, plastifie) {
     calculerTotal();
 }
 function showCart() {
+    var precommandeFenetre = document.getElementById('precommande-fenetre');
     var modal = document.getElementById('panier-fenetre');
-    modal.style.display = 'block';
-    fetch('afficher_panier.php')
-        .then(response => response.text())
-        .then(data => document.getElementById('panier-liste').innerHTML = data);
-    calculerTotal();
+    if (window.getComputedStyle(precommandeFenetre).display === "none") {
+        modal.style.display = 'block';
+        fetch('afficher_panier.php')
+            .then(response => response.text())
+            .then(data => document.getElementById('panier-liste').innerHTML = data);
+        calculerTotal();
+    }
+    else{
+        modal.style.display = 'flex';
+        precommandeFenetre.style.display='none';
+
+    }
 }
 
 function clearCart() {
