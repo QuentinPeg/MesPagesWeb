@@ -88,7 +88,7 @@ function updateCartFormat($product_title, $new_format)
             break; // Sortir de la boucle une fois l'article trouvé et mis à jour
         }
     }
-    mettreAJourNombreArticlesPanier();
+    
 }
 
 function updateCartPlastifie($product_title, $new_plastifie)
@@ -106,6 +106,4 @@ function updateCartPlastifie($product_title, $new_plastifie)
             break; // Sortir de la boucle une fois l'article trouvé et mis à jour
         }
     }
-    
-    mettreAJourNombreArticlesPanier();
 }

@@ -364,6 +364,7 @@ function mettreAJourNombreArticlesPanier() {
 
 
 function updateCart(action, productTitle, format, plastifie) {
+    console.log(action, productTitle, format, plastifie)
     fetch('afficher_panier.php', {
         method: 'POST',
         headers: {
@@ -371,16 +372,13 @@ function updateCart(action, productTitle, format, plastifie) {
         },
         body: `action=${action}&product_title=${encodeURIComponent(productTitle)}&format=${encodeURIComponent(format)}&plastifie=${encodeURIComponent(plastifie)}`
     })
-    .then(response => response.json())
-    .then(cart => {
-        // Re-render the cart items
-        mettreAJourNombreArticlesPanier(); // Ensure this function is called to update the cart bubble
-        showCart();
-        calculerTotal(); // Recalculate the total
-    })
-    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('panier-liste').innerHTML = data;
+            calculerTotal(); // Assurez-vous que le total est recalculé après la mise à jour du panier
+        })
+        .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
 }
-
 
 
 
@@ -467,3 +465,4 @@ Array.from(boutonsSupprimerTout).forEach(function (bouton) {
             .catch(error => console.error('Erreur:', error));
     });
 });
+
