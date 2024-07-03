@@ -12,7 +12,16 @@ function afficherRecapArticles() {
         .then(data => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
-            const items = doc.querySelectorAll('li');
+            const items = Array.from(doc.querySelectorAll('li'));
+
+            // Trier les articles par titre de produit
+            items.sort((a, b) => {
+                const formA = a.querySelector('form');
+                const formB = b.querySelector('form');
+                const titleA = formA.querySelector('input[name="product_title"]').value.toLowerCase();
+                const titleB = formB.querySelector('input[name="product_title"]').value.toLowerCase();
+                return titleA.localeCompare(titleB);
+            });
 
             items.forEach(item => {
                 const form = item.querySelector('form');
@@ -79,6 +88,7 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
 
     return selectFormat;
 }
+
 
 function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
     var selectPlastifie = document.createElement('select');
