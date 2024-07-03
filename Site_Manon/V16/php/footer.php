@@ -56,7 +56,7 @@
             <input type="hidden" id="amount" name="amount" value="0">
 
             <div id="CarteBleu">
-                <span class="italique">*Pour toute information sur le fonctionnement du système de paiement utilisé ou
+                <span class="italique">Pour toute information sur le fonctionnement du système de paiement utilisé ou
                     pour atténuer vos craintes avant votre achat, n'hésitez pas à nous contacter via la
                     page <a href="contact.php" class="gras"> contact </a> ! (Réponse sous 1 jour)
                 </span>
