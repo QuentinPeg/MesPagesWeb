@@ -496,11 +496,6 @@ function mettreAJourNombreArticlesPanier() {
             });
             bullePanier.textContent = totalQuantity;
 
-            if (totalQuantity > 0) {
-                bullePanier.style.display = 'block';
-            } else {
-                bullePanier.style.display = 'none';
-            }
         })
         .catch(error => console.error("Erreur lors de la mise à jour du nombre d'articles :", error));
     afficherRecapArticles();
