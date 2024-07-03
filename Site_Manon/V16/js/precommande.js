@@ -1,6 +1,123 @@
-function fermerPrecommande() {
+/* Au chargement de la page*/
+var boutonsSupprimerTout = document.getElementsByClassName('btn-supprimer-tout');
+
+window.addEventListener('load', mettreAJourNombreArticlesPanier);
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('click', function (event) {
+        const panierLink = document.querySelector('.panier-link');
+        const panier = document.getElementById('panier-fenetre');
+
+        if (!panierLink.contains(event.target) && !panier.contains(event.target)) {
+            panier.style.display = 'none';
+        }
+    });
+
+    const panierLink = document.querySelector('.panier-link');
+    panierLink.addEventListener('click', function (event) {
+        const panier = document.getElementById('panier-fenetre');
+        panier.style.display = 'block';
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélectionner la div à supprimer en utilisant un sélecteur CSS
+    var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
+
+    // Vérifier si la div existe
+    if (divASupprimer) {
+        // Supprimer la div
+        divASupprimer.parentNode.removeChild(divASupprimer);
+    } else {
+        console.log("La div spécifiée n'existe pas.");
+    }
+});
+
+Array.from(boutonsSupprimerTout).forEach(function (bouton) {
+    bouton.addEventListener('click', function () {
+        fetch('afficher_panier.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'action=clear_cart'
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('panier-liste').innerHTML = data;
+                mettreAJourNombreArticlesPanier();
+            })
+            .catch(error => console.error('Erreur:', error));
+    });
+});
+
+window.addEventListener("scroll", function () {
+    var header = document.querySelector("header");
+    var h1 = document.querySelector("h1");
+    var a = document.querySelector("#entete>a");
+    var imgipage = document.querySelector("img");
+    var imgipanier = document.querySelector(".panier-link img");
+    var nb = document.querySelector(".nombre-articles-panier");
+    var panier = document.querySelector(".panier-fenetre");
+    var bulle = document.querySelector(".panier-bulle");
+
+    if (window.scrollY > 50) {
+        header.classList.add("shrink");
+        h1.classList.add("shrink");
+        a.classList.add("shrink");
+        imgipage.classList.add("shrink");
+        imgipanier.classList.add("shrink");
+        nb.classList.add("shrink");
+        panier.classList.add("shrink");
+        if (bulle !== null) {
+            bulle.classList.add("shrink");
+        }
+    } else {
+        header.classList.remove("shrink");
+        h1.classList.remove("shrink");
+        a.classList.remove("shrink");
+        imgipage.classList.remove("shrink");
+        imgipanier.classList.remove("shrink");
+        nb.classList.remove("shrink");
+        panier.classList.remove("shrink");
+        if (bulle !== null) {
+            bulle.classList.remove("shrink");
+        }
+    }
+});
+
+/* Les fontions de la précommande */
+
+function validerOuverturePreco(nombreArticles) {
+    if (nombreArticles === 0) {
+        alert('Votre panier est vide. Veuillez ajouter des articles.');
+        return false;
+    }
+
+    if (nombreArticles > 10) {
+        alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
+        return false;
+    }
+
+    return true;
+}
+
+function afficherPrecommande() {
+    var nombreArticles = obtenirNombreArticlesPanier();
+
+    if (!validerOuverturePreco(nombreArticles)) {
+        return;
+    }
+
     var precommandeFenetre = document.getElementById('precommande-fenetre');
-    precommandeFenetre.style.display = 'none';
+    var panierFenetre = document.getElementById('panier-fenetre');
+
+    masquerPanier();
+
+    precommandeFenetre.style.display = 'flex';
+    calculerTotal();
+
+    afficherRecapArticles();
 }
 
 function afficherRecapArticles() {
@@ -89,7 +206,6 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
     return selectFormat;
 }
 
-
 function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
     var selectPlastifie = document.createElement('select');
     selectPlastifie.setAttribute('data-nom', nom);
@@ -117,37 +233,6 @@ function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
     return selectPlastifie;
 }
 
-
-
-
-function calculerTotal() {
-    var total = 0;
-    // Récupérer tous les éléments de l'article dans le récapitulatif
-    const articles = document.querySelectorAll('#recap-articles > p');
-
-    articles.forEach(article => {
-        const id = article.id;
-        const quantity = parseInt(article.textContent.match(/\[(\d+)\]/)[1], 10);
-        const format = article.querySelector('select[data-format]').value;
-        const plastifie = article.querySelector('select[data-plastifie]').value;
-
-        // Utiliser l'ID pour extraire le nom de l'article pour obtenir le prix
-        const nomArticle = id.split('-')[0];
-        var prixUnitaire = obtenirPrixArticle(nomArticle, format);
-
-        // Appliquer la logique de plastification
-        if (plastifie === 'Oui') {
-            prixUnitaire += prixUnitaire * 0.10; // Augmentez le prix de 10% si plastifié
-        }
-
-        total += prixUnitaire * quantity;
-    });
-
-    // Mettre à jour le total dans l'élément HTML correspondant
-    document.getElementById('amount').value = total;
-    document.getElementById("prixTotal").textContent = formaterPrix(total);
-}
-
 function createOption(value, text, selectedValue) {
     var option = document.createElement('option');
     option.setAttribute('value', value);
@@ -158,10 +243,12 @@ function createOption(value, text, selectedValue) {
     return option;
 }
 
-function formaterPrix(prix) {
-    return prix % 1 !== 0 ? prix.toFixed(2).replace('.', ',') + ' €' : prix.toFixed(0) + ' €';
+function fermerPrecommande() {
+    var precommandeFenetre = document.getElementById('precommande-fenetre');
+    precommandeFenetre.style.display = 'none';
 }
 
+/* Les fonctions de prix */
 var articlesPrix = {
     'Pack intégral': {
         'A6': 250,
@@ -290,7 +377,40 @@ function obtenirPrixArticle(nomArticle, format) {
 
 }
 
-// Fonction pour ajouter un article au panier
+function calculerTotal() {
+    var total = 0;
+    // Récupérer tous les éléments de l'article dans le récapitulatif
+    const articles = document.querySelectorAll('#recap-articles > p');
+
+    articles.forEach(article => {
+        const id = article.id;
+        const quantity = parseInt(article.textContent.match(/\[(\d+)\]/)[1], 10);
+        const format = article.querySelector('select[data-format]').value;
+        const plastifie = article.querySelector('select[data-plastifie]').value;
+
+        // Utiliser l'ID pour extraire le nom de l'article pour obtenir le prix
+        const nomArticle = id.split('-')[0];
+        var prixUnitaire = obtenirPrixArticle(nomArticle, format);
+
+        // Appliquer la logique de plastification
+        if (plastifie === 'Oui') {
+            prixUnitaire += prixUnitaire * 0.10; // Augmentez le prix de 10% si plastifié
+        }
+
+        total += prixUnitaire * quantity;
+    });
+
+    // Mettre à jour le total dans l'élément HTML correspondant
+    document.getElementById('amount').value = total;
+    document.getElementById("prixTotal").textContent = formaterPrix(total);
+}
+
+function formaterPrix(prix) {
+    return prix % 1 !== 0 ? prix.toFixed(2).replace('.', ',') + ' €' : prix.toFixed(0) + ' €';
+}
+
+/* Les fonctions de Panier */
+
 function addToCart(id, quantity, format, plastifie) {
     fetch('index.php', {
         method: 'POST',
@@ -320,6 +440,7 @@ function addToCart(id, quantity, format, plastifie) {
         });
     calculerTotal();
 }
+
 function showCart() {
     var precommandeFenetre = document.getElementById('precommande-fenetre');
     var modal = document.getElementById('panier-fenetre');
@@ -337,19 +458,23 @@ function showCart() {
     }
 }
 
-function clearCart() {
-    const formData = new FormData();
-    formData.append('action', 'clear_cart');
+function updateCart(action, productTitle, format, plastifie) {
     fetch('afficher_panier.php', {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=${action}&product_title=${encodeURIComponent(productTitle)}&format=${encodeURIComponent(format)}&plastifie=${encodeURIComponent(plastifie)}`
     })
         .then(response => response.text())
-        .then(data => document.getElementById('panier-liste').innerHTML = data);
-    mettreAJourNombreArticlesPanier;
-    mettreAJourNombreArticlesPanier();
+        .then(data => {
+            document.getElementById('panier-liste').innerHTML = data;
+            calculerTotal(); // Assurez-vous que le total est recalculé après la mise à jour du panier
+            mettreAJourNombreArticlesPanier();
+        })
+        .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
 }
-// Mettre à jour le nombre d'articles dans la bulle du panier dans l'en-tête
+
 function mettreAJourNombreArticlesPanier() {
     var bullePanier = document.getElementById('panier-bulle');
 
@@ -381,66 +506,23 @@ function mettreAJourNombreArticlesPanier() {
     afficherRecapArticles();
 }
 
-
-function updateCart(action, productTitle, format, plastifie) {
-    fetch('afficher_panier.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `action=${action}&product_title=${encodeURIComponent(productTitle)}&format=${encodeURIComponent(format)}&plastifie=${encodeURIComponent(plastifie)}`
-    })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('panier-liste').innerHTML = data;
-            calculerTotal(); // Assurez-vous que le total est recalculé après la mise à jour du panier
-            mettreAJourNombreArticlesPanier();
-        })
-        .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
-}
-
-
-
-
-// Mettre à jour le nombre d'articles dans la bulle de l'en-tête au chargement de la page
-window.addEventListener('load', mettreAJourNombreArticlesPanier);
-
 function obtenirNombreArticlesPanier() {
     var bullePanier = document.getElementById('panier-bulle');
     var nombreArticles = parseInt(bullePanier.textContent, 10);
     return isNaN(nombreArticles) ? 0 : nombreArticles;
 }
 
-function afficherPrecommande() {
-    var nombreArticles = obtenirNombreArticlesPanier();
-
-    if (!validerOuverturePreco(nombreArticles)) {
-        return;
-    }
-
-    var precommandeFenetre = document.getElementById('precommande-fenetre');
-    var panierFenetre = document.getElementById('panier-fenetre');
-
-    masquerPanier();
-
-    precommandeFenetre.style.display = 'flex';
-    calculerTotal();
-
-    afficherRecapArticles();
-}
-
-function validerOuverturePreco(nombreArticles) {
-    if (nombreArticles === 0) {
-        alert('Votre panier est vide. Veuillez ajouter des articles.');
-        return false;
-    }
-
-    if (nombreArticles > 10) {
-        alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
-        return false;
-    }
-
-    return true;
+function clearCart() {
+    const formData = new FormData();
+    formData.append('action', 'clear_cart');
+    fetch('afficher_panier.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => document.getElementById('panier-liste').innerHTML = data);
+    mettreAJourNombreArticlesPanier;
+    mettreAJourNombreArticlesPanier();
 }
 
 function masquerPanier() {
@@ -448,90 +530,7 @@ function masquerPanier() {
     panierFenetre.style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('click', function (event) {
-        const panierLink = document.querySelector('.panier-link');
-        const panier = document.getElementById('panier-fenetre');
-
-        if (!panierLink.contains(event.target) && !panier.contains(event.target)) {
-            panier.style.display = 'none';
-        }
-    });
-
-    const panierLink = document.querySelector('.panier-link');
-    panierLink.addEventListener('click', function (event) {
-        const panier = document.getElementById('panier-fenetre');
-        panier.style.display = 'block';
-    });
-});
-
-var boutonsSupprimerTout = document.getElementsByClassName('btn-supprimer-tout');
-
-Array.from(boutonsSupprimerTout).forEach(function (bouton) {
-    bouton.addEventListener('click', function () {
-        fetch('afficher_panier.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'action=clear_cart'
-        })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('panier-liste').innerHTML = data;
-                mettreAJourNombreArticlesPanier();
-            })
-            .catch(error => console.error('Erreur:', error));
-    });
-});
-
-window.addEventListener("scroll", function () {
-    var header = document.querySelector("header");
-    var h1 = document.querySelector("h1");
-    var a = document.querySelector("#entete>a");
-    var imgipage = document.querySelector("img");
-    var imgipanier = document.querySelector(".panier-link img");
-    var nb = document.querySelector(".nombre-articles-panier");
-    var panier = document.querySelector(".panier-fenetre");
-    var bulle = document.querySelector(".panier-bulle");
-
-    if (window.scrollY > 50) {
-        header.classList.add("shrink");
-        h1.classList.add("shrink");
-        a.classList.add("shrink");
-        imgipage.classList.add("shrink");
-        imgipanier.classList.add("shrink");
-        nb.classList.add("shrink");
-        panier.classList.add("shrink");
-        if (bulle !== null) {
-            bulle.classList.add("shrink");
-        }
-    } else {
-        header.classList.remove("shrink");
-        h1.classList.remove("shrink");
-        a.classList.remove("shrink");
-        imgipage.classList.remove("shrink");
-        imgipanier.classList.remove("shrink");
-        nb.classList.remove("shrink");
-        panier.classList.remove("shrink");
-        if (bulle !== null) {
-            bulle.classList.remove("shrink");
-        }
-    }
-});
-// Attendre que le contenu de la page soit chargé
-document.addEventListener("DOMContentLoaded", function () {
-    // Sélectionner la div à supprimer en utilisant un sélecteur CSS
-    var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
-
-    // Vérifier si la div existe
-    if (divASupprimer) {
-        // Supprimer la div
-        divASupprimer.parentNode.removeChild(divASupprimer);
-    } else {
-        console.log("La div spécifiée n'existe pas.");
-    }
-});
+/* Les fonctions de carroussel */
 
 var carousel = document.getElementById('carousel');
 var scrollAmount = 0;
