@@ -59,7 +59,7 @@
                 <li>Plastifié : +10%</li>
             </ul>
             <section>
-                <a href="index.php"><button class="btn-retour">Voir d'autres
+                <a href="index.php" class="class-btn-retour"><button class="btn-retour">Voir d'autres
                         articles</button></a>
                 <button class="btn-ajouter-article"
                     onclick="addToCart('Processus traumatique (UE 2.4 semestre 1)', 1, 'A5', 'Non')">Ajouter au

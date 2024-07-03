@@ -44,7 +44,7 @@ article>section>section {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 25px;
+    gap: 15%;
 }
 
 /* Style ddu carroussel*/
@@ -139,12 +139,17 @@ section>a{
     max-height: 1000px;
     transition: max-height 0.5s ease-in;
 }
+.class-btn-retour{
+    width: 20% !important;
+    min-width: 70px;
+}
 
 .btn-retour {
     display: flex;
     width: fit-content;
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 100%;
     padding: 12px;
     background-color: #3498db;
     color: #fff;
@@ -160,6 +165,8 @@ section>a{
 }
 
 .btn-ajouter-article {
+    min-width: 70px;
+    width: 20% !important;
     display: flex;
     justify-content: center;
     align-items: center;

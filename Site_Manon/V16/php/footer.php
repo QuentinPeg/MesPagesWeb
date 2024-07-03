@@ -57,8 +57,8 @@
 
             <div id="CarteBleu">
                 <span class="italique">*Pour toute information sur le fonctionnement du système de paiement utilisé ou
-                    pour atténuer vos craintes avant votre achat, n'hésitez pas à nous contacter avant votre achat via la
-                    page <a href="contact.php" class="gras"> contact </> ! (Réponse sous 1 jour)
+                    pour atténuer vos craintes avant votre achat, n'hésitez pas à nous contacter via la
+                    page <a href="contact.php" class="gras"> contact </a> ! (Réponse sous 1 jour)
                 </span>
                 <div id="card-number-element"></div>
                 <div id="CB2">
