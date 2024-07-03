@@ -467,4 +467,3 @@ Array.from(boutonsSupprimerTout).forEach(function (bouton) {
             .catch(error => console.error('Erreur:', error));
     });
 });
-
