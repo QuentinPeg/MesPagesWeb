@@ -557,6 +557,7 @@ footer>div>span>img {
 .StripeElement {
     box-sizing: border-box;
     height: 40px;
+    width: 190.22px;
     padding: 8px 12px;
     /* Ajustez le padding pour correspondre à vos champs de saisie */
     border: 1px solid black;
@@ -586,9 +587,31 @@ footer>div>span>img {
     background-color: #fefde5 !important;
 }
 
+.italique{
+    color: gray;
+    font-style: italic;
+    height: fit-content;
+    font-size: smaller;
+}
+
+#CarteBleu{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#card-number-element{
+    width: 400px;
+}
 
 
-
+#CB2{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
 /* Style pour la fenêtre modale du panier */
 #cartModal {
     position: fixed !important;

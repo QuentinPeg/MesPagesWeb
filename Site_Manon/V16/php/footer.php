@@ -54,10 +54,19 @@
             </section>
             <hr>
             <input type="hidden" id="amount" name="amount" value="0">
-            <div id="card-number-element"></div>
-            <div id="card-expiry-element"></div>
-            <div id="card-cvc-element"></div>
-            <div id="card-errors" role="alert"></div>
+
+            <div id="CarteBleu">
+                <span class="italique">*Pour toute information sur le fonctionnement du système de paiement utilisé ou
+                    pour atténuer vos craintes avant votre achat, n'hésitez pas à nous contacter avant votre achat via la
+                    page <a href="contact.php" class="gras"> contact </> ! (Réponse sous 1 jour)
+                </span>
+                <div id="card-number-element"></div>
+                <div id="CB2">
+                    <div id="card-expiry-element"></div>
+                    <div id="card-cvc-element"></div>
+                </div>
+                <div id="card-errors" role="alert"></div>
+            </div>
             <section id="section-bouton">
                 <button type="button" class="btn-fermer" onclick="fermerPrecommande()">Fermer</button>
                 <div id="prixTotal">Total : <span>0 euros</span></div>
