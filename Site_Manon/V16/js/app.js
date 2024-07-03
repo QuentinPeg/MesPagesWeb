@@ -72,6 +72,7 @@ let mailData = null;
 function chargerMail() {
   let nom = document.querySelector("#Nom").value;
   let prenom = document.querySelector("#Prénom").value;
+  let civilité = document.querySelector("#civilite").value;
   let email = document.querySelector("#Email").value;
   let numero = document.querySelector("#numero").value;
   let adresse = document.querySelector("#Adresse").value;
@@ -80,6 +81,12 @@ function chargerMail() {
   let prixTotal = document.querySelector("#prixTotal").textContent;
   const articles = document.querySelectorAll('#recap-articles > p');
   let recapArticles = "";
+
+  if (civilité == "homme") {
+    civilité = "Mr";
+  } else if (civilité == "femme") {
+    civilité = "Mme";
+  }
 
   articles.forEach(article => {
     let pack = article.id.split('-')[0].trim();
@@ -95,7 +102,7 @@ function chargerMail() {
   });
 
   let message = `
-Vente de ${nom} ${prenom},
+Vente de ${civilité} ${nom} ${prenom},
 
 Récapitulatif des articles :
 ${recapArticles}

@@ -28,25 +28,32 @@
             </section>
             <section>
                 <div class="grp">
+                    <label for="civilite">Civilité :</label>
+                    <select id="civilite" name="civilite" required>
+                        <option value="homme">Homme</option>
+                        <option value="femme">Femme</option>
+                    </select>
+                </div>
+                <div class="grp">
                     <label for="Email">Email :</label>
                     <input type="email" id="Email" name="Email" placeholder="Email*" required>
                 </div>
+            </section>
+            <section>
                 <div class="grp">
                     <label for="numero">Numéro de téléphone :</label>
                     <input type="tel" id="numero" name="numero" placeholder="Numéro de téléphone*" required>
                 </div>
-            </section>
-            <section>
                 <div class="grp">
                     <label for="Adresse">Adresse : </label>
                     <input type="text" id="Adresse" name="Adresse" placeholder="Adresse*" required>
                 </div>
+            </section>
+            <section>
                 <div class="grp">
                     <label for="CodePostale">Code Postale :</label>
                     <input type="text" id="CodePostale" name="Code_Postale" placeholder="Code Postale*" required>
                 </div>
-            </section>
-            <section>
                 <div class="grp">
                     <label for="Ville">Ville :</label>
                     <input type="text" id="Ville" name="Ville" placeholder="Ville*" required>

@@ -365,7 +365,6 @@ function mettreAJourNombreArticlesPanier() {
 
 
 function updateCart(action, productTitle, format, plastifie) {
-    console.log(action, productTitle, format, plastifie)
     fetch('afficher_panier.php', {
         method: 'POST',
         headers: {
