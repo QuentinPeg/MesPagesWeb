@@ -24,30 +24,34 @@ try {
     $cart = getCart();
 
     function renderCart($cart)
-    {
-        ob_start();
-        ?>
-        <ul id="panier-liste">
-            <?php foreach ($cart as $productId => $details): ?>
-                <li>
-                    <?php echo $details['id'] . "<br>(Format : " . $details['format'] . " - Plastifié : " . $details['plastifie'] . ") : "; ?>
-                    <form style="display:inline;">
-                        <input type="hidden" name="product_title" value="<?php echo $details['id']; ?>">
-                        <input type="hidden" name="format" value="<?php echo $details['format']; ?>">
-                        <input type="hidden" name="plastifie" value="<?php echo $details['plastifie']; ?>">
-                        <br>
-                        <button type="button" class="btn-quantite"
-                            onclick="updateCart('decrement', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">-</button>
-                        <?php echo $details['quantity']; ?>
-                        <button type="button" class="btn-quantite"
-                            onclick="updateCart('increment', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">+</button>
-                    </form>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-        <?php
-        return ob_get_clean();
-    }
+{
+    ob_start();
+    // Trier le panier par ordre alphabétique de l'id
+    uasort($cart, function($a, $b) {
+        return strcmp($a['id'], $b['id']);
+    });
+    ?>
+    <ul id="panier-liste">
+        <?php foreach ($cart as $productId => $details): ?>
+            <li>
+                <?php echo $details['id'] . "<br>(Format : " . $details['format'] . " - Plastifié : " . $details['plastifie'] . ") : "; ?>
+                <form style="display:inline;">
+                    <input type="hidden" name="product_title" value="<?php echo $details['id']; ?>">
+                    <input type="hidden" name="format" value="<?php echo $details['format']; ?>">
+                    <input type="hidden" name="plastifie" value="<?php echo $details['plastifie']; ?>">
+                    <br>
+                    <button type="button" class="btn-quantite"
+                        onclick="updateCart('decrement', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">-</button>
+                    <?php echo $details['quantity']; ?>
+                    <button type="button" class="btn-quantite"
+                        onclick="updateCart('increment', '<?php echo $details['id']; ?>', '<?php echo $details['format']; ?>', '<?php echo $details['plastifie']; ?>')">+</button>
+                </form>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php
+    return ob_get_clean();
+}
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo renderCart($cart);

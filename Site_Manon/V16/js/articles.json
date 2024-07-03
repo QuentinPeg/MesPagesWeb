@@ -2,7 +2,7 @@
     {
         "id": "packintegrale",
         "imageSrc": "../Images/Pack_integral.png",
-        "titre": "Pack intégral",
+        "titre": "Pack Intégral",
         "prix": {
             "A6": 250.00,
             "A5": 290.00
@@ -79,7 +79,7 @@
     {
         "id": "cyclevie",
         "imageSrc": "../Images/Cycle_de_la_vie.png",
-        "titre": "Cycle de la vie et grande fonction (UE 2.2 semestre 1)",
+        "titre": "Cycle De La Vie Et Grande Fonction (UE 2.2 semestre 1)",
         "prix": {
             "A6": 30.00,
             "A5": 38.00
@@ -90,7 +90,7 @@
     {
         "id": "biologiefondamentale",
         "imageSrc": "../Images/Biologie_fondamental.png",
-        "titre": "Biologie fondamentale (UE 2.1 semestre 1)",
+        "titre": "Biologie Fondamentale (UE 2.1 semestre 1)",
         "prix": {
             "A6": 20.00,
             "A5": 28.00
@@ -101,7 +101,7 @@
     {
         "id": "processtraumatique",
         "imageSrc": "../Images/Processus_trauma.png",
-        "titre": "Processus traumatique (UE 2.4 semestre 1)",
+        "titre": "Processus Traumatique (UE 2.4 semestre 1)",
         "prix": {
             "A6": 23.00,
             "A5": 31.00
@@ -112,7 +112,7 @@
     {
         "id": "processuspsychopathologique1",
         "imageSrc": "../Images/Prcessus_psychoS2.png",
-        "titre": "Processus psychopathologique (UE 2.6 semestre 2)",
+        "titre": "Processus Psychopathologique (UE 2.6 semestre 2)",
         "prix": {
             "A6": 38.00,
             "A5": 30.00
@@ -123,7 +123,7 @@
     {
         "id": "processuspsychopathologique2",
         "imageSrc": "../Images/Prcessus_psychoS5.png",
-        "titre": "Processus psychopathologique (UE 2.6 semestre 5)",
+        "titre": "Processus Psychopathologique (UE 2.6 semestre 5)",
         "prix": {
             "A6": 26.00,
             "A5": 18.00
@@ -134,7 +134,7 @@
     {
         "id": "processusobstructif",
         "imageSrc": "../Images/Processus_obstructif.png",
-        "titre": "Processus obstructif (UE 2.8 semestre 3)",
+        "titre": "Processus Obstructif (UE 2.8 semestre 3)",
         "prix": {
             "A6": 17.00,
             "A5": 25.00
@@ -145,7 +145,7 @@
     {
         "id": "processusinfectieux",
         "imageSrc": "../Images/Processus_infectieux.png",
-        "titre": "Processus infectieux (UE 2.5 semestre 3)",
+        "titre": "Processus Infectieux (UE 2.5 semestre 3)",
         "prix": {
             "A6": 38.00,
             "A5": 46.00
@@ -156,7 +156,7 @@
     {
         "id": "processusdegeneratif",
         "imageSrc": "../Images/Processus_degeneratif.png",
-        "titre": "Processus dégénératif (UE 2.7 semestre 4)",
+        "titre": "Processus Dégénératif (UE 2.7 semestre 4)",
         "prix": {
             "A6": 30.00,
             "A5": 38.00
@@ -167,7 +167,7 @@
     {
         "id": "processustumoraux",
         "imageSrc": "../Images/Processus_tumoraux.png",
-        "titre": "Processus tumoraux (UE 2.9 semestre 5)",
+        "titre": "Processus Tumoraux (UE 2.9 semestre 5)",
         "prix": {
             "A6": 35.00,
             "A5": 43.00
