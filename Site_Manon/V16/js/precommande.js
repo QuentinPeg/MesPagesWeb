@@ -320,9 +320,9 @@ function showCart() {
             .then(data => document.getElementById('panier-liste').innerHTML = data);
         calculerTotal();
     }
-    else{
+    else {
         modal.style.display = 'flex';
-        precommandeFenetre.style.display='none';
+        precommandeFenetre.style.display = 'none';
 
     }
 }
@@ -474,3 +474,93 @@ Array.from(boutonsSupprimerTout).forEach(function (bouton) {
             .catch(error => console.error('Erreur:', error));
     });
 });
+
+window.addEventListener("scroll", function () {
+    var header = document.querySelector("header");
+    var h1 = document.querySelector("h1");
+    var a = document.querySelector("#entete>a");
+    var imgipage = document.querySelector("img");
+    var imgipanier = document.querySelector(".panier-link img");
+    var nb = document.querySelector(".nombre-articles-panier");
+    var panier = document.querySelector(".panier-fenetre");
+    var bulle = document.querySelector(".panier-bulle");
+
+    if (window.scrollY > 50) {
+        header.classList.add("shrink");
+        h1.classList.add("shrink");
+        a.classList.add("shrink");
+        imgipage.classList.add("shrink");
+        imgipanier.classList.add("shrink");
+        nb.classList.add("shrink");
+        panier.classList.add("shrink");
+        if (bulle !== null) {
+            bulle.classList.add("shrink");
+        }
+    } else {
+        header.classList.remove("shrink");
+        h1.classList.remove("shrink");
+        a.classList.remove("shrink");
+        imgipage.classList.remove("shrink");
+        imgipanier.classList.remove("shrink");
+        nb.classList.remove("shrink");
+        panier.classList.remove("shrink");
+        if (bulle !== null) {
+            bulle.classList.remove("shrink");
+        }
+    }
+});
+// Attendre que le contenu de la page soit chargé
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélectionner la div à supprimer en utilisant un sélecteur CSS
+    var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
+
+    // Vérifier si la div existe
+    if (divASupprimer) {
+        // Supprimer la div
+        divASupprimer.parentNode.removeChild(divASupprimer);
+    } else {
+        console.log("La div spécifiée n'existe pas.");
+    }
+});
+
+var carousel = document.getElementById('carousel');
+var scrollAmount = 0;
+var scrollTime = 10000; // Temps de défilement en millisecondes
+
+function rotateImages() {
+    scrollAmount++;
+    if (scrollAmount >= carousel.childElementCount) {
+        scrollAmount = 0;
+    }
+    carousel.scrollTo({
+        top: 0,
+        left: scrollAmount * carousel.offsetWidth,
+        behavior: 'smooth'
+    });
+}
+
+function prevImage() {
+    scrollAmount--;
+    if (scrollAmount < 0) {
+        scrollAmount = carousel.childElementCount - 1;
+    }
+    carousel.scrollTo({
+        top: 0,
+        left: scrollAmount * carousel.offsetWidth,
+        behavior: 'smooth'
+    });
+}
+
+function nextImage() {
+    scrollAmount++;
+    if (scrollAmount >= carousel.childElementCount) {
+        scrollAmount = 0;
+    }
+    carousel.scrollTo({
+        top: 0,
+        left: scrollAmount * carousel.offsetWidth,
+        behavior: 'smooth'
+    });
+}
+
+setInterval(rotateImages, scrollTime);
