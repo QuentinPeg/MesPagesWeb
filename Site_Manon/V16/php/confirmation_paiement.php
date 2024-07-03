@@ -5,7 +5,8 @@
 
 <main>
     <h1>Merci de votre commande</h1>
-    <p>Votre commande a été acceptée, elle sera préparée et envoyée au cours de la semaine, nous vous recontacterons si nécessaire...</p>
+    <p>Votre commande a été acceptée, elle sera préparée et envoyée au cours de la semaine, nous vous recontacterons si
+        nécessaire...</p>
     <a href="index.php">
         <img src="../Images/Logolescahiersduneinfirmiere.jpg" alt="Les cahiers d'une infirmière"></a>
 
@@ -17,6 +18,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         envoyerMail();
+        storedMailData='';
+        clearCart()
     });
 
     function envoyerMail() {
