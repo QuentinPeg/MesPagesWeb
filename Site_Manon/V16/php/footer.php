@@ -77,7 +77,7 @@
             <section id="section-bouton">
                 <button type="button" class="btn-fermer" onclick="fermerPrecommande()">Fermer</button>
                 <div id="prixTotal">Total : <span>0 euros</span></div>
-                <button type="submit">Payer</button>
+                <button type="submit" class="btn-payer">Payer</button>
             </section>
         </form>
     </div>

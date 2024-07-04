@@ -147,12 +147,36 @@ function afficherRecapArticles() {
                     const format = form.querySelector('input[name="format"]').value;
                     const plastifie = form.querySelector('input[name="plastifie"]').value;
                     const quantity = parseInt(form.textContent.match(/\d+/)[0], 10);
+                    const premdiv = document.createElement('span');
+                    premdiv.style.width = '255px';
 
-                    const articleText = `[${quantity}] x ${productTitle}`;
+                    // Créer les boutons d'augmentation et de diminution
+                    const btnDecrease = document.createElement('button');
+                    btnDecrease.textContent = '-';
+                    const btnIncrease = document.createElement('button');
+                    btnIncrease.textContent = '+';
+
+                    // Ajouter des écouteurs d'événements aux boutons
+                    btnDecrease.addEventListener('click', function () {
+                        updateCart('decrement', productTitle, format, plastifie);
+                    });
+                    btnIncrease.addEventListener('click', function () {
+                        updateCart('increment', productTitle, format, plastifie);
+                    });
+
+                    // Créer des nœuds de texte pour quantité et titre
+                    const textQuantite = document.createTextNode(`[${quantity}]`);
+                    const textTitre = document.createTextNode(` x ${productTitle}`);
+
+                    btnDecrease.className='btn-quantite'
+                    btnIncrease.className='btn-quantite'
+                    premdiv.appendChild(btnDecrease);
+                    premdiv.appendChild(textQuantite);
+                    premdiv.appendChild(btnIncrease);
+                    premdiv.appendChild(textTitre);
 
                     const articleElement = document.createElement('p');
                     articleElement.id = `${productTitle}-${format}-${plastifie}`;
-                    articleElement.textContent = articleText;
 
                     const labelFormat = document.createElement('label');
                     labelFormat.textContent = 'Format :';
@@ -165,10 +189,24 @@ function afficherRecapArticles() {
                     selectFormat.setAttribute('data-format', format);
                     selectPlastifie.setAttribute('data-plastifie', plastifie);
 
+                    var prixArticle = obtenirPrixArticle(productTitle, format);
+                    // Appliquer la logique de plastification
+                    if (plastifie === 'Oui') {
+                        prixArticle += prixArticle * 0.10;
+                    }
+                    var prixTotArticle = quantity * prixArticle;
+
+                    // Créer un élément pour afficher le prix total par ligne
+                    const prixTotArticleElement = document.createElement('span');
+                    prixTotArticleElement.textContent = formaterPrix(prixTotArticle);
+                    prixTotArticleElement.style.width = '71px'; // Définir la largeur de l'élément à 71px
+
+                    articleElement.appendChild(premdiv);
                     articleElement.appendChild(labelFormat);
                     articleElement.appendChild(selectFormat);
                     articleElement.appendChild(labelPlastifie);
                     articleElement.appendChild(selectPlastifie);
+                    articleElement.appendChild(prixTotArticleElement); // Ajouter le prix total comme élément de texte
 
                     recapArticlesDiv.appendChild(articleElement);
                 }
@@ -176,8 +214,9 @@ function afficherRecapArticles() {
         })
         .catch(error => console.error("Erreur lors du chargement des articles :", error));
 
-    calculerTotal;
+    calculerTotal();
 }
+
 
 function createFormatSelect(nom, quantite, key, selectedFormat) {
     var selectFormat = document.createElement('select');
