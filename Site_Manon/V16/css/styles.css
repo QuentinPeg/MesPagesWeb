@@ -325,7 +325,8 @@ label {
     margin-bottom: 8px;
 }
 
-.precommande-contenu input, #civilite {
+.precommande-contenu input,
+#civilite {
     width: 100%;
     height: 35px;
     padding: 8px;
@@ -522,10 +523,10 @@ footer>div>span>img {
 
     #recap-articles {
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: column;
         max-height: none;
         gap: 10px;
+        padding-bottom: 50px;
         /* justify-content: center;*/
     }
 
@@ -551,6 +552,22 @@ footer>div>span>img {
     form>section:last-child {
         flex-direction: row;
     }
+
+    .StripeElement {
+        width: 180px !important;
+    }
+
+    #card-number-element {
+        width: 180px !important;
+    }
+
+
+    #CB2 {
+        display: flex;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
 }
 
 
@@ -591,14 +608,14 @@ footer>div>span>img {
     background-color: #fefde5 !important;
 }
 
-.italique{
+.italique {
     color: gray;
     font-style: italic;
     height: fit-content;
     font-size: smaller;
 }
 
-#CarteBleu{
+#CarteBleu {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -606,16 +623,17 @@ footer>div>span>img {
     gap: 10px;
 }
 
-#card-number-element{
+#card-number-element {
     width: 400px;
 }
 
 
-#CB2{
+#CB2 {
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
+
 /* Style pour la fenêtre modale du panier */
 #cartModal {
     position: fixed !important;
@@ -663,27 +681,34 @@ footer>div>span>img {
 
 }
 
-#panier-liste{
+#panier-liste {
     padding-left: 0;
 }
 
-#panier-liste ul{
-   padding-left: 5px;
+#panier-liste ul {
+    padding-left: 5px;
 }
 
 /* Styling pour les boutons + et - */
 .btn-quantite {
-    background-color: var(--header-bg-color); /* Couleur de fond */
+    background-color: var(--header-bg-color);
+    /* Couleur de fond */
     border: #000 solid 1px;
-    color: black; /* Couleur du texte */
-    text-align: center; /* Alignement du texte */
-  
-    margin: 4px 2px; /* Marge autour du bouton */
-    cursor: pointer; /* Curseur pointeur */
-border-radius: 4px; /* Bordure arrondie */
+    color: black;
+    /* Couleur du texte */
+    text-align: center;
+    /* Alignement du texte */
+
+    margin: 4px 2px;
+    /* Marge autour du bouton */
+    cursor: pointer;
+    /* Curseur pointeur */
+    border-radius: 4px;
+    /* Bordure arrondie */
 }
 
 /* Styling pour les boutons + et - au survol */
 .btn-quantite:hover {
-    background-color: var(--main-bg-color); /* Couleur de fond au survol */
+    background-color: var(--main-bg-color);
+    /* Couleur de fond au survol */
 }
