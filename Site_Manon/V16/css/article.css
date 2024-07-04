@@ -35,6 +35,14 @@ article {
 
 }
 
+/* Media Query pour les appareils mobiles */
+@media only screen and (max-width: 600px) {
+    article{
+        height:fit-content;
+        min-height: fit-content;
+    }
+}
+
 header>a {
     color: black;
     font-size: medium;
