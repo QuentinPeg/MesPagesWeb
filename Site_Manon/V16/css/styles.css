@@ -707,6 +707,12 @@ section>a {
 
     }
 
+    .premdiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     form>section {
         flex-direction: column;
     }

@@ -114,8 +114,8 @@
         "imageSrc": "../Images/Prcessus_psychoS2.png",
         "titre": "Processus Psychopathologique (UE 2.6 semestre 2)",
         "prix": {
-            "A6": 38.00,
-            "A5": 30.00
+            "A6": 30.00,
+            "A5": 38.00
         },
         "lien": "Processus_psychopathologique_S2.php",
         "estPack": false

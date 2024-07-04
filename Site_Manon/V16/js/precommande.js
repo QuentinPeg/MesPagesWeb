@@ -121,6 +121,7 @@ function afficherPrecommande() {
 }
 
 function afficherRecapArticles() {
+    calculerTotal();
     var recapArticlesDiv = document.getElementById('recap-articles');
     recapArticlesDiv.textContent = '';
 
@@ -148,7 +149,8 @@ function afficherRecapArticles() {
                     const plastifie = form.querySelector('input[name="plastifie"]').value;
                     const quantity = parseInt(form.textContent.match(/\d+/)[0], 10);
                     const premdiv = document.createElement('span');
-                    premdiv.style.width = '255px';
+                    const divquantite = document.createElement('span');
+                    premdiv.style.maxWidth = '255px';
 
                     // Créer les boutons d'augmentation et de diminution
                     const btnDecrease = document.createElement('button');
@@ -158,21 +160,44 @@ function afficherRecapArticles() {
 
                     // Ajouter des écouteurs d'événements aux boutons
                     btnDecrease.addEventListener('click', function () {
+                        const currentQuantity = parseInt(divquantite.getAttribute('data-quantity'), 10);
+                        console.log(divquantite.getAttribute('data-quantity'))
+                        divquantite.setAttribute('data-quantity', currentQuantity - 1);
+                        console.log(divquantite.getAttribute('data-quantity'))
+
+                        // this.previousElementSibling.textContent = `[${currentQuantity - 1}]`;
+                        console.log(currentQuantity)
                         updateCart('decrement', productTitle, format, plastifie);
+                        calculerTotal(); // Recalculate the total
                     });
+
                     btnIncrease.addEventListener('click', function () {
+                        const currentQuantity = parseInt(divquantite.getAttribute('data-quantity'), 10);
+                        divquantite.setAttribute('data-quantity', currentQuantity + 1);
+                        this.previousElementSibling.textContent = `[${currentQuantity + 1}]`;
+                        console.log(currentQuantity);
                         updateCart('increment', productTitle, format, plastifie);
+                        calculerTotal(); // Recalculate the total
                     });
+
 
                     // Créer des nœuds de texte pour quantité et titre
+                    // Lors de la création de la quantité
                     const textQuantite = document.createTextNode(`[${quantity}]`);
-                    const textTitre = document.createTextNode(` x ${productTitle}`);
+                    divquantite.setAttribute('data-quantity', quantity);
+                    const textfois = document.createElement('span');
+                    textfois.textContent = ' x ';
+                    const textTitre = document.createTextNode(`${productTitle}`);
 
-                    btnDecrease.className='btn-quantite'
-                    btnIncrease.className='btn-quantite'
-                    premdiv.appendChild(btnDecrease);
-                    premdiv.appendChild(textQuantite);
-                    premdiv.appendChild(btnIncrease);
+                    premdiv.className = 'premdiv';
+                    btnDecrease.className = 'btn-quantite';
+                    btnIncrease.className = 'btn-quantite';
+                    divquantite.appendChild(btnDecrease);
+                    divquantite.appendChild(textQuantite);
+                    divquantite.appendChild(btnIncrease);
+                    divquantite.style.width = 'fit-content';
+                    premdiv.appendChild(divquantite);
+                    premdiv.appendChild(textfois);
                     premdiv.appendChild(textTitre);
 
                     const articleElement = document.createElement('p');
@@ -214,9 +239,8 @@ function afficherRecapArticles() {
         })
         .catch(error => console.error("Erreur lors du chargement des articles :", error));
 
-    calculerTotal();
-}
 
+}
 
 function createFormatSelect(nom, quantite, key, selectedFormat) {
     var selectFormat = document.createElement('select');
@@ -240,7 +264,7 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
         // Update cart with new format
         updateCart('update_format', nom, selectedFormat, plastifie);
     });
-    calculerTotal;
+
 
     return selectFormat;
 }
@@ -267,7 +291,6 @@ function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
         // Update cart with new plastification
         updateCart('update_plastifie', nom, format, selectedPlastifie);
     });
-    calculerTotal;
 
     return selectPlastifie;
 }
@@ -418,17 +441,18 @@ function obtenirPrixArticle(nomArticle, format) {
 
 function calculerTotal() {
     var total = 0;
-    // Récupérer tous les éléments de l'article dans le récapitulatif
+    // Sélectionner tous les éléments p dans le div recap-articles
     const articles = document.querySelectorAll('#recap-articles > p');
 
     articles.forEach(article => {
-        const id = article.id;
-        const quantity = parseInt(article.textContent.match(/\[(\d+)\]/)[1], 10);
+        // Récupérer le dernier span dans chaque p
+        const quantitySpan = article.querySelector('.premdiv span[data-quantity]');
+        const quantity = parseInt(quantitySpan.getAttribute('data-quantity'), 10);
         const format = article.querySelector('select[data-format]').value;
         const plastifie = article.querySelector('select[data-plastifie]').value;
 
         // Utiliser l'ID pour extraire le nom de l'article pour obtenir le prix
-        const nomArticle = id.split('-')[0];
+        const nomArticle = article.id.split('-')[0];
         var prixUnitaire = obtenirPrixArticle(nomArticle, format);
 
         // Appliquer la logique de plastification
@@ -438,12 +462,12 @@ function calculerTotal() {
 
         total += prixUnitaire * quantity;
     });
-    console.log(total)
 
     // Mettre à jour le total dans l'élément HTML correspondant
     document.getElementById('amount').value = total;
     document.getElementById("prixTotal").textContent = formaterPrix(total);
 }
+
 
 function formaterPrix(prix) {
     return prix % 1 !== 0 ? prix.toFixed(2).replace('.', ',') + ' €' : prix.toFixed(0) + ' €';
@@ -489,13 +513,12 @@ function showCart() {
         fetch('afficher_panier.php')
             .then(response => response.text())
             .then(data => document.getElementById('panier-liste').innerHTML = data);
-        calculerTotal();
     }
     else {
         modal.style.display = 'flex';
         precommandeFenetre.style.display = 'none';
-
     }
+    calculerTotal();
 }
 
 function updateCart(action, productTitle, format, plastifie) {
@@ -509,10 +532,12 @@ function updateCart(action, productTitle, format, plastifie) {
         .then(response => response.text())
         .then(data => {
             document.getElementById('panier-liste').innerHTML = data;
-            calculerTotal(); // Assurez-vous que le total est recalculé après la mise à jour du panier
+
             mettreAJourNombreArticlesPanier();
         })
         .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
+
+    calculerTotal();
 }
 
 function mettreAJourNombreArticlesPanier() {
@@ -565,7 +590,6 @@ function masquerPanier() {
     panierFenetre.style.display = 'none';
 }
 
-/* Les fonctions de carroussel */
 /* Les fonctions de carroussel */
 
 var carousel = document.getElementById('carousel');
