@@ -9,6 +9,7 @@ header>a {
 main {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 article {
@@ -22,7 +23,7 @@ article {
     margin: 10px;
     width: 45vw;
     height: fit-content;
-    min-height: 580px;
+    min-height: fit-content;
     min-width: 300px;
 
 }
