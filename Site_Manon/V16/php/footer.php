@@ -107,6 +107,8 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="../js/app.js"></script>
+<script src="../js/precommande.js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
 </body>
 

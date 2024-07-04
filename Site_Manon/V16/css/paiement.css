@@ -1,3 +1,4 @@
+/* MAIN*/
 main {
     display: flex;
     flex-direction: column;
@@ -6,39 +7,6 @@ main {
 
 main>a>img {
     width: 150px;
-}
-
-#entcontact {
-    text-align: left;
-    padding: 25px 0px 25px 0px;
-    transition: font-size 0.3s ease;
-
-}
-
-#entcontact>a {
-    color: black;
-    font-size: medium;
-    transition: font-size 0.3s ease;
-    padding-right: 25px;
-}
-
-.btn-retour {
-    display: flex;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 12px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-}
-
-.btn-retour:hover {
-    background-color: #2980b9;
 }
 
 .contact-form {
@@ -73,6 +41,26 @@ main>a>img {
     max-width: 95%;
     max-height: 100px;
 
+}
+
+/* BOUTON */
+.btn-retour {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+}
+
+.btn-retour:hover {
+    background-color: #2980b9;
 }
 
 .submit-btn {

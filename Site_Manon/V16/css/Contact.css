@@ -1,34 +1,21 @@
-.mailcontact {
-    font-weight: bold;
-}
-
-.contact {
-    text-align: left;
-    padding: 25px 0px 25px 0px;
-    transition: font-size 0.3s ease;
-
-}
-
-#entcontact {
-    padding-right: 15px;
-    transition: font-size 0.3s ease;
-
-}
-
-#entcontact>a {
-    color: black;
-    font-size: medium;
-    transition: font-size 0.3s ease;
-}
-
+/* HEADER */
 header>a {
     color: black;
     font-size: medium;
     transition: font-size 0.3s ease;
 }
 
-#entcontact>a.shrink {
-    font-size: small;
+/* MAIN */
+.mailcontact {
+    font-weight: bold;
+}
+
+
+.contact {
+    text-align: left;
+    padding: 25px 0px 25px 0px;
+    transition: font-size 0.3s ease;
+
 }
 
 .contact-form {
@@ -65,6 +52,17 @@ header>a {
 
 }
 
+#plien {
+    display: block;
+    /* Afficher les liens comme des blocs pour forcer le retour à la ligne */
+    width: auto;
+    /* Rétablir la largeur automatique */
+    white-space: normal;
+    /* Gérer les retours à la ligne */
+}
+
+/* BOUTON */
+
 .submit-btn {
     display: block;
     width: 100%;
@@ -80,9 +78,3 @@ header>a {
 .submit-btn:hover {
     background-color: #2980b9;
 }
-
-#plien {
-    display: block; /* Afficher les liens comme des blocs pour forcer le retour à la ligne */
-    width: auto; /* Rétablir la largeur automatique */
-    white-space: normal; /* Gérer les retours à la ligne */
-  }

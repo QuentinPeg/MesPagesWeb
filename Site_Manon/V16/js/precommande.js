@@ -250,7 +250,7 @@ function fermerPrecommande() {
 
 /* Les fonctions de prix */
 var articlesPrix = {
-    'Pack intégral': {
+    'Pack Intégral': {
         'A6': 250,
         'A5': 290,
     },
@@ -278,39 +278,39 @@ var articlesPrix = {
         'A6': 35,
         'A5': 43
     },
-    'Cycle de la vie et grande fonction (UE 2.2 semestre 1)': {
+    'Cycle De La Vie Et Grande Fonction (UE 2.2 semestre 1)': {
         'A6': 30,
         'A5': 38
     },
-    'Biologie fondamentale (UE 2.1 semestre 1)': {
+    'Biologie Fondamentale (UE 2.1 semestre 1)': {
         'A6': 20,
         'A5': 28
     },
-    'Processus traumatique (UE 2.4 semestre 1)': {
+    'Processus Traumatique (UE 2.4 semestre 1)': {
         'A6': 23,
         'A5': 31
     },
-    'Processus psychopathologique (UE 2.6 semestre 2)': {
+    'Processus Psychopathologique (UE 2.6 semestre 2)': {
         'A6': 30,
         'A5': 38,
     },
-    'Processus psychopathologique (UE 2.6 semestre 5)': {
+    'Processus Psychopathologique (UE 2.6 semestre 5)': {
         'A6': 18,
         'A5': 26
     },
-    'Processus obstructif (UE 2.8 semestre 3)': {
+    'Processus Obstructif (UE 2.8 semestre 3)': {
         'A6': 17,
         'A5': 25
     },
-    'Processus infectieux (UE 2.5 semestre 3)': {
+    'Processus Infectieux (UE 2.5 semestre 3)': {
         'A6': 38,
         'A5': 46
     },
-    'Processus dégénératif (UE 2.7 semestre 4)': {
+    'Processus Dégénératif (UE 2.7 semestre 4)': {
         'A6': 30,
         'A5': 38
     },
-    'Processus tumoraux (UE 2.9 semestre 5)': {
+    'Processus Tumoraux (UE 2.9 semestre 5)': {
         'A6': 35,
         'A5': 43
     },
@@ -320,8 +320,8 @@ function obtenirPrixArticle(nomArticle, format) {
     var prix = 0;
 
     switch (nomArticle) {
-        case 'Pack intégral':
-            prix = articlesPrix['Pack intégral'][format];
+        case 'Pack Intégral':
+            prix = articlesPrix['Pack Intégral'][format];
             break;
         case 'Pack Première Année':
             prix = articlesPrix['Pack Première Année'][format];
@@ -341,32 +341,32 @@ function obtenirPrixArticle(nomArticle, format) {
         case 'Soins Infirmier':
             prix = articlesPrix['Soins Infirmier'][format];
             break;
-        case 'Cycle de la vie et grande fonction (UE 2.2 semestre 1)':
-            prix = articlesPrix['Cycle de la vie et grande fonction (UE 2.2 semestre 1)'][format];
+        case 'Cycle De La Vie Et Grande Fonction (UE 2.2 semestre 1)':
+            prix = articlesPrix['Cycle De La Vie Et Grande Fonction (UE 2.2 semestre 1)'][format];
             break;
-        case 'Biologie fondamentale (UE 2.1 semestre 1)':
-            prix = articlesPrix['Biologie fondamentale (UE 2.1 semestre 1)'][format];
+        case 'Biologie Fondamentale (UE 2.1 semestre 1)':
+            prix = articlesPrix['Biologie Fondamentale (UE 2.1 semestre 1)'][format];
             break;
-        case 'Processus traumatique (UE 2.4 semestre 1)':
-            prix = articlesPrix['Processus traumatique (UE 2.4 semestre 1)'][format];
+        case 'Processus Traumatique (UE 2.4 semestre 1)':
+            prix = articlesPrix['Processus Traumatique (UE 2.4 semestre 1)'][format];
             break;
-        case 'Processus psychopathologique (UE 2.6 semestre 2)':
-            prix = articlesPrix['Processus psychopathologique (UE 2.6 semestre 2)'][format];
+        case 'Processus Psychopathologique (UE 2.6 semestre 2)':
+            prix = articlesPrix['Processus Psychopathologique (UE 2.6 semestre 2)'][format];
             break;
-        case 'Processus psychopathologique (UE 2.6 semestre 5)':
-            prix = articlesPrix['Processus psychopathologique (UE 2.6 semestre 5)'][format];
+        case 'Processus Psychopathologique (UE 2.6 semestre 5)':
+            prix = articlesPrix['Processus Psychopathologique (UE 2.6 semestre 5)'][format];
             break;
-        case 'Processus obstructif (UE 2.8 semestre 3)':
-            prix = articlesPrix['Processus obstructif (UE 2.8 semestre 3)'][format];
+        case 'Processus Obstructif (UE 2.8 semestre 3)':
+            prix = articlesPrix['Processus Obstructif (UE 2.8 semestre 3)'][format];
             break;
-        case 'Processus infectieux (UE 2.5 semestre 3)':
-            prix = articlesPrix['Processus infectieux (UE 2.5 semestre 3)'][format];
+        case 'Processus Infectieux (UE 2.5 semestre 3)':
+            prix = articlesPrix['Processus Infectieux (UE 2.5 semestre 3)'][format];
             break;
-        case 'Processus dégénératif (UE 2.7 semestre 4)':
-            prix = articlesPrix['Processus dégénératif (UE 2.7 semestre 4)'][format];
+        case 'Processus Dégénératif (UE 2.7 semestre 4)':
+            prix = articlesPrix['Processus Dégénératif (UE 2.7 semestre 4)'][format];
             break;
-        case 'Processus tumoraux (UE 2.9 semestre 5)':
-            prix = articlesPrix['Processus tumoraux (UE 2.9 semestre 5)'][format];
+        case 'Processus Tumoraux (UE 2.9 semestre 5)':
+            prix = articlesPrix['Processus Tumoraux (UE 2.9 semestre 5)'][format];
             break;
         default:
             // Si l'article n'est pas reconnu, le prix reste à 0
@@ -399,6 +399,7 @@ function calculerTotal() {
 
         total += prixUnitaire * quantity;
     });
+    console.log(total)
 
     // Mettre à jour le total dans l'élément HTML correspondant
     document.getElementById('amount').value = total;
@@ -526,10 +527,15 @@ function masquerPanier() {
 }
 
 /* Les fonctions de carroussel */
+/* Les fonctions de carroussel */
 
 var carousel = document.getElementById('carousel');
 var scrollAmount = 0;
 var scrollTime = 10000; // Temps de défilement en millisecondes
+
+
+
+setInterval(rotateImages, scrollTime);
 
 function rotateImages() {
     scrollAmount++;
@@ -566,5 +572,3 @@ function nextImage() {
         behavior: 'smooth'
     });
 }
-
-setInterval(rotateImages, scrollTime);

@@ -97,14 +97,16 @@ function chargerMail() {
       let quantite = selectFormat.getAttribute('data-quantite');
       let format = selectFormat.options[selectFormat.selectedIndex].value;
       let plastifie = selectPlastifie.options[selectPlastifie.selectedIndex].value;
-      recapArticles += `${quantite} x ${pack} Format: ${format} Plastifié: ${plastifie}\n`;
+      recapArticles += `${quantite} x ${pack} Format: ${format} Plastifié: ${plastifie}\n\n`;
     }
   });
+  console.log(recapArticles);
 
   let message = `
 Vente de ${civilité} ${nom} ${prenom},
 
 Récapitulatif des articles :
+
 ${recapArticles}
 
 Prix de la précommande

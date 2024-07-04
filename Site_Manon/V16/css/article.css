@@ -1,19 +1,11 @@
-#entcontact {
-    padding-right: 15px;
-    transition: font-size 0.3s ease;
-
-}
-
-#entcontact>a {
+/* HEADER */
+header>a {
     color: black;
     font-size: medium;
     transition: font-size 0.3s ease;
 }
 
-#entcontact>a.shrink {
-    font-size: small;
-}
-
+/* MAIN*/
 main {
     display: flex;
     flex-direction: row;
@@ -35,21 +27,6 @@ article {
 
 }
 
-/* Media Query pour les appareils mobiles */
-@media only screen and (max-width: 600px) {
-    article{
-        height:fit-content;
-        min-height: fit-content;
-    }
-}
-
-header>a {
-    color: black;
-    font-size: medium;
-    transition: font-size 0.3s ease;
-}
-
-
 article>section>section {
     display: flex;
     flex-direction: row;
@@ -57,14 +34,12 @@ article>section>section {
     gap: 15%;
 }
 
-/* Style ddu carroussel*/
+/* CARROUSEL */
 .carousel {
     display: flex;
     overflow: hidden;
     width: 100%;
-    /* Ajustez selon le besoin */
     height: 500px;
-    /* Hauteur fixe ou ajustez selon le besoin */
     position: relative;
 }
 
@@ -72,19 +47,9 @@ article>section>section {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Assure que les images couvrent l'espace sans être déformées */
     flex-shrink: 0;
-    /* Empêche les images de rétrécir */
 }
 
-@media only screen and (max-width: 600px) {
-    .carousel {
-        height: 300px;
-        /* Hauteur ajustée pour les appareils mobiles */
-    }
-}
-
-/* Styles pour les flèches */
 .prev,
 .next {
     position: absolute;
@@ -119,7 +84,7 @@ section>a {
     width: 100%;
 }
 
-/**/
+/* LIRE LA SUITE FONCTION */
 
 .lire-suite-checkbox {
     display: none;
@@ -168,6 +133,13 @@ section>a {
     min-width: 70px;
 }
 
+/* FOOTER */
+footer {
+    margin-top: 15%;
+}
+
+/* BOUTON */
+
 .btn-retour {
     display: flex;
     width: fit-content;
@@ -211,14 +183,21 @@ section>a {
     background-color: #659f69;
 }
 
-footer {
-    margin-top: 15%;
-}
-
+/* APPAREIL MOBILE */
 @media only screen and (max-width: 600px) {
     main {
         flex-direction: column;
         padding-bottom: 20%;
         align-items: center;
+    }
+
+    article {
+        height: fit-content;
+        min-height: fit-content;
+    }
+
+    .carousel {
+        height: 300px;
+        /* Hauteur ajustée pour les appareils mobiles */
     }
 }
