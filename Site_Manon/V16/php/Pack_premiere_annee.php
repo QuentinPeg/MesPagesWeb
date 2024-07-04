@@ -10,9 +10,9 @@
             <img src="../Images/Pack_premiere_annee3.png" alt="Image 3">
             <img src="../Images/Pack_premiere_annee4.png" alt="Image 4">
             <img src="../Images/Pack_premiere_annee5.png" alt="Image 5">
-            <button class="prev" onclick="prevImage()">&#10094;</button>
-            <button class="next" onclick="nextImage()">&#10095;</button>
         </div>
+        <button class="prev" onclick="prevImage()">&#10094;</button>
+        <button class="next" onclick="nextImage()">&#10095;</button>
     </article>
 
     <article>
@@ -41,7 +41,8 @@
             <section>
                 <a href="index.php" class="class-btn-retour"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <button class="btn-ajouter-article" onclick="addToCart('Pack Première Année', 1, 'A5', 'Non')">Ajouter au
+                <button class="btn-ajouter-article" onclick="addToCart('Pack Première Année', 1, 'A5', 'Non')">Ajouter
+                    au
                     panier</button>
             </section>
         </section>
