@@ -59,6 +59,7 @@
                     <input type="text" id="Ville" name="Ville" placeholder="Ville*" required>
                 </div>
             </section>
+            <span class="italique">* = Champ obligatoire </span>
             <hr>
             <input type="hidden" id="amount" name="amount" value="0">
 
