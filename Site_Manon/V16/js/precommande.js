@@ -224,8 +224,24 @@ function afficherRecapArticles() {
                     // Créer un élément pour afficher le prix total par ligne
                     const prixTotArticleElement = document.createElement('span');
                     prixTotArticleElement.textContent = formaterPrix(prixTotArticle);
-                    prixTotArticleElement.style.width = '71px'; // Définir la largeur de l'élément à 71px
+                    // Écouter l'événement de redimensionnement de la fenêtre
+                    window.addEventListener('resize', function () {
+                        // Vérifier si la largeur de l'écran est de 600px ou moins
+                        if (window.innerWidth <= 600) {
+                            // Appliquer le style fit-content
+                            prixTotArticleElement.style.width = 'fit-content';
+                        } else {
+                            // Réinitialiser le style ou appliquer un autre style si nécessaire
+                            prixTotArticleElement.style.width = '71px';
+                        }
+                    });
 
+                    // Appeler la fonction immédiatement pour appliquer le style au chargement initial
+                    if (window.innerWidth <= 600) {
+                        prixTotArticleElement.style.width = 'fit-content';
+                    } else {
+                        prixTotArticleElement.style.width = '71px';
+                    }
                     articleElement.appendChild(premdiv);
                     articleElement.appendChild(labelFormat);
                     articleElement.appendChild(selectFormat);
