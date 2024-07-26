@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/Navbar/logo.jpeg';
 import { Toggle } from './Toggle';
-import Horloge from '../components/horloge.tsx'; // Assurez-vous que le chemin est correct
+import Horloge from '../components/horloge.tsx';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

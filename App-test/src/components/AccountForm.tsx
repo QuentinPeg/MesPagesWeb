@@ -1,16 +1,13 @@
-// src/components/AccountForm.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Tesseract from 'tesseract.js';
 import parseExtractedText from './parseExtractedText';
 import bankingImage from './banking.jpg';
 import AccountSummary from './AccountSummary';
-import { supabase } from '../supabase';
-import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../supabase'; // Importez Supabase
 
 interface AccountFormProps {
   addAccount: (account: Account) => void;
   accounts: Account[];
-  livrets: { name: string; obtained: boolean; expense: boolean; move: boolean; moveTo?: string[] }[];
 }
 
 interface Account {
@@ -25,41 +22,25 @@ interface Account {
   ObtenuLivretA: string;
   ObtenuMozaïque: string;
   ARevoir: string;
-  [key: string]: any;
 }
 
-const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets }) => {
+const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts }) => {
   const [dateString, setDateString] = useState('');
   const [NomDeLaDepense, setNomDeLaDepense] = useState('');
   const [Categorie, setCategorie] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
-  const [dynamicValues, setDynamicValues] = useState<{ [key: string]: string }>({});
+  const [DepenseCarteBleue, setDepenseCarteBleue] = useState('');
+  const [ObtenuCarteBleue, setObtenuCarteBleue] = useState('');
+  const [DeplaceCarteBleueVersLivretA, setDeplaceCarteBleueVersLivretA] = useState('');
+  const [DeplaceLivretAVersCarteBleue, setDeplaceLivretAVersCarteBleue] = useState('');
+  const [ObtenuLivretA, setObtenuLivretA] = useState('');
+  const [ObtenuMozaïque, setObtenuMozaïque] = useState('');
   const [ARevoir, setARevoir] = useState('Oui');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    };
-
-    fetchUser();
-  }, []);
 
   const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(e.target.value);
-  };
-
-  const handleDynamicValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setDynamicValues(prevValues => ({
-      ...prevValues,
-      [name]: value
-    }));
   };
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,37 +51,12 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
       const parsedData = parseExtractedText(text);
       setDateString(parsedData.Date);
       setNomDeLaDepense(parsedData.NomDeLaDepense);
-      setDynamicValues({ ...dynamicValues, DepenseCarteBleue: parsedData.DepenseCarteBleue.trim() });
+      setDepenseCarteBleue(parsedData.DepenseCarteBleue.trim());
       setSelectedOption(parsedData.selectedOption);
     }
   };
 
-  const ensureColumnExists = async (columnName: string) => {
-    try {
-      const cleanColumnName = columnName.trim();
-      const { error } = await supabase.rpc('check_and_add_column', {
-        p_table_name: 'accounts',
-        p_column_name: cleanColumnName,
-        p_column_type: 'text'
-      });
-
-      if (error) throw error;
-
-      const { data, error: fetchError } = await supabase
-        .from('accounts')
-        .select(cleanColumnName)
-        .limit(1);
-
-      if (fetchError) throw fetchError;
-
-      console.log(`Colonne ${cleanColumnName} ajoutée avec succès.`);
-    } catch (error) {
-      console.error(`Erreur lors de la vérification/ajout de la colonne ${columnName} :`, error);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
-    setLoading(true);
     e.preventDefault();
     if (isSubmitting) return;
 
@@ -115,7 +71,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
     const formattedDate = `${day}/${month}/${year}`;
 
     let account: Account = {
-      id: uuidv4(),
+      id: '',
       date: formattedDate,
       NomDeLaDepense,
       Categorie,
@@ -125,43 +81,60 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
       DeplaceLivretAVersCarteBleue: '',
       ObtenuLivretA: '',
       ObtenuMozaïque: '',
-      ARevoir,
-      ...dynamicValues
+      ARevoir
     };
 
-    try {
-      await ensureColumnExists('date');
-      await ensureColumnExists('NomDeLaDepense');
-      await ensureColumnExists('Categorie');
-      await ensureColumnExists('DepenseCarteBleue');
-      await ensureColumnExists('ObtenuCarteBleue');
-      await ensureColumnExists('DeplaceCarteBleueVersLivretA');
-      await ensureColumnExists('DeplaceLivretAVersCarteBleue');
-      await ensureColumnExists('ObtenuLivretA');
-      await ensureColumnExists('ObtenuMozaïque');
-      await ensureColumnExists('ARevoir');
-      for (const key in dynamicValues) {
-        if (dynamicValues.hasOwnProperty(key)) {
-          await ensureColumnExists(key);
-        }
-      }
+    switch (selectedOption) {
+      case 'Dépense Carte Bleue':
+        account.DepenseCarteBleue = DepenseCarteBleue;
+        break;
+      case 'Obtenu Carte Bleue':
+        account.ObtenuCarteBleue = ObtenuCarteBleue;
+        break;
+      case 'Déplacé Carte Bleue vers Livret A':
+        account.DeplaceCarteBleueVersLivretA = DeplaceCarteBleueVersLivretA;
+        break;
+      case 'Déplacé Livret A vers Carte Bleue':
+        account.DeplaceLivretAVersCarteBleue = DeplaceLivretAVersCarteBleue;
+        break;
+      case 'Obtenu livret A':
+        account.ObtenuLivretA = ObtenuLivretA;
+        break;
+      case 'Obtenu Mozaïque':
+        account.ObtenuMozaïque = ObtenuMozaïque;
+        break;
+      default:
+        break;
+    }
 
-      if (!user || !user.id) {
-        console.error("Erreur: Utilisateur non défini ou non connecté.");
+    try {
+      const { data: countData, error: countError } = await supabase
+        .from('accounts')
+        .select('id', { count: 'exact' });
+
+      if (countError) {
+        console.error("Erreur lors de la récupération du nombre de comptes :", countError);
         setIsSubmitting(false);
         return;
       }
+
+      const newId = (countData.length + 1).toString();
+      account.id = newId;
 
       const { data, error } = await supabase
         .from('accounts')
-        .insert([{ ...account, user_id: user.id }]);
+        .select('*')
+        .eq('date', formattedDate)
+        .eq('NomDeLaDepense', NomDeLaDepense)
+        .eq('Categorie', Categorie);
 
       if (error) {
-        console.error("Erreur lors de l'ajout du compte :", error);
+        console.error("Erreur lors de la récupération des comptes :", error);
         setIsSubmitting(false);
         return;
       }
 
+      addAccount(account);
 
     } catch (error) {
       console.error("Erreur lors de l'ajout du compte :", error);
@@ -171,22 +144,21 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
     setNomDeLaDepense('');
     setCategorie('');
     setSelectedOption('');
-    setDynamicValues({});
+    setDepenseCarteBleue('');
+    setObtenuCarteBleue('');
+    setDeplaceCarteBleueVersLivretA('');
+    setDeplaceLivretAVersCarteBleue('');
+    setObtenuLivretA('');
+    setObtenuMozaïque('');
     setARevoir('Oui');
-
     setIsImageUploaded(false);
-
     setIsSubmitting(false);
 
-    setLoading(false);
-
-    window.location.reload();
   };
-
 
   return (
     <form onSubmit={handleSubmit} className="p-4">
-      <div className="flex flex-row gap-5">
+      <div className="flex row">
         <div className="w-3/4 my-auto">
           <div className='flex gap-5'>
             <div className='w-1/3 p-2'>
@@ -226,31 +198,52 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
                 className="border p-2 w-full"
               >
                 <option value="">Sélectionner le type de dépense</option>
-                <option value="DepenseCarteBleue">Dépense Carte Bleue</option>
-                <option value="ObtenuCarteBleue">Obtenu Carte Bleue</option>
-                {livrets.map(livret => (
-                  <React.Fragment key={livret.name}>
-                    {livret.expense && <option value={`Depense${livret.name}`}>Dépense {livret.name}</option>}
-                    {livret.obtained && <option value={`Obtenu${livret.name}`}>Obtenu {livret.name}</option>}
-                    {livret.move && livret.moveTo?.map(moveTo => (
-                      <option key={`Deplace${livret.name}Vers${moveTo}`} value={`Deplace${livret.name}Vers${moveTo}`}>Déplacé {livret.name} vers {moveTo}</option>
-                    ))}
-                  </React.Fragment>
-                ))}
+                <option value="Dépense Carte Bleue">Dépense Carte Bleue</option>
+                <option value="Obtenu Carte Bleue">Obtenu Carte Bleue</option>
+                <option value="Déplacé Carte Bleue vers Livret A">Déplacé Carte Bleue vers Livret A</option>
+                <option value="Déplacé Livret A vers Carte Bleue">Déplacé Livret A vers Carte Bleue</option>
+                <option value="Obtenu livret A">Obtenu livret A</option>
+                <option value="Obtenu Mozaïque">Obtenu Mozaïque</option>
               </select>
             </div>
-              <div className='w-1/2 p-2'>
-                  <label className="block">Montant</label>
-                  <input
-                    type="number"
-                    name={selectedOption}
-                    value={dynamicValues[selectedOption] || ''}
-                    onChange={handleDynamicValueChange}
-                    className="border p-2 w-full"
-                  />
+            <div className='w-1/2 p-2'>
+              <label className="block">Montant</label>
+              <input
+                type="number"
+                value={selectedOption === 'Dépense Carte Bleue' ? DepenseCarteBleue :
+                  selectedOption === 'Obtenu Carte Bleue' ? ObtenuCarteBleue :
+                    selectedOption === 'Déplacé Carte Bleue vers Livret A' ? DeplaceCarteBleueVersLivretA :
+                      selectedOption === 'Déplacé Livret A vers Carte Bleue' ? DeplaceLivretAVersCarteBleue :
+                        selectedOption === 'Obtenu livret A' ? ObtenuLivretA :
+                          selectedOption === 'Obtenu Mozaïque' ? ObtenuMozaïque : ''}
+                onChange={(e) => {
+                  switch (selectedOption) {
+                    case 'Dépense Carte Bleue':
+                      setDepenseCarteBleue(e.target.value);
+                      break;
+                    case 'Obtenu Carte Bleue':
+                      setObtenuCarteBleue(e.target.value);
+                      break;
+                    case 'Déplacé Carte Bleue vers Livret A':
+                      setDeplaceCarteBleueVersLivretA(e.target.value);
+                      break;
+                    case 'Déplacé Livret A vers Carte Bleue':
+                      setDeplaceLivretAVersCarteBleue(e.target.value);
+                      break;
+                    case 'Obtenu livret A':
+                      setObtenuLivretA(e.target.value);
+                      break;
+                    case 'Obtenu Mozaïque':
+                      setObtenuMozaïque(e.target.value);
+                      break;
+                    default:
+                      break;
+                  }
+                }}
+                className="border p-2 w-full"
+              />
             </div>
           </div>
-
           <div>
             <label className="block">
               A revoir
@@ -265,7 +258,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
           <button type="submit" className="bg-green-500 text-white p-2 mt-2">
             Ajouter
           </button>
-          {loading && <div className="text-blue-500 mb-4">En cours de chargement...</div>}
         </div>
 
         <div className="w-1/4">
@@ -283,4 +275,3 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
 };
 
 export default AccountForm;
-

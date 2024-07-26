@@ -1,60 +1,179 @@
+// src/App.tsx
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import AccountForm from './components/AccountForm';
 import AccountList from './components/AccountList';
-import { db } from './firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import AccountCharts from './components/AccountCharts';
+import Auth from './components/Auth';
+import Parametres from './components/Parametres';
+import { supabase } from './supabase';
+import { v4 as uuidv4 } from 'uuid';
+import './App.css';
 
 interface Account {
   id: string;
   date: string;
-  name: string;
-  expenseCard: string;
-  obtainedCard: string;
-  transferToSavings: string;
-  transferToCard: string;
-  obtainedSavings: string;
-  obtainedMozaic: string;
-  toReview: string;
+  NomDeLaDepense: string;
+  Categorie: string;
+  DepenseCarteBleue: string;
+  ObtenuCarteBleue: string;
+  DeplaceCarteBleueVersLivretA: string;
+  DeplaceLivretAVersCarteBleue: string;
+  ObtenuLivretA: string;
+  ObtenuMozaïque: string;
+  ARevoir: string;
+  [key: string]: any;
 }
 
 const App: React.FC = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
+  const [user, setUser] = useState<any>(null);
+  const [livrets, setLivrets] = useState<{ name: string, obtained: boolean, expense: boolean, move: boolean, moveTo?: string[] }[]>([]);
 
   useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      setLivrets(user?.user_metadata?.livrets || []);
+    };
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
     const fetchAccounts = async () => {
-      const querySnapshot = await getDocs(collection(db, "accounts"));
-      const accountsData = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Account[];
-      setAccounts(accountsData);
+      const { data, error } = await supabase
+        .from('accounts')
+        .select('*')
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error("Erreur lors de la récupération des comptes :", error);
+        return;
+      }
+
+      if (data) {
+        const accountsData = data.map(account => ({
+          id: account.id,
+          ...account
+        })) as Account[];
+
+        setAccounts(accountsData);
+      } else {
+        console.error("Les données récupérées sont nulles");
+      }
     };
 
     fetchAccounts();
-  }, []);
+  }, [user]);
 
-  const addAccount = async (account: Account) => {
-    const docRef = await addDoc(collection(db, "accounts"), account);
-    setAccounts([...accounts, { id: docRef.id, ...account }]);
+  const ensureColumnExists = async (columnName: string) => {
+    try {
+      const cleanColumnName = columnName.replace(/[^a-zA-Z0-9_]/g, '_');
+      const { error } = await supabase
+        .rpc('check_and_add_column', {
+          table_name: 'accounts',
+          column_name: cleanColumnName,
+          column_type: 'text'
+        });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error(`Erreur lors de la vérification/ajout de la colonne ${columnName} :`, error);
+    }
   };
 
-  const deleteAccount = async (id: string) => {
-    await deleteDoc(doc(db, "accounts", id));
-    setAccounts(accounts.filter(account => account.id !== id));
+  const addAccount = async (account: Account) => {
+    account.id = uuidv4(); // Générer un identifiant unique pour le compte
+
+    // Vérifiez et ajoutez les colonnes nécessaires
+    for (const key in account) {
+      if (account.hasOwnProperty(key) && key !== 'id' && key !== 'user_id') {
+        await ensureColumnExists(key);
+      }
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('accounts')
+        .insert({ ...account, user_id: user?.id })
+        .select();
+
+      if (error) {
+        console.error("Erreur lors de l'insertion du compte :", error);
+        return;
+      }
+
+      if (data) {
+        setAccounts([...accounts, { id: data[0].id, ...account }]);
+      } else {
+        console.error("Les données insérées sont nulles");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout du compte :", error);
+    }
   };
 
   const updateAccount = async (id: string, updatedAccount: Partial<Account>) => {
-    await updateDoc(doc(db, "accounts", id), updatedAccount);
-    setAccounts(accounts.map(account => account.id === id ? { ...account, ...updatedAccount } : account));
+    // Vérifiez et ajoutez les colonnes nécessaires
+    for (const key in updatedAccount) {
+      if (updatedAccount.hasOwnProperty(key) && key !== 'id' && key !== 'user_id') {
+        await ensureColumnExists(key);
+      }
+    }
+
+    try {
+      const { error } = await supabase
+        .from('accounts')
+        .update(updatedAccount)
+        .eq('id', id)
+        .eq('user_id', user?.id);
+
+      if (error) {
+        console.error("Erreur lors de la mise à jour du compte :", error);
+        return;
+      }
+
+      setAccounts(accounts.map(account => account.id === id ? { ...account, ...updatedAccount } : account));
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour du compte :", error);
+    }
+  };
+
+  const deleteAccount = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('accounts')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user?.id);
+
+      if (error) {
+        console.error("Erreur lors de la suppression du compte :", error);
+        return;
+      }
+
+      setAccounts(accounts.filter(account => account.id !== id));
+    } catch (error) {
+      console.error("Erreur lors de la suppression du compte :", error);
+    }
   };
 
   return (
-    <div className="App">
-      <Header />
-      <AccountForm addAccount={addAccount} />
-      <AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} />
-    </div>
+    <Router>
+      <div className="App w-full h-full">
+        <Header />
+        <Routes>
+          <Route path="/" element={<AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} />} />
+          <Route path="/tableau" element={<AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} />} />
+          <Route path="/graphique" element={<AccountCharts accounts={accounts} />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/parametres" element={<Parametres />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

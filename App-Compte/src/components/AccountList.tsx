@@ -1,32 +1,62 @@
-import React, { useState } from 'react';
+// accountList.tsx
+import React, { useState, useEffect, useRef } from 'react';
+import AccountSummary from './AccountSummary';
+import { supabase } from '../supabase';
 
 interface AccountListProps {
   accounts: Account[];
   deleteAccount: (id: string) => void;
   updateAccount: (id: string, updatedAccount: Partial<Account>) => void;
+  livrets: { name: string, obtained: boolean, expense: boolean, move: boolean, moveTo?: string[] }[];
 }
 
 interface Account {
   id: string;
-  Date: string;
+  date: string;
   NomDeLaDepense: string;
-  DepenseCarteBleue: string;
-  ObtenuCarteBleue: string;
-  DeplaceCarteBleueVersLivretA: string;
-  DeplaceLivretAVersCarteBleue: string;
-  ObtenuLivretA: string;
-  ObtenuMozaïque: string;
+  Categorie: string;
   ARevoir: string;
+  [key: string]: any;
 }
 
-const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, updateAccount }) => {
-  const [sortColumn, setSortColumn] = useState<string>('Date');
+const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, updateAccount, livrets }) => {
+  const [sortColumn, setSortColumn] = useState<string>('date');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [editing, setEditing] = useState<boolean>(false);
   const [editedAccounts, setEditedAccounts] = useState<Partial<Account>[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [columnOrder, setColumnOrder] = useState<string[]>(['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
+
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchColumnOrder = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error('Erreur lors de la récupération de l’ordre des colonnes :', error);
+        return;
+      }
+      const user = data.user;
+      setColumnOrder(user?.user_metadata?.columnOrder || ['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
+    };
+    fetchColumnOrder();
+  }, []);
+
+  useEffect(() => {
+    const tableContainer = tableContainerRef.current;
+    const scrollContainer = scrollContainerRef.current;
+
+    if (tableContainer && scrollContainer) {
+      const syncScroll = () => {
+        scrollContainer.scrollLeft = tableContainer.scrollLeft;
+      };
+      tableContainer.addEventListener('scroll', syncScroll);
+      return () => tableContainer.removeEventListener('scroll', syncScroll);
+    }
+  }, []);
 
   const handleSort = (column: string) => {
     if (sortColumn === column) {
@@ -44,17 +74,17 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
 
   const sortedAccounts = [...accounts].sort((a, b) => {
     const order = sortDirection === 'asc' ? 1 : -1;
-  
+
     const isAEmpty = !a[sortColumn] && a[sortColumn] !== 0;
     const isBEmpty = !b[sortColumn] && b[sortColumn] !== 0;
-  
+
     if (isAEmpty && isBEmpty) return 0;
     if (isAEmpty) return 1;
     if (isBEmpty) return -1;
-  
-    if (sortColumn === 'Date') {
-      const dateA = parseDate(a.Date);
-      const dateB = parseDate(b.Date);
+
+    if (sortColumn === 'date') {
+      const dateA = parseDate(a.date);
+      const dateB = parseDate(b.date);
       return (dateA.getTime() - dateB.getTime()) * order;
     } else if (!isNaN(Number(a[sortColumn])) && !isNaN(Number(b[sortColumn]))) {
       return (Number(a[sortColumn]) - Number(b[sortColumn])) * order;
@@ -81,9 +111,12 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
   };
 
   const handleDeleteSelected = async () => {
+    setEditing(false);
+    setLoading(true);
     await Promise.all(selectedIds.map(id => deleteAccount(id)));
     setSelectedIds([]);
     setSelectAll(false);
+    setLoading(false);
   };
 
   const handleEdit = () => {
@@ -93,33 +126,32 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
 
   const handleSaveAll = async () => {
     setEditing(false);
-    setLoading(true); // Start loading
+    setLoading(true);
     await Promise.all(editedAccounts.map(account => {
       const { id, ...updatedAccount } = account;
       return updateAccount(id!, updatedAccount);
     }));
-    setLoading(false); // Stop loading
-    window.location.reload();
+    setLoading(false);
   };
 
   const handleChange = (id: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
-    // Validation pour ARevoir
-    if (name === 'ARevoir' && value !== '' && value !== 'Oui') {
-      alert('ARevoir ne peut contenir que "" ou "Oui".');
-      return;
-    }
-  
+
     setEditedAccounts(editedAccounts.map(account =>
       account.id === id ? { ...account, [name]: value } : account
     ));
   };
-  
+
+  const displayLivretName = (name: string) => {
+    return name.replace(/([A-Z])/g, ' $1').trim();
+  };
+
   return (
-    <div className="p-4">
+    <div className="flex flex-col pr-4">
+      <AccountSummary accounts={accounts} />
+
       <h2 className="text-xl mb-2">Liste des comptes</h2>
-      <div className="flex mb-4">
+      <div className="flex flex-wrap justify-evenly mb-4">
         <button
           className="bg-blue-500 text-white px-4 py-2 mr-2 rounded"
           onClick={handleEdit}
@@ -143,204 +175,71 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
         </button>
       </div>
       {loading && <div className="text-blue-500 mb-4">En cours de chargement...</div>}
-      <table className="min-w-full bg-white text-black border-collapse border text-center">
-        <thead>
-          <tr>
-            <th className="py-2">
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-              />
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('Date')}
-              >
-                Date {sortColumn === 'Date' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('NomDeLaDepense')}
-              >
-                Nom de la dépense {sortColumn === 'NomDeLaDepense' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('DepenseCarteBleue')}
-              >
-                Dépense Carte Bleue {sortColumn === 'DepenseCarteBleue' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('ObtenuCarteBleue')}
-              >
-                Obtenu Carte Bleue {sortColumn === 'ObtenuCarteBleue' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('DeplaceCarteBleueVersLivretA')}
-              >
-                Déplacé Carte Bleue vers Livret A {sortColumn === 'DeplaceCarteBleueVersLivretA' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('DeplaceLivretAVersCarteBleue')}
-              >
-                Déplacé Livret A vers Carte Bleue {sortColumn === 'DeplaceLivretAVersCarteBleue' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('ObtenuLivretA')}
-              >
-                Obtenu livret A {sortColumn === 'ObtenuLivretA' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('ObtenuMozaïque')}
-              >
-                Obtenu Mozaïque {sortColumn === 'ObtenuMozaïque' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-            <th className="py-2">
-              <button
-                className="focus:outline-none flex bg-transparent"
-                onClick={() => handleSort('ARevoir')}
-              >
-                A revoir {sortColumn === 'ARevoir' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedAccounts.map((account, index) => (
-            <tr key={index} className="border-b border-gray-200">
-              <td className="py-2 border border-gray-200">
-                <input
-                  type="checkbox"
-                  checked={selectedIds.includes(account.id)}
-                  onChange={() => handleSelect(account.id)}
-                />
-              </td>
-              {editing ? (
-                <>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="Date"
-                      value={editedAccounts.find(a => a.id === account.id)?.Date || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="NomDeLaDepense"
-                      value={editedAccounts.find(a => a.id === account.id)?.NomDeLaDepense || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="DepenseCarteBleue"
-                      value={editedAccounts.find(a => a.id === account.id)?.DepenseCarteBleue || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="ObtenuCarteBleue"
-                      value={editedAccounts.find(a => a.id === account.id)?.ObtenuCarteBleue || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="DeplaceCarteBleueVersLivretA"
-                      value={editedAccounts.find(a => a.id === account.id)?.DeplaceCarteBleueVersLivretA || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="DeplaceLivretAVersCarteBleue"
-                      value={editedAccounts.find(a => a.id === account.id)?.DeplaceLivretAVersCarteBleue || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="ObtenuLivretA"
-                      value={editedAccounts.find(a => a.id === account.id)?.ObtenuLivretA || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <input
-                      type="text"
-                      name="ObtenuMozaïque"
-                      value={editedAccounts.find(a => a.id === account.id)?.ObtenuMozaïque || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
-                    />
-                  </td>
-                  <td className="py-2 border border-gray-200 bg-gray-100">
-                    <select
-                      name="ARevoir"
-                      value={editedAccounts.find(a => a.id === account.id)?.ARevoir || ''}
-                      onChange={(e) => handleChange(account.id, e)}
-                      className="border p-1 w-full text-center bg-gray-200"
+      <div className="relative flex-1 p-2 mx-auto">
+        <div ref={tableContainerRef} className="overflow-auto h-full">
+          <table className="min-w-full bg-white text-black border-collapse border text-center">
+            <thead>
+              <tr>
+                <th className="py-2">
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                  />
+                </th>
+                {columnOrder.map(column => (
+                  <th className="py-2" key={column}>
+                    <button
+                      className="focus:outline-none flex bg-transparent mx-auto"
+                      onClick={() => handleSort(column)}
                     >
-                      <option value="">Non</option>
-                      <option value="Oui">Oui</option>
-                    </select>
+                      {displayLivretName(column)} {sortColumn === column && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </button>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedAccounts.map((account, index) => (
+                <tr key={index} className="border-b border-gray-200">
+                  <td className="py-2 border border-gray-200">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.includes(account.id)}
+                      onChange={() => handleSelect(account.id)}
+                    />
                   </td>
-                </>
-              ) : (
-                <>
-                  <td className="py-2 border border-gray-200">{account.Date}</td>
-                  <td className="py-2 border border-gray-200">{account.NomDeLaDepense}</td>
-                  <td className="py-2 border border-gray-200">{account.DepenseCarteBleue}</td>
-                  <td className="py-2 border border-gray-200">{account.ObtenuCarteBleue}</td>
-                  <td className="py-2 border border-gray-200">{account.DeplaceCarteBleueVersLivretA}</td>
-                  <td className="py-2 border border-gray-200">{account.DeplaceLivretAVersCarteBleue}</td>
-                  <td className="py-2 border border-gray-200">{account.ObtenuLivretA}</td>
-                  <td className="py-2 border border-gray-200">{account.ObtenuMozaïque}</td>
-                  <td className="py-2 border border-gray-200">{account.ARevoir}</td>
-                </>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  {editing ? (
+                    <>
+                      {columnOrder.map(column => (
+                        <td className="py-2 border border-gray-200 bg-gray-100" key={column}>
+                          <input
+                            type="text"
+                            name={column}
+                            value={editedAccounts.find(a => a.id === account.id)?.[column] || ''}
+                            onChange={(e) => handleChange(account.id, e)}
+                            className="border p-1 w-full text-center bg-gray-200"
+                          />
+                        </td>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {columnOrder.map(column => (
+                        <td className="py-2 border border-gray-200" key={column}>
+                          {account[column]}
+                        </td>
+                      ))}
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
-};  
+};
+
 export default AccountList;

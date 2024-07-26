@@ -10,9 +10,6 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Chemin vers le fichier CSV
 const csvFilePath = './comptetest.csv';
 
-// ID utilisateur à ajouter
-const userId = '067acc14-3530-4595-ac00-6fa01eeca00b';
-
 (async () => {
   try {
     // Vider la table 'accounts'
@@ -42,8 +39,8 @@ const userId = '067acc14-3530-4595-ac00-6fa01eeca00b';
 
         for (const record of data) {
           // Afficher les valeurs lues pour vérification
+
           const account = {
-            user_id: userId,
             date: record['Date'],
             NomDeLaDepense: record['Nom de la dépense'],
             Categorie: record['Catégorie'],

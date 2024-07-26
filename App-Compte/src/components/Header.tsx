@@ -1,10 +1,59 @@
-import React from 'react';
+// src/components/Header.tsx
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../supabase';
+import bankingImage from './banking.jpg';
 
 const Header: React.FC = () => {
+  const [user, setUser] = useState<any>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.reload();
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <header className="bg-blue-500 text-white p-4 ">
-      <h1 className="text-2xl">Gestion de Comptes</h1>
-    </header>
+    <nav className='bg-blue-500 text-white p-4 flex justify-between items-center'>
+      <Link to="/" className="flex items-center text-white mr-4">
+        <img src={bankingImage} alt="Logo" className="w-12 rounded-full" style={{ cursor: 'pointer' }} />
+        <h1 className="text-2xl pl-3">Gestion de Comptes</h1>
+      </Link>
+      <div className='flex justify-evenly w-1/2 items-center'>
+        <Link to="/" className="text-white border border-gray-200 rounded-md p-2">Accueil</Link>
+        <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2">Tableau</Link>
+        <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2">Graphique</Link>
+      </div>
+      <div className="relative flex items-center">
+        {user ? (
+          <div className="relative flex flex-col items-center pr-4" onClick={toggleMenu}>
+            <img src={user.user_metadata?.avatar_url || bankingImage} alt="Avatar" className="w-8 h-8 rounded-full cursor-pointer" />
+            <span className="text-sm cursor-pointer">{user.user_metadata?.full_name || user.email}</span>
+            {menuOpen && (
+              <div className="absolute top-full mt-2 w-48 bg-white text-black rounded shadow-lg">
+                <button onClick={() => navigate('/parametres')} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Paramètres</button>
+                <button onClick={handleLogout} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Déconnexion</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link to="/auth" className="text-white mr-4">Connexion</Link>
+        )}
+      </div>
+    </nav>
   );
 };
 
