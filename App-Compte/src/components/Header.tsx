@@ -1,5 +1,4 @@
-// src/components/Header.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import bankingImage from './banking.jpg';
@@ -7,6 +6,7 @@ import bankingImage from './banking.jpg';
 const Header: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +26,19 @@ const Header: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className='bg-blue-500 text-white p-4 flex justify-between items-center'>
       <Link to="/" className="flex items-center text-white mr-4">
@@ -39,8 +52,8 @@ const Header: React.FC = () => {
       </div>
       <div className="relative flex items-center">
         {user ? (
-          <div className="relative flex flex-col items-center pr-4" onClick={toggleMenu}>
-            <img src={user.user_metadata?.avatar_url || bankingImage} alt="Avatar" className="w-8 h-8 rounded-full cursor-pointer" />
+          <div className="relative flex flex-col items-center pr-4" onClick={toggleMenu} ref={menuRef}>
+            <img src={bankingImage} alt="Avatar" className="w-8 h-8 rounded-full cursor-pointer" />
             <span className="text-sm cursor-pointer">{user.user_metadata?.full_name || user.email}</span>
             {menuOpen && (
               <div className="absolute top-full mt-2 w-48 bg-white text-black rounded shadow-lg">

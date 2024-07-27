@@ -44,8 +44,21 @@ const Parametres: React.FC = () => {
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Afficher la confirmation avant de sauvegarder
+    const confirmSave = window.confirm('Êtes-vous sûr de vouloir sauvegarder les modifications ?');
+    if (!confirmSave) {
+      return; // Annuler la mise à jour si l'utilisateur refuse
+    }
+
     if (!user) {
       console.error('Utilisateur non authentifié');
+      return;
+    }
+
+    const hasDuplicateColumns = columnOrder.some((column, index) => columnOrder.indexOf(column) !== index);
+    if (hasDuplicateColumns) {
+      alert('Chaque colonne doit être unique. Veuillez vérifier l’ordre des colonnes.');
       return;
     }
 
@@ -72,7 +85,6 @@ const Parametres: React.FC = () => {
       },
     }));
 
-    alert('Informations mises à jour avec succès');
     window.location.reload();
   };
 
@@ -83,11 +95,16 @@ const Parametres: React.FC = () => {
   };
 
   const addColumn = () => {
-    setColumnOrder([...columnOrder, 'date']);
+    const newOrder = [...columnOrder];
+    newOrder.splice(columnOrder.length - 1, 0, 'date');
+    setColumnOrder(newOrder);
   };
 
   const deleteColumn = (index: number) => {
-    setColumnOrder(columnOrder.filter((_, i) => i !== index));
+    const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer cette colonne ?');
+    if (confirmDelete) {
+      setColumnOrder(columnOrder.filter((_, i) => i !== index));
+    }
   };
 
   const displayLivretName = (name: string) => {
@@ -115,7 +132,11 @@ const Parametres: React.FC = () => {
       alert('Le livret "Carte Bleue" ne peut pas être supprimé.');
       return;
     }
-    setLivrets(livrets.filter(l => l.name !== livretName));
+
+    const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce livret ?');
+    if (confirmDelete) {
+      setLivrets(livrets.filter(l => l.name !== livretName));
+    }
   };
 
   const handleLivretChange = (index: number, field: 'obtained' | 'expense' | 'move', value: boolean) => {
@@ -151,120 +172,141 @@ const Parametres: React.FC = () => {
       <h2 className="text-2xl mb-4">Paramètres du compte</h2>
       {user && (
         <form onSubmit={handleUpdate}>
-          <div className="mb-4">
-            <label>Email</label>
-            <input type="email" value={user.email} disabled className="border p-2 w-full" />
-          </div>
-          <div className="mb-4">
-            <label>Nom</label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="border p-2 w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label>Ordre des Colonnes</label>
-            {columnOrder.map((column, index) => (
-              <div key={index} className="mb-2 flex items-center">
-                <select
-                  value={column}
-                  onChange={(e) => handleColumnOrderChange(index, e.target.value)}
-                  className="border p-2 w-full"
-                >
-                  <option value="date">Date</option>
-                  <option value="NomDeLaDepense">Nom de la dépense</option>
-                  <option value="Categorie">Catégorie</option>
-                  <option value="ARevoir">A revoir</option>
-                  {livrets.map(livret => livret.obtained && (
-                    <option key={'Obtenu' + livret.name} value={'Obtenu' + livret.name}>Obtenu {displayLivretName(livret.name)}</option>
-                  ))}
-                  {livrets.map(livret => livret.expense && (
-                    <option key={'Depense' + livret.name} value={'Depense' + livret.name}>Dépense {displayLivretName(livret.name)}</option>
-                  ))}
-                  {livrets.map(livret => livret.move && livret.moveTo?.map(moveTo => (
-                    <option key={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)} value={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)}>Déplacer {displayLivretName(livret.name)} vers {displayLivretName(moveTo)}</option>
-                  )))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => deleteColumn(index)}
-                  className="bg-red-500 text-white p-2 ml-2 rounded"
-                >
-                  X
-                </button>
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={addColumn}
-              className="bg-blue-500 text-white p-2 rounded mb-2"
-            >
-              +
-            </button>
+          <div className="flex flex-row justify-center gap-20">
+            <div className="mb-4">
+              <label>Email</label>
+              <input type="email" value={user.email} disabled className="border p-2 w-full" />
+            </div>
+            <div className="mb-4">
+              <label>Nom</label>
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
           </div>
           <div className="mb-4">
             <label>Mes Livrets</label>
-            <div>
+            <div className="grid grid-cols-12 gap-2 items-center grid-rows-fixed">
               {livrets.map((livret, index) => (
-                <div key={livret.name} className="flex flex-row mb-2 gap-4">
-                  <span className="font-bold my-auto">{displayLivretName(livret.name)}</span>
-                  <label className="mr-2 my-auto">
+                <React.Fragment key={livret.name}>
+                  <span className="col-span-2 font-bold">{displayLivretName(livret.name)}</span>
+                  <label className="col-span-2 flex items-center">
                     Obtenu
                     <input
                       type="checkbox"
                       checked={livret.obtained}
                       onChange={(e) => handleLivretChange(index, 'obtained', e.target.checked)}
-                      className="ml-1 my-auto"
+                      className="ml-1"
                     />
                   </label>
-                  <label className="mr-2 my-auto">
+                  <label className="col-span-2 flex items-center">
                     Dépense
                     <input
                       type="checkbox"
                       checked={livret.expense}
                       onChange={(e) => handleLivretChange(index, 'expense', e.target.checked)}
-                      className="ml-1 my-auto"
+                      className="ml-1"
                     />
                   </label>
-                  <label className="mr-2 my-auto">
+                  <label className="col-span-2 flex items-center">
                     Déplacer vers
                     <input
                       type="checkbox"
                       checked={livret.move}
                       onChange={(e) => handleLivretChange(index, 'move', e.target.checked)}
-                      className="ml-1 my-auto"
+                      className="ml-1"
                     />
                   </label>
-                  {livret.move && (
-                    <div className="ml-2 my-auto">
-                      {livrets.filter((_, i) => i !== index).map(l => (
-                        <label key={l.name} className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            checked={livret.moveTo?.includes(l.name) || false}
-                            onChange={(e) => handleMoveToChange(index, l.name, e.target.checked)}
-                          />
-                          {displayLivretName(l.name)}
-                        </label>
-                      ))}
-                    </div>
+                  <div className="col-span-2">
+                    {livret.move ? (
+                      <div>
+                        {livrets.filter((_, i) => i !== index).map(l => (
+                          <label key={l.name} className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={livret.moveTo?.includes(l.name) || false}
+                              onChange={(e) => handleMoveToChange(index, l.name, e.target.checked)}
+                            />
+                            {displayLivretName(l.name)}
+                          </label>
+                        ))}
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                  {livret.name !== 'CarteBleue' ? (
+                    <button
+                      type="button"
+                      onClick={() => deleteLivret(livret.name)}
+                      className="col-span-1 bg-red-800 text-white px-2 py-1 rounded ml-2"
+                    >
+                      Supprimer
+                    </button>
+                  ) : (
+                    <div className="col-span-1"></div>
                   )}
-                  {livret.name !== 'CarteBleue' && (
-                    <button type="button" onClick={() => deleteLivret(livret.name)} className="ml-2 h-fit my-auto">Supprimer</button>
-                  )}
-                </div>
+                </React.Fragment>
               ))}
+            </div>
+            <div className='flex flex-col w-fit p-2 mx-auto gap-3'>
               <input
                 type="text"
                 value={newLivret}
                 onChange={(e) => setNewLivret(e.target.value)}
-                className="border p-2 w-full mb-2"
+                className="border p-2 mb-2"
                 placeholder="Ajouter un nouveau livret"
               />
               <button type="button" onClick={addLivret}>Ajouter Livret</button>
             </div>
+          </div>
+          <div className="mb-4">
+            <label>Ordre des Colonnes</label>
+            <div className="grid grid-cols-2 gap-4 mx-auto">
+              {columnOrder.map((column, index) => (
+                <div key={index} className="flex items-center mb-2 gap-4 mx-auto">
+                  <select
+                    value={column}
+                    onChange={(e) => handleColumnOrderChange(index, e.target.value)}
+                    className="border p-2 min-w-max max-w-xs"
+                    style={{ width: 'auto' }}
+                  >
+                    <option value="date">Date</option>
+                    <option value="NomDeLaDepense">Nom de la dépense</option>
+                    <option value="Categorie">Catégorie</option>
+                    <option value="ARevoir">A revoir</option>
+                    {livrets.map(livret => livret.obtained && (
+                      <option key={'Obtenu' + livret.name} value={'Obtenu' + livret.name}>Obtenu {displayLivretName(livret.name)}</option>
+                    ))}
+                    {livrets.map(livret => livret.expense && (
+                      <option key={'Depense' + livret.name} value={'Depense' + livret.name}>Dépense {displayLivretName(livret.name)}</option>
+                    ))}
+                    {livrets.map(livret => livret.move && livret.moveTo?.map(moveTo => (
+                      <option key={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)} value={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)}>
+                        Déplacer {displayLivretName(livret.name)} vers {displayLivretName(moveTo)}
+                      </option>
+                    )))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => deleteColumn(index)}
+                    className="bg-red-500 text-white p-2 ml-2 rounded"
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={addColumn}
+              className="bg-blue-500 text-white p-2 rounded mt-2"
+            >
+              +
+            </button>
           </div>
           <button
             type="submit"

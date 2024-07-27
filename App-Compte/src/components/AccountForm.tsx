@@ -70,7 +70,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
       const parsedData = parseExtractedText(text);
       setDateString(parsedData.Date);
       setNomDeLaDepense(parsedData.NomDeLaDepense);
-      setDynamicValues({ ...dynamicValues, DepenseCarteBleue: parsedData.DepenseCarteBleue.trim() });
       setSelectedOption(parsedData.selectedOption);
     }
   };
@@ -239,15 +238,15 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
                 ))}
               </select>
             </div>
-              <div className='w-1/2 p-2'>
-                  <label className="block">Montant</label>
-                  <input
-                    type="number"
-                    name={selectedOption}
-                    value={dynamicValues[selectedOption] || ''}
-                    onChange={handleDynamicValueChange}
-                    className="border p-2 w-full"
-                  />
+            <div className='w-1/2 p-2'>
+              <label className="block">Montant</label>
+              <input
+                type="number"
+                name={selectedOption}
+                value={dynamicValues[selectedOption] || ''}
+                onChange={handleDynamicValueChange}
+                className="border p-2 w-full"
+              />
             </div>
           </div>
 

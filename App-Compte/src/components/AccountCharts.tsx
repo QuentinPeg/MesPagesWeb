@@ -1,4 +1,3 @@
-// src/components/AccountCharts.tsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -33,6 +32,7 @@ interface Account {
     ObtenuLivretA: string;
     ObtenuMozaïque: string;
     ARevoir: string;
+    user_id?: string;
 }
 
 interface AccountChartsProps {
@@ -149,15 +149,14 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
         });
     }, [filterAccounts, selectedExpenseType, granularity]); // Ajouter granularity aux dépendances pour recalculer lors du changement de granularité
 
-    const expenseTypeOptions = [
-        { value: 'DepenseCarteBleue', label: 'Dépense Carte Bleue' },
-        { value: 'ObtenuCarteBleue', label: 'Obtenu Carte Bleue' },
-        { value: 'DeplaceCarteBleueVersLivretA', label: 'Déplacé de Carte Bleue vers Livret A' },
-        { value: 'DeplaceLivretAVersCarteBleue', label: 'Déplacé de Livret A vers Carte Bleue' },
-        { value: 'ObtenuLivretA', label: 'Obtenu Livret A' },
-        { value: 'ObtenuMozaïque', label: 'Obtenu Mozaïque' },
-        // Ajoutez d'autres types de dépenses ici
-    ];
+    // Obtenez dynamiquement les types de dépense à partir des colonnes des comptes
+    const expenseTypeOptions = useMemo(() => {
+        if (accounts.length === 0) return [];
+        const firstAccount = accounts[0];
+        return Object.keys(firstAccount)
+            .filter(key => key !== 'id' && key !== 'date' && key !== 'NomDeLaDepense' && key !== 'Categorie' && key !== 'ARevoir' && key !== 'user_id')
+            .map(key => ({ value: key, label: key.replace(/([A-Z])/g, ' $1').trim() }));
+    }, [accounts]);
 
     const expenseTypeToCategories = useMemo(() => {
         return accounts.reduce((acc, account) => {
@@ -170,7 +169,7 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
             });
             return acc;
         }, {} as { [key: string]: Set<string> });
-    }, [accounts]);
+    }, [accounts, expenseTypeOptions]);
 
     useEffect(() => {
         if (expenseTypeToCategories[selectedExpenseType]) {

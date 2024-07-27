@@ -132,6 +132,7 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
       return updateAccount(id!, updatedAccount);
     }));
     setLoading(false);
+    window.location.reload();
   };
 
   const handleChange = (id: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
