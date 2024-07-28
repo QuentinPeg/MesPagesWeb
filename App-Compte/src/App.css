@@ -122,3 +122,4 @@ main {
 .grid-rows-fixed {
   grid-auto-rows: minmax(50px, auto); /* Vous pouvez ajuster 50px à la hauteur souhaitée */
 } 
+

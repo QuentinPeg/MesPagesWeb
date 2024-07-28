@@ -40,7 +40,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-
   useEffect(() => {
     const fetchUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -71,6 +70,10 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
       setDateString(parsedData.Date);
       setNomDeLaDepense(parsedData.NomDeLaDepense);
       setSelectedOption(parsedData.selectedOption);
+      setDynamicValues(prevValues => ({
+        ...prevValues,
+        [parsedData.selectedOption]: parsedData.DepenseCarteBleue
+      }));
     }
   };
 
@@ -92,7 +95,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
 
       if (fetchError) throw fetchError;
 
-      console.log(`Colonne ${cleanColumnName} ajoutée avec succès.`);
     } catch (error) {
       console.error(`Erreur lors de la vérification/ajout de la colonne ${columnName} :`, error);
     }
@@ -160,8 +162,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
         setIsSubmitting(false);
         return;
       }
-
-
     } catch (error) {
       console.error("Erreur lors de l'ajout du compte :", error);
     }
@@ -181,7 +181,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
 
     window.location.reload();
   };
-
 
   return (
     <form onSubmit={handleSubmit} className="p-4">
@@ -282,4 +281,3 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
 };
 
 export default AccountForm;
-

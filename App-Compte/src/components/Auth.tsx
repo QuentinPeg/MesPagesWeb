@@ -31,7 +31,7 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
+    <form onSubmit={handleSubmit} className="contact-form mx-auto w-96 bg-gray-500 p-8 rounded-lg shadow-md m-8">
       <h2 className="text-2xl mb-4">{isSignup ? 'Sign Up' : 'Login'}</h2>
       <div className="mb-4">
         <label>Email</label>

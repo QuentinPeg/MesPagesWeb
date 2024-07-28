@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import { FaPen } from 'react-icons/fa';
+
+interface Livret {
+  id: string;
+  name: string;
+  obtained: boolean;
+  expense: boolean;
+  move: boolean;
+  moveTo?: string[];
+}
 
 interface User {
   id: string;
@@ -7,7 +17,7 @@ interface User {
   user_metadata: {
     full_name?: string;
     avatar_url?: string;
-    livrets?: { name: string, obtained: boolean, expense: boolean, move: boolean, moveTo?: string[] }[];
+    livrets?: Livret[];
     columnOrder?: string[];
   };
 }
@@ -15,9 +25,11 @@ interface User {
 const Parametres: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [fullName, setFullName] = useState<string>('');
-  const [livrets, setLivrets] = useState<{ name: string, obtained: boolean, expense: boolean, move: boolean, moveTo?: string[] }[]>([]);
+  const [livrets, setLivrets] = useState<Livret[]>([]);
   const [newLivret, setNewLivret] = useState<string>('');
   const [columnOrder, setColumnOrder] = useState<string[]>(['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
+  const [editingLivret, setEditingLivret] = useState<number | null>(null);
+  const [editedLivretName, setEditedLivretName] = useState<string>('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,13 +42,20 @@ const Parametres: React.FC = () => {
       setUser(user);
       setFullName(user?.user_metadata?.full_name || '');
 
+      // Initialize or migrate livrets
       const existingLivrets = user?.user_metadata?.livrets || [];
-      const hasCarteBleue = existingLivrets.some(livret => livret.name === 'CarteBleue');
-      if (!hasCarteBleue) {
-        existingLivrets.push({ name: 'CarteBleue', obtained: false, expense: false, move: false });
-      }
-      setLivrets(existingLivrets);
+      const migratedLivrets = existingLivrets.map(livret => ({
+        ...livret,
+        id: livret.id || `${livret.name}-${Date.now()}`
+      }));
 
+      // Ensure there's a "CarteBleue-Initial" livret
+      const hasCarteBleue = migratedLivrets.some(livret => livret.id === 'CarteBleue-Initial');
+      if (!hasCarteBleue) {
+        migratedLivrets.push({ id: 'CarteBleue-Initial', name: 'CarteBleue', obtained: false, expense: false, move: false });
+      }
+
+      setLivrets(migratedLivrets);
       setColumnOrder(user?.user_metadata?.columnOrder || ['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
     };
     fetchUser();
@@ -45,10 +64,9 @@ const Parametres: React.FC = () => {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Afficher la confirmation avant de sauvegarder
     const confirmSave = window.confirm('Êtes-vous sûr de vouloir sauvegarder les modifications ?');
     if (!confirmSave) {
-      return; // Annuler la mise à jour si l'utilisateur refuse
+      return;
     }
 
     if (!user) {
@@ -96,7 +114,7 @@ const Parametres: React.FC = () => {
 
   const addColumn = () => {
     const newOrder = [...columnOrder];
-    newOrder.splice(columnOrder.length - 1, 0, 'date');
+    newOrder.push('date');
     setColumnOrder(newOrder);
   };
 
@@ -108,34 +126,25 @@ const Parametres: React.FC = () => {
   };
 
   const displayLivretName = (name: string) => {
-    if (name === 'CarteBleue') return 'Carte Bleue';
-    return name;
+    return name.replace(/CarteBleue/, 'Carte Bleue');
   };
 
   const internalLivretName = (name: string) => {
-    if (name === 'Carte Bleue') return 'CarteBleue';
-    return name;
+    return name.replace(/Carte Bleue/, 'CarteBleue');
   };
 
   const addLivret = () => {
-    const internalName = internalLivretName(newLivret);
-    if (newLivret && internalName !== 'CarteBleue' && !livrets.find(l => l.name === internalName)) {
-      setLivrets([...livrets, { name: internalName, obtained: false, expense: false, move: false }]);
+    if (newLivret && !livrets.find(l => l.name === internalLivretName(newLivret))) {
+      const newId = `${internalLivretName(newLivret)}-${Date.now()}`; // Create unique ID for new livret
+      setLivrets([...livrets, { id: newId, name: internalLivretName(newLivret), obtained: false, expense: false, move: false }]);
       setNewLivret('');
-    } else if (internalName === 'CarteBleue') {
-      alert('Le livret "Carte Bleue" ne peut pas être ajouté de nouveau.');
     }
   };
 
-  const deleteLivret = (livretName: string) => {
-    if (livretName === 'CarteBleue') {
-      alert('Le livret "Carte Bleue" ne peut pas être supprimé.');
-      return;
-    }
-
+  const deleteLivret = (livretId: string) => {
     const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer ce livret ?');
     if (confirmDelete) {
-      setLivrets(livrets.filter(l => l.name !== livretName));
+      setLivrets(livrets.filter(l => l.id !== livretId));
     }
   };
 
@@ -167,6 +176,18 @@ const Parametres: React.FC = () => {
     return livrets.every(livret => livret.obtained || livret.expense || livret.move);
   };
 
+  const handleEditLivret = (index: number) => {
+    setEditingLivret(index);
+    setEditedLivretName(livrets[index].name);
+  };
+
+  const handleSaveLivretName = (index: number) => {
+    const updatedLivrets = [...livrets];
+    updatedLivrets[index].name = internalLivretName(editedLivretName);
+    setLivrets(updatedLivrets);
+    setEditingLivret(null);
+  };
+
   return (
     <div className="p-4">
       <h2 className="text-2xl mb-4">Paramètres du compte</h2>
@@ -191,8 +212,31 @@ const Parametres: React.FC = () => {
             <label>Mes Livrets</label>
             <div className="grid grid-cols-12 gap-2 items-center grid-rows-fixed">
               {livrets.map((livret, index) => (
-                <React.Fragment key={livret.name}>
-                  <span className="col-span-2 font-bold">{displayLivretName(livret.name)}</span>
+                <React.Fragment key={livret.id}>
+                  <div className="col-span-2 flex items-center gap-2">
+                    {editingLivret === index ? (
+                      <>
+                        <input
+                          type="text"
+                          value={editedLivretName}
+                          onChange={(e) => setEditedLivretName(e.target.value)}
+                          className="border p-2"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleSaveLivretName(index)}
+                          className="bg-blue-500 text-white p-2 rounded"
+                        >
+                          Save
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <span className="font-bold">{displayLivretName(livret.name)}</span>
+                        <FaPen onClick={() => handleEditLivret(index)} className="cursor-pointer text-blue-500" />
+                      </>
+                    )}
+                  </div>
                   <label className="col-span-2 flex items-center">
                     Obtenu
                     <input
@@ -224,7 +268,7 @@ const Parametres: React.FC = () => {
                     {livret.move ? (
                       <div>
                         {livrets.filter((_, i) => i !== index).map(l => (
-                          <label key={l.name} className="flex items-center gap-2">
+                          <label key={l.id} className="flex items-center gap-2">
                             <input
                               type="checkbox"
                               checked={livret.moveTo?.includes(l.name) || false}
@@ -238,10 +282,10 @@ const Parametres: React.FC = () => {
                       <div></div>
                     )}
                   </div>
-                  {livret.name !== 'CarteBleue' ? (
+                  {livret.id !== 'CarteBleue-Initial' ? ( // Prevent deletion if livret has initial Carte Bleue ID
                     <button
                       type="button"
-                      onClick={() => deleteLivret(livret.name)}
+                      onClick={() => deleteLivret(livret.id)}
                       className="col-span-1 bg-red-800 text-white px-2 py-1 rounded ml-2"
                     >
                       Supprimer
@@ -268,6 +312,7 @@ const Parametres: React.FC = () => {
             <div className="grid grid-cols-2 gap-4 mx-auto">
               {columnOrder.map((column, index) => (
                 <div key={index} className="flex items-center mb-2 gap-4 mx-auto">
+                  <span>{index + 1}.</span> {/* Afficher le numéro de la colonne */}
                   <select
                     value={column}
                     onChange={(e) => handleColumnOrderChange(index, e.target.value)}

@@ -1,3 +1,4 @@
+// src/components/Header.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
@@ -18,8 +19,11 @@ const Header: React.FC = () => {
   }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.reload();
+    const confirmed = window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?');
+    if (confirmed) {
+      await supabase.auth.signOut();
+      window.location.reload();
+    }
   };
 
   const toggleMenu = () => {
@@ -41,15 +45,17 @@ const Header: React.FC = () => {
 
   return (
     <nav className='bg-blue-500 text-white p-4 flex justify-between items-center'>
-      <Link to="/" className="flex items-center text-white mr-4">
+      <Link to={user ? "/accountform" : "/"} className="flex items-center text-white mr-4">
         <img src={bankingImage} alt="Logo" className="w-12 rounded-full" style={{ cursor: 'pointer' }} />
         <h1 className="text-2xl pl-3">Gestion de Comptes</h1>
       </Link>
-      <div className='flex justify-evenly w-1/2 items-center'>
-        <Link to="/" className="text-white border border-gray-200 rounded-md p-2">Accueil</Link>
-        <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2">Tableau</Link>
-        <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2">Graphique</Link>
-      </div>
+      {user ? (
+        <div className='flex justify-evenly w-1/2 items-center'>
+          <Link to="/accountform" className="text-white border border-gray-200 rounded-md p-2">Accueil</Link>
+          <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2">Tableau</Link>
+          <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2">Graphique</Link>
+        </div>
+      ) : null}
       <div className="relative flex items-center">
         {user ? (
           <div className="relative flex flex-col items-center pr-4" onClick={toggleMenu} ref={menuRef}>
@@ -58,6 +64,7 @@ const Header: React.FC = () => {
             {menuOpen && (
               <div className="absolute top-full mt-2 w-48 bg-white text-black rounded shadow-lg">
                 <button onClick={() => navigate('/parametres')} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Paramètres</button>
+                <button onClick={() => navigate('/contact')} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Contact</button>
                 <button onClick={handleLogout} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Déconnexion</button>
               </div>
             )}

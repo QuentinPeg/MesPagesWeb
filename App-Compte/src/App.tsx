@@ -1,12 +1,14 @@
 // src/App.tsx
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import AccountForm from './components/AccountForm';
 import AccountList from './components/AccountList';
 import AccountCharts from './components/AccountCharts';
 import Auth from './components/Auth';
 import Parametres from './components/Parametres';
+import Home from './components/Home';
+import Contact from './components/Contact';
 import { supabase } from './supabase';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -30,12 +32,14 @@ const App: React.FC = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [user, setUser] = useState<any>(null);
   const [livrets, setLivrets] = useState<{ name: string, obtained: boolean, expense: boolean, move: boolean, moveTo?: string[] }[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
       setLivrets(user?.user_metadata?.livrets || []);
+      setLoading(false);
     };
     getUser();
   }, []);
@@ -86,9 +90,8 @@ const App: React.FC = () => {
   };
 
   const addAccount = async (account: Account) => {
-    account.id = uuidv4(); // Générer un identifiant unique pour le compte
+    account.id = uuidv4();
 
-    // Vérifiez et ajoutez les colonnes nécessaires
     for (const key in account) {
       if (account.hasOwnProperty(key) && key !== 'id' && key !== 'user_id') {
         await ensureColumnExists(key);
@@ -117,7 +120,6 @@ const App: React.FC = () => {
   };
 
   const updateAccount = async (id: string, updatedAccount: Partial<Account>) => {
-    // Vérifiez et ajoutez les colonnes nécessaires
     for (const key in updatedAccount) {
       if (updatedAccount.hasOwnProperty(key) && key !== 'id' && key !== 'user_id') {
         await ensureColumnExists(key);
@@ -161,16 +163,22 @@ const App: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Router>
       <div className="App w-full h-full">
         <Header />
         <Routes>
-          <Route path="/" element={<AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} />} />
-          <Route path="/tableau" element={<AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} />} />
-          <Route path="/graphique" element={<AccountCharts accounts={accounts} />} />
+          <Route path="/" element={user ? <Navigate to="/accountform" /> : <Home />} />
+          <Route path="/accountform" element={user ? <AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
+          <Route path="/tableau" element={user ? <AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} /> : <Navigate to="/" />} />
+          <Route path="/graphique" element={user ? <AccountCharts accounts={accounts} /> : <Navigate to="/" />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/parametres" element={<Parametres />} />
+          <Route path="/parametres" element={user ? <Parametres /> : <Navigate to="/" />} />
+          <Route path="/contact" element={user ? <Contact /> : <Navigate to="/" />} />
         </Routes>
       </div>
     </Router>
@@ -178,3 +186,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+  
