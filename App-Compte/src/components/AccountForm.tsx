@@ -9,7 +9,6 @@ import { v4 as uuidv4 } from 'uuid';
 import Autosuggest from 'react-autosuggest';
 import '../App.css';
 
-
 interface AccountFormProps {
   addAccount: (account: Account) => void;
   accounts: Account[];
@@ -217,10 +216,12 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
   const inputProps = {
     placeholder: "Catégorie",
     value: Categorie,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+    onChange: (event: React.FormEvent<HTMLElement>, { newValue }: { newValue: string }) => {
       setCategorie(newValue);
     }
   };
+
+
 
   return (
     <form onSubmit={handleSubmit} className="p-4">

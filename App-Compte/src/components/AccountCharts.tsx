@@ -33,6 +33,7 @@ interface Account {
     ObtenuMozaïque: string;
     ARevoir: string;
     user_id?: string;
+    [key: string]: string | undefined;
 }
 
 interface AccountChartsProps {
@@ -127,7 +128,7 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
                 dateA = new Date(a);
                 dateB = new Date(b);
             }
-            return dateA.getTime() - dateB.getTime();
+            return (dateA ? dateA.getTime() : 0) - (dateB ? dateB.getTime() : 0);
         });
 
         const data = labels.map(label =>

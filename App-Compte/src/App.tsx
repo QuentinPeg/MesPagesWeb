@@ -110,7 +110,7 @@ const App: React.FC = () => {
       }
 
       if (data) {
-        setAccounts([...accounts, { id: data[0].id, ...account }]);
+        setAccounts([...accounts, { ...account }]);
       } else {
         console.error("Les données insérées sont nulles");
       }

@@ -39,18 +39,18 @@ const Parametres: React.FC = () => {
         return;
       }
       const user = data.user;
-      setUser(user);
+      setUser(user as User | null);
       setFullName(user?.user_metadata?.full_name || '');
 
       // Initialize or migrate livrets
       const existingLivrets = user?.user_metadata?.livrets || [];
-      const migratedLivrets = existingLivrets.map(livret => ({
+      const migratedLivrets = existingLivrets.map((livret: Livret) => ({
         ...livret,
         id: livret.id || `${livret.name}-${Date.now()}`
       }));
 
       // Ensure there's a "CarteBleue-Initial" livret
-      const hasCarteBleue = migratedLivrets.some(livret => livret.id === 'CarteBleue-Initial');
+      const hasCarteBleue = migratedLivrets.some((livret: Livret) => livret.id === 'CarteBleue-Initial');
       if (!hasCarteBleue) {
         migratedLivrets.push({ id: 'CarteBleue-Initial', name: 'CarteBleue', obtained: false, expense: false, move: false });
       }
