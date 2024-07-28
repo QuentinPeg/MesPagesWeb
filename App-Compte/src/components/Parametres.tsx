@@ -114,7 +114,8 @@ const Parametres: React.FC = () => {
 
   const addColumn = () => {
     const newOrder = [...columnOrder];
-    newOrder.push('date');
+    const secondLastIndex = newOrder.length - 1;
+    newOrder.splice(secondLastIndex, 0, 'date');
     setColumnOrder(newOrder);
   };
 
@@ -296,7 +297,7 @@ const Parametres: React.FC = () => {
                 </React.Fragment>
               ))}
             </div>
-            <div className='flex flex-col w-fit p-2 mx-auto gap-3'>
+            <div className='flex flex-col w-fit p-2 mx-auto gap-3 '>
               <input
                 type="text"
                 value={newLivret}
@@ -304,12 +305,12 @@ const Parametres: React.FC = () => {
                 className="border p-2 mb-2"
                 placeholder="Ajouter un nouveau livret"
               />
-              <button type="button" onClick={addLivret}>Ajouter Livret</button>
+              <button className='bg-green-600' type="button" onClick={addLivret}>Ajouter Livret</button>
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-20">
             <label>Ordre des Colonnes</label>
-            <div className="grid grid-cols-2 gap-4 mx-auto">
+            <div className="grid grid-cols-2 gap-4 mx-auto mb-4">
               {columnOrder.map((column, index) => (
                 <div key={index} className="flex items-center mb-2 gap-4 mx-auto">
                   <span>{index + 1}.</span> {/* Afficher le numéro de la colonne */}
@@ -348,7 +349,7 @@ const Parametres: React.FC = () => {
             <button
               type="button"
               onClick={addColumn}
-              className="bg-blue-500 text-white p-2 rounded mt-2"
+              className="bg-green-600 text-white px-4 py-2 rounded-full mt-2"
             >
               +
             </button>

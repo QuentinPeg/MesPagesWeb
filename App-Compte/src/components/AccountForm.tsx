@@ -6,6 +6,9 @@ import bankingImage from './banking.jpg';
 import AccountSummary from './AccountSummary';
 import { supabase } from '../supabase';
 import { v4 as uuidv4 } from 'uuid';
+import Autosuggest from 'react-autosuggest';
+import '../App.css';
+
 
 interface AccountFormProps {
   addAccount: (account: Account) => void;
@@ -32,6 +35,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
   const [dateString, setDateString] = useState('');
   const [NomDeLaDepense, setNomDeLaDepense] = useState('');
   const [Categorie, setCategorie] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedOption, setSelectedOption] = useState('');
   const [dynamicValues, setDynamicValues] = useState<{ [key: string]: string }>({});
   const [ARevoir, setARevoir] = useState('Oui');
@@ -182,6 +186,42 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
     window.location.reload();
   };
 
+  const getSuggestions = (value: string) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+    return inputLength === 0 ? [] : accounts
+      .map(account => account.Categorie)
+      .filter((categorie, index, self) => categorie.toLowerCase().includes(inputValue) && self.indexOf(categorie) === index);
+  };
+
+  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
+    setSuggestions(getSuggestions(value));
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const onSuggestionSelected = (event: React.FormEvent, { suggestion }: { suggestion: string }) => {
+    setCategorie(suggestion);
+  };
+
+  const getSuggestionValue = (suggestion: string) => suggestion;
+
+  const renderSuggestion = (suggestion: string) => (
+    <div>
+      {suggestion}
+    </div>
+  );
+
+  const inputProps = {
+    placeholder: "Catégorie",
+    value: Categorie,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+      setCategorie(newValue);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="p-4">
       <div className="flex flex-row gap-5">
@@ -207,11 +247,14 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
             </div>
             <div className='w-1/3 p-2'>
               <label className="block">Catégorie</label>
-              <input
-                type="text"
-                value={Categorie}
-                onChange={(e) => setCategorie(e.target.value)}
-                className="border p-2 w-full"
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={onSuggestionsClearRequested}
+                onSuggestionSelected={onSuggestionSelected}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps}
               />
             </div>
           </div>

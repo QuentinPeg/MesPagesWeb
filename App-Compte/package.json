@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-table": "^8.19.2",
+    "@types/react-select": "^5.0.1",
     "chart.js": "^4.4.3",
     "chartjs-adapter-date-fns": "^3.0.0",
     "csv-parser": "^3.0.0",
@@ -21,6 +22,7 @@
     "firebase-admin": "^12.2.0",
     "papaparse": "^5.4.1",
     "react": "^18.3.1",
+    "react-autosuggest": "^10.1.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
