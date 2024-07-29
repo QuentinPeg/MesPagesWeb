@@ -22,6 +22,7 @@ const Header: React.FC = () => {
     const confirmed = window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?');
     if (confirmed) {
       await supabase.auth.signOut();
+      navigate('/Home');
       window.location.reload();
     }
   };
