@@ -172,7 +172,8 @@ const App: React.FC = () => {
       <div className="App w-full h-full">
         <Header />
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/accountform" /> : <Home />} />
+          <Route path="/" element={user ? <Navigate to="/accountform" /> : <Navigate to="/Home" />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/accountform" element={user ? <AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
           <Route path="/tableau" element={user ? <AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} /> : <Navigate to="/" />} />
           <Route path="/graphique" element={user ? <AccountCharts accounts={accounts} /> : <Navigate to="/" />} />
