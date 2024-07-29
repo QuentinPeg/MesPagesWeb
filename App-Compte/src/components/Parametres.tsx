@@ -283,7 +283,7 @@ const Parametres: React.FC = () => {
                       <div></div>
                     )}
                   </div>
-                  {livret.id !== 'CarteBleue-Initial' ? ( // Prevent deletion if livret has initial Carte Bleue ID
+                  {livret.id !== 'CarteBleue-Initial' ? ( 
                     <button
                       type="button"
                       onClick={() => deleteLivret(livret.id)}
