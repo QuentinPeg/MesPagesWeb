@@ -23,6 +23,7 @@ const Header: React.FC = () => {
     if (confirmed) {
       await supabase.auth.signOut();
       navigate('/Home');
+      navigate('/');
       window.location.reload();
     }
   };

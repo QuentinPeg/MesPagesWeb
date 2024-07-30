@@ -1,5 +1,6 @@
 // accountList.tsx
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AccountSummary from './AccountSummary';
 import { supabase } from '../supabase';
 
@@ -28,6 +29,8 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
   const [editedAccounts, setEditedAccounts] = useState<Partial<Account>[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [columnOrder, setColumnOrder] = useState<string[]>(['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
+  const navigate = useNavigate();
+
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -132,7 +135,7 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
       return updateAccount(id!, updatedAccount);
     }));
     setLoading(false);
-    window.location.reload();
+    navigate('/tableau');
   };
 
   const handleChange = (id: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

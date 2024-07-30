@@ -7,6 +7,7 @@ import AccountSummary from './AccountSummary';
 import { supabase } from '../supabase';
 import { v4 as uuidv4 } from 'uuid';
 import Autosuggest from 'react-autosuggest';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 interface AccountFormProps {
@@ -42,6 +43,8 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -182,7 +185,10 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
 
     setLoading(false);
 
+    navigate('/');
     window.location.reload();
+    navigate('/');
+
   };
 
   const getSuggestions = (value: string) => {

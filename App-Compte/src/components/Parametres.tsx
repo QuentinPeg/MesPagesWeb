@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import { FaPen } from 'react-icons/fa';
 
@@ -30,6 +31,7 @@ const Parametres: React.FC = () => {
   const [columnOrder, setColumnOrder] = useState<string[]>(['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
   const [editingLivret, setEditingLivret] = useState<number | null>(null);
   const [editedLivretName, setEditedLivretName] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
