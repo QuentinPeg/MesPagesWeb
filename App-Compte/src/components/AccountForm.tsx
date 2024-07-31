@@ -45,7 +45,6 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const fetchUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -227,14 +226,12 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
     }
   };
 
-
-
   return (
-    <form onSubmit={handleSubmit} className="p-4">
-      <div className="flex flex-row gap-5">
-        <div className="w-3/4 my-auto">
-          <div className='flex gap-5'>
-            <div className='w-1/3 p-2'>
+    <form onSubmit={handleSubmit} className="p-4 account-form">
+      <div className="flex flex-col gap-5 lg:flex-row">
+        <div className="w-full lg:w-3/4 my-auto form-group">
+          <div className='flex flex-col gap-5 lg:flex-row'>
+            <div className='w-full lg:w-1/3 p-2 input-field'>
               <label className="block">Date</label>
               <input
                 type="date"
@@ -243,7 +240,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
                 className="border p-2 w-full"
               />
             </div>
-            <div className='w-1/3 p-2'>
+            <div className='w-full lg:w-1/3 p-2 input-field'>
               <label className="block">Nom de la dépense</label>
               <input
                 type="text"
@@ -252,7 +249,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
                 className="border p-2 w-full"
               />
             </div>
-            <div className='w-1/3 p-2'>
+            <div className='w-full lg:w-1/3 p-2 input-field'>
               <label className="block">Catégorie</label>
               <Autosuggest
                 suggestions={suggestions}
@@ -265,8 +262,8 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
               />
             </div>
           </div>
-          <div className='flex gap-5'>
-            <div className='w-1/2 p-2'>
+          <div className='flex flex-col gap-5 lg:flex-row'>
+            <div className='w-full lg:w-1/2 p-2 input-field'>
               <label className="block">Type de dépense</label>
               <select
                 value={selectedOption}
@@ -287,7 +284,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
                 ))}
               </select>
             </div>
-            <div className='w-1/2 p-2'>
+            <div className='w-full lg:w-1/2 p-2 input-field'>
               <label className="block">Montant</label>
               <input
                 type="number"
@@ -299,7 +296,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
             </div>
           </div>
 
-          <div>
+          <div className='my-2'>
             <label className="block">
               A revoir
               <input
@@ -313,16 +310,15 @@ const AccountForm: React.FC<AccountFormProps> = ({ addAccount, accounts, livrets
           <button type="submit" className="bg-green-500 text-white p-2 mt-2">
             Ajouter
           </button>
-          {loading && <div className="text-blue-500 mb-4">En cours de chargement...</div>}
+          {loading && <div className="text-center text-blue-500 mb-4 loading-message">En cours de chargement...</div>}
         </div>
 
-        <div className="w-1/4">
+        <div className="w-full lg:w-1/4 file-upload">
           <input type="file" id="imageUpload" onChange={handleImageUpload} style={{ display: 'none' }} />
-          <label htmlFor="imageUpload">
-            <span className="block bg-slate-500">Clicker sur l'image pour insérer depuis une image</span>
+          <label htmlFor="imageUpload" className="flex flex-col items-center cursor-pointer">
+            <span className="block bg-slate-500 text-center py-2 px-4">Cliquez sur l'image pour insérer depuis une image</span>
             <span className="block bg-slate-500 text-center">  ↓  ↓  ↓  </span>
-            <img src={bankingImage} alt="Logo" className="preview-image rounded-full" style={{ cursor: 'pointer' }} />
-          </label>
+            <img src={bankingImage} alt="Logo" className="preview-image rounded-full mt-2 lg:mt-0 max-w-[100px] sm:max-w-full" />          </label>
         </div>
       </div>
       <AccountSummary accounts={accounts} />

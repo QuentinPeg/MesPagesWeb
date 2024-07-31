@@ -168,7 +168,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <Router basename="/Personal_Banking">
+    <Router >{/*basename="/Personal_Banking"*/}
       <div className="App w-full h-full">
         <Header />
         <Routes>
