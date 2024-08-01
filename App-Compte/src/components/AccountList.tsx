@@ -153,95 +153,99 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
   };
 
   return (
-    <div className="flex flex-col pr-4">
+    <div className="flex flex-col pr-4 overflowX-hidden">
       <AccountSummary accounts={accounts} />
-
-      <h2 className="text-xl mb-2">Liste des comptes</h2>
-      <div className="flex flex-wrap justify-evenly mb-4">
-        <button
-          className="bg-blue-500 text-white px-4 py-2 mr-2 rounded"
-          onClick={handleEdit}
-          disabled={editing}
-        >
-          Éditer
-        </button>
-        <button
-          className="bg-red-500 text-white px-4 py-2 mr-2 rounded"
-          onClick={handleDeleteSelected}
-          disabled={selectedIds.length === 0}
-        >
-          Supprimer Sélectionnés
-        </button>
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded"
-          onClick={handleSaveAll}
-          disabled={!editing}
-        >
-          Enregistrer
-        </button>
+      <div className='sm:hidden'>
+        <h1>Tableau non disponible sur téléphne, veuillez vous connecter depuis un ordinateur</h1>
       </div>
-      {loading && <div className="text-blue-500 mb-4">En cours de chargement...</div>}
-      <div className="relative flex-1 p-2 mx-auto">
-        <div ref={tableContainerRef} className="overflow-auto h-full">
-          <table className="min-w-full bg-white text-black border-collapse border text-center">
-            <thead>
-              <tr>
-                <th className="py-2">
-                  <input
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                  />
-                </th>
-                {columnOrder.map(column => (
-                  <th className="py-2" key={column}>
-                    <button
-                      className="focus:outline-none flex bg-transparent mx-auto"
-                      onClick={() => handleSort(column)}
-                    >
-                      {displayLivretName(column)} {sortColumn === column && (sortDirection === 'asc' ? '↑' : '↓')}
-                    </button>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sortedAccounts.map((account, index) => (
-                <tr key={index} className="border-b border-gray-200">
-                  <td className="py-2 border border-gray-200">
+      <div className='max-sm:hidden'>
+        <h2 className="text-xl mb-2">Liste des comptes</h2>
+        <div className="flex flex-wrap justify-evenly mb-4">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 mr-2 rounded"
+            onClick={handleEdit}
+            disabled={editing}
+          >
+            Éditer
+          </button>
+          <button
+            className="bg-red-500 text-white px-4 py-2 mr-2 rounded"
+            onClick={handleDeleteSelected}
+            disabled={selectedIds.length === 0}
+          >
+            Supprimer Sélectionnés
+          </button>
+          <button
+            className="bg-green-500 text-white px-4 py-2 rounded"
+            onClick={handleSaveAll}
+            disabled={!editing}
+          >
+            Enregistrer
+          </button>
+        </div>
+        {loading && <div className="text-blue-500 mb-4">En cours de chargement...</div>}
+        <div className="relative flex-1 p-2 mx-auto">
+          <div ref={tableContainerRef} className="overflow-auto h-full">
+            <table className="min-w-full bg-white text-black border-collapse border text-center">
+              <thead>
+                <tr>
+                  <th className="py-2">
                     <input
                       type="checkbox"
-                      checked={selectedIds.includes(account.id)}
-                      onChange={() => handleSelect(account.id)}
+                      checked={selectAll}
+                      onChange={handleSelectAll}
                     />
-                  </td>
-                  {editing ? (
-                    <>
-                      {columnOrder.map(column => (
-                        <td className="py-2 border border-gray-200 bg-gray-100" key={column}>
-                          <input
-                            type="text"
-                            name={column}
-                            value={editedAccounts.find(a => a.id === account.id)?.[column] || ''}
-                            onChange={(e) => handleChange(account.id, e)}
-                            className="border p-1 w-full text-center bg-gray-200"
-                          />
-                        </td>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {columnOrder.map(column => (
-                        <td className="py-2 border border-gray-200" key={column}>
-                          {account[column]}
-                        </td>
-                      ))}
-                    </>
-                  )}
+                  </th>
+                  {columnOrder.map(column => (
+                    <th className="py-2" key={column}>
+                      <button
+                        className="focus:outline-none flex bg-transparent mx-auto"
+                        onClick={() => handleSort(column)}
+                      >
+                        {displayLivretName(column)} {sortColumn === column && (sortDirection === 'asc' ? '↑' : '↓')}
+                      </button>
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sortedAccounts.map((account, index) => (
+                  <tr key={index} className="border-b border-gray-200">
+                    <td className="py-2 border border-gray-200">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(account.id)}
+                        onChange={() => handleSelect(account.id)}
+                      />
+                    </td>
+                    {editing ? (
+                      <>
+                        {columnOrder.map(column => (
+                          <td className="py-2 border border-gray-200 bg-gray-100" key={column}>
+                            <input
+                              type="text"
+                              name={column}
+                              value={editedAccounts.find(a => a.id === account.id)?.[column] || ''}
+                              onChange={(e) => handleChange(account.id, e)}
+                              className="border p-1 w-full text-center bg-gray-200"
+                            />
+                          </td>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {columnOrder.map(column => (
+                          <td className="py-2 border border-gray-200" key={column}>
+                            {account[column]}
+                          </td>
+                        ))}
+                      </>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
