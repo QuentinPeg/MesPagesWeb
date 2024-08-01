@@ -28,8 +28,12 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
   const [editing, setEditing] = useState<boolean>(false);
   const [editedAccounts, setEditedAccounts] = useState<Partial<Account>[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [columnOrder, setColumnOrder] = useState<string[]>(['date', 'NomDeLaDepense', 'Categorie']);
+  const [columnOrder, setColumnOrder] = useState<string[]>(['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
   const navigate = useNavigate();
+
+
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchColumnOrder = async () => {
@@ -39,14 +43,13 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
         return;
       }
       const user = data.user;
-      setColumnOrder(user?.user_metadata?.columnOrder || ['date', 'NomDeLaDepense', 'Categorie']);
+      setColumnOrder(user?.user_metadata?.columnOrder || ['date', 'NomDeLaDepense', 'Categorie', 'ARevoir']);
     };
     fetchColumnOrder();
   }, []);
 
   useEffect(() => {
     const tableContainer = tableContainerRef.current;
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const scrollContainer = scrollContainerRef.current;
 
     if (tableContainer && scrollContainer) {
@@ -132,6 +135,8 @@ const AccountList: React.FC<AccountListProps> = ({ accounts, deleteAccount, upda
       return updateAccount(id!, updatedAccount);
     }));
     setLoading(false);
+    navigate('/tableau');
+    window.location.reload();
     navigate('/tableau');
   };
 

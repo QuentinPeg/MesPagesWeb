@@ -211,21 +211,21 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
     };
 
     return (
-        <div className="account-charts w-2/3 mx-auto p-4 m-4 bg-gray-100 rounded-md text-center">
+        <div className="account-charts w-11/12 sm:w-2/3 mx-auto p-4 m-4 bg-gray-100 rounded-md text-center">
             <h2 className="text-xl text-black mb-4">Graphiques des Dépenses</h2>
-            <div className="mb-4 flex justify-around">
+            <div className="mb-4 flex flex-col sm:flex-row justify-around">
                 <Select
                     options={granularityOptions}
                     onChange={handleGranularityChange}
                     placeholder="Trier par"
-                    className="w-1/3"
-                    styles={customStyles} // Appliquer les styles personnalisés ici
+                    className="mb-2 sm:mb-0 w-full sm:w-1/3"
+                    styles={customStyles}
                 />
                 <Select
                     options={expenseTypeOptions}
                     onChange={handleExpenseTypeChange}
                     placeholder="Sélectionner le type de dépense"
-                    className="w-1/3"
+                    className="mb-2 sm:mb-0 w-full sm:w-1/3"
                     styles={customStyles}
                 />
                 <Select
@@ -233,20 +233,23 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
                     options={categoryOptions}
                     onChange={handleCategoryChange}
                     placeholder="Filtrer par catégorie"
-                    className="w-1/3"
+                    className="w-full sm:w-1/3"
                     styles={customStyles}
                 />
             </div>
-            <Bar
-                data={chartData}
-                options={{
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: selectedExpenseType }
-                    }
-                }}
-            />
+            <div className="h-[50vh]">
+                <Bar
+                    data={chartData}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            title: { display: true, text: selectedExpenseType }
+                        }
+                    }}
+                />
+            </div>
         </div>
     );
 };

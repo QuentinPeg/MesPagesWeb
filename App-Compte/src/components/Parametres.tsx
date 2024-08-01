@@ -44,14 +44,12 @@ const Parametres: React.FC = () => {
       setUser(user as User | null);
       setFullName(user?.user_metadata?.full_name || '');
 
-      // Initialize or migrate livrets
       const existingLivrets = user?.user_metadata?.livrets || [];
       const migratedLivrets = existingLivrets.map((livret: Livret) => ({
         ...livret,
         id: livret.id || `${livret.name}-${Date.now()}`
       }));
 
-      // Ensure there's a "CarteBleue-Initial" livret
       const hasCarteBleue = migratedLivrets.some((livret: Livret) => livret.id === 'CarteBleue-Initial');
       if (!hasCarteBleue) {
         migratedLivrets.push({ id: 'CarteBleue-Initial', name: 'CarteBleue', obtained: false, expense: false, move: false });
@@ -138,7 +136,7 @@ const Parametres: React.FC = () => {
 
   const addLivret = () => {
     if (newLivret && !livrets.find(l => l.name === internalLivretName(newLivret))) {
-      const newId = `${internalLivretName(newLivret)}-${Date.now()}`; // Create unique ID for new livret
+      const newId = `${internalLivretName(newLivret)}-${Date.now()}`;
       setLivrets([...livrets, { id: newId, name: internalLivretName(newLivret), obtained: false, expense: false, move: false }]);
       setNewLivret('');
     }
@@ -193,176 +191,177 @@ const Parametres: React.FC = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl mb-4">Paramètres du compte</h2>
+      <h2 className="text-xl sm:text-2xl mb-4">Paramètres du compte</h2>
       {user && (
-        <form onSubmit={handleUpdate}>
-          <div className="flex flex-row justify-center gap-20">
-            <div className="mb-4">
-              <label>Email</label>
-              <input type="email" value={user.email} disabled className="border p-2 w-full" />
+        <form onSubmit={handleUpdate} className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="mb-4">
+                <label>Email</label>
+                <input type="email" value={user.email} disabled className="border p-2 w-full" />
+              </div>
+              <div className="mb-4">
+                <label>Nom</label>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="border p-2 w-full"
+                />
+              </div>
             </div>
             <div className="mb-4">
-              <label>Nom</label>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className="border p-2 w-full"
-              />
+              <label>Mes Livrets</label>
+              <div className="grid gap-4 items-center">
+                {livrets.map((livret, index) => (
+                  <div key={livret.id} className="grid grid-cols-12 gap-2 items-center">
+                    <div className="col-span-12 sm:col-span-2 flex items-center gap-2">
+                      {editingLivret === index ? (
+                        <>
+                          <input
+                            type="text"
+                            value={editedLivretName}
+                            onChange={(e) => setEditedLivretName(e.target.value)}
+                            className="border p-2"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleSaveLivretName(index)}
+                            className="bg-blue-500 text-white p-2 rounded"
+                          >
+                            Save
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <span className="font-bold">{displayLivretName(livret.name)}</span>
+                          <FaPen onClick={() => handleEditLivret(index)} className="cursor-pointer text-blue-500" />
+                        </>
+                      )}
+                    </div>
+                    <label className="col-span-6 sm:col-span-2 flex items-center">
+                      Obtenu
+                      <input
+                        type="checkbox"
+                        checked={livret.obtained}
+                        onChange={(e) => handleLivretChange(index, 'obtained', e.target.checked)}
+                        className="ml-1"
+                      />
+                    </label>
+                    <label className="col-span-6 sm:col-span-2 flex items-center">
+                      Dépense
+                      <input
+                        type="checkbox"
+                        checked={livret.expense}
+                        onChange={(e) => handleLivretChange(index, 'expense', e.target.checked)}
+                        className="ml-1"
+                      />
+                    </label>
+                    <label className="col-span-6 sm:col-span-2 flex items-center">
+                      Déplacer vers
+                      <input
+                        type="checkbox"
+                        checked={livret.move}
+                        onChange={(e) => handleLivretChange(index, 'move', e.target.checked)}
+                        className="ml-1"
+                      />
+                    </label>
+                    <div className="col-span-12 sm:col-span-2">
+                      {livret.move ? (
+                        <div>
+                          {livrets.filter((_, i) => i !== index).map(l => (
+                            <label key={l.id} className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                checked={livret.moveTo?.includes(l.name) || false}
+                                onChange={(e) => handleMoveToChange(index, l.name, e.target.checked)}
+                              />
+                              {displayLivretName(l.name)}
+                            </label>
+                          ))}
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                    {livret.id !== 'CarteBleue-Initial' ? ( 
+                      <button
+                        type="button"
+                        onClick={() => deleteLivret(livret.id)}
+                        className="col-span-12 sm:col-span-1 bg-red-800 text-white px-2 py-1 rounded ml-2"
+                      >
+                        Supprimer
+                      </button>
+                    ) : (
+                      <div className="col-span-12 sm:col-span-1"></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className='flex flex-col w-fit p-2 mx-auto gap-3'>
+                <input
+                  type="text"
+                  value={newLivret}
+                  onChange={(e) => setNewLivret(e.target.value)}
+                  className="border p-2 mb-2"
+                  placeholder="Ajouter un nouveau livret"
+                />
+                <button className='bg-green-600 text-white p-2 rounded' type="button" onClick={addLivret}>Ajouter Livret</button>
+              </div>
             </div>
-          </div>
-          <div className="mb-4">
-            <label>Mes Livrets</label>
-            <div className="grid grid-cols-12 gap-2 items-center grid-rows-fixed">
-              {livrets.map((livret, index) => (
-                <React.Fragment key={livret.id}>
-                  <div className="col-span-2 flex items-center gap-2">
-                    {editingLivret === index ? (
-                      <>
-                        <input
-                          type="text"
-                          value={editedLivretName}
-                          onChange={(e) => setEditedLivretName(e.target.value)}
-                          className="border p-2"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => handleSaveLivretName(index)}
-                          className="bg-blue-500 text-white p-2 rounded"
-                        >
-                          Save
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <span className="font-bold">{displayLivretName(livret.name)}</span>
-                        <FaPen onClick={() => handleEditLivret(index)} className="cursor-pointer text-blue-500" />
-                      </>
-                    )}
-                  </div>
-                  <label className="col-span-2 flex items-center">
-                    Obtenu
-                    <input
-                      type="checkbox"
-                      checked={livret.obtained}
-                      onChange={(e) => handleLivretChange(index, 'obtained', e.target.checked)}
-                      className="ml-1"
-                    />
-                  </label>
-                  <label className="col-span-2 flex items-center">
-                    Dépense
-                    <input
-                      type="checkbox"
-                      checked={livret.expense}
-                      onChange={(e) => handleLivretChange(index, 'expense', e.target.checked)}
-                      className="ml-1"
-                    />
-                  </label>
-                  <label className="col-span-2 flex items-center">
-                    Déplacer vers
-                    <input
-                      type="checkbox"
-                      checked={livret.move}
-                      onChange={(e) => handleLivretChange(index, 'move', e.target.checked)}
-                      className="ml-1"
-                    />
-                  </label>
-                  <div className="col-span-2">
-                    {livret.move ? (
-                      <div>
-                        {livrets.filter((_, i) => i !== index).map(l => (
-                          <label key={l.id} className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={livret.moveTo?.includes(l.name) || false}
-                              onChange={(e) => handleMoveToChange(index, l.name, e.target.checked)}
-                            />
-                            {displayLivretName(l.name)}
-                          </label>
-                        ))}
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
-                  </div>
-                  {livret.id !== 'CarteBleue-Initial' ? ( 
+            <div className="mb-4">
+              <label>Ordre des Colonnes</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto mb-4">
+                {columnOrder.map((column, index) => (
+                  <div key={index} className="flex items-center mb-2 gap-4 mx-auto">
+                    <span>{index + 1}.</span>
+                    <select
+                      value={column}
+                      onChange={(e) => handleColumnOrderChange(index, e.target.value)}
+                      className="border p-2 min-w-max max-w-xs"
+                    >
+                      <option value="date">Date</option>
+                      <option value="NomDeLaDepense">Nom de la dépense</option>
+                      <option value="Categorie">Catégorie</option>
+                      <option value="ARevoir">A revoir</option>
+                      {livrets.map(livret => livret.obtained && (
+                        <option key={'Obtenu' + livret.name} value={'Obtenu' + livret.name}>Obtenu {displayLivretName(livret.name)}</option>
+                      ))}
+                      {livrets.map(livret => livret.expense && (
+                        <option key={'Depense' + livret.name} value={'Depense' + livret.name}>Dépense {displayLivretName(livret.name)}</option>
+                      ))}
+                      {livrets.map(livret => livret.move && livret.moveTo?.map(moveTo => (
+                        <option key={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)} value={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)}>
+                          Déplacer {displayLivretName(livret.name)} vers {displayLivretName(moveTo)}
+                        </option>
+                      )))}
+                    </select>
                     <button
                       type="button"
-                      onClick={() => deleteLivret(livret.id)}
-                      className="col-span-1 bg-red-800 text-white px-2 py-1 rounded ml-2"
+                      onClick={() => deleteColumn(index)}
+                      className="bg-red-500 text-white p-2 ml-2 rounded"
                     >
-                      Supprimer
+                      X
                     </button>
-                  ) : (
-                    <div className="col-span-1"></div>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-            <div className='flex flex-col w-fit p-2 mx-auto gap-3 '>
-              <input
-                type="text"
-                value={newLivret}
-                onChange={(e) => setNewLivret(e.target.value)}
-                className="border p-2 mb-2"
-                placeholder="Ajouter un nouveau livret"
-              />
-              <button className='bg-green-600' type="button" onClick={addLivret}>Ajouter Livret</button>
-            </div>
-          </div>
-          <div className="mb-20">
-            <label>Ordre des Colonnes</label>
-            <div className="grid grid-cols-2 gap-4 mx-auto mb-4">
-              {columnOrder.map((column, index) => (
-                <div key={index} className="flex items-center mb-2 gap-4 mx-auto">
-                  <span>{index + 1}.</span> {/* Afficher le numéro de la colonne */}
-                  <select
-                    value={column}
-                    onChange={(e) => handleColumnOrderChange(index, e.target.value)}
-                    className="border p-2 min-w-max max-w-xs"
-                    style={{ width: 'auto' }}
-                  >
-                    <option value="date">Date</option>
-                    <option value="NomDeLaDepense">Nom de la dépense</option>
-                    <option value="Categorie">Catégorie</option>
-                    <option value="ARevoir">A revoir</option>
-                    {livrets.map(livret => livret.obtained && (
-                      <option key={'Obtenu' + livret.name} value={'Obtenu' + livret.name}>Obtenu {displayLivretName(livret.name)}</option>
-                    ))}
-                    {livrets.map(livret => livret.expense && (
-                      <option key={'Depense' + livret.name} value={'Depense' + livret.name}>Dépense {displayLivretName(livret.name)}</option>
-                    ))}
-                    {livrets.map(livret => livret.move && livret.moveTo?.map(moveTo => (
-                      <option key={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)} value={'Deplace' + livret.name + 'Vers' + internalLivretName(moveTo)}>
-                        Déplacer {displayLivretName(livret.name)} vers {displayLivretName(moveTo)}
-                      </option>
-                    )))}
-                  </select>
-                  <button
-                    type="button"
-                    onClick={() => deleteColumn(index)}
-                    className="bg-red-500 text-white p-2 ml-2 rounded"
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={addColumn}
+                className="bg-green-600 text-white px-4 py-2 rounded-full mt-2"
+              >
+                +
+              </button>
             </div>
             <button
-              type="button"
-              onClick={addColumn}
-              className="bg-green-600 text-white px-4 py-2 rounded-full mt-2"
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded"
+              disabled={!validateLivrets()}
             >
-              +
+              Mettre à jour
             </button>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white p-2 rounded"
-            disabled={!validateLivrets()}
-          >
-            Mettre à jour
-          </button>
         </form>
       )}
     </div>
