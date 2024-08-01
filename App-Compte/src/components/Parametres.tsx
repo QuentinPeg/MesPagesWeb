@@ -227,9 +227,9 @@ const Parametres: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleSaveLivretName(index)}
-                            className="bg-blue-500 text-white p-2 rounded"
+                            className="bg-blue-500 text-white p-2 rounded bg-opacity-60 z-10"
                           >
-                            Save
+                            Sauvegarder
                           </button>
                         </>
                       ) : (
