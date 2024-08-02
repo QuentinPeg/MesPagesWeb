@@ -313,7 +313,7 @@ const Parametres: React.FC = () => {
               <label>Ordre des Colonnes</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto mb-4">
                 {columnOrder.map((column, index) => (
-                  <div key={index} className="flex items-center mb-2 gap-4 mx-auto max-sm:w-[90vw]">
+                  <div key={index} className="flex items-center mb-2 gap-4 max-sm:gap-1 mx-auto max-sm:w-[90vw]">
                     <span>{index + 1}.</span>
                     <select
                       value={column}
