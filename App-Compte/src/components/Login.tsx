@@ -29,7 +29,7 @@ const Login: React.FC = () => {
         <label>Password</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="border p-2 w-full" />
       </div>
-      <button type="submit" className="bg-blue-500 text-white p-2">Login</button>
+      <button type="submit" className="bg-blue-500 text-white p-2">Connexion</button>
     </form>
   );
 };
