@@ -211,7 +211,7 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
     };
 
     return (
-        <div className="account-charts w-11/12 sm:w-2/3 mx-auto p-4 m-4 bg-gray-100 rounded-md text-center">
+        <div className="account-charts max-sm:w-11/12 h-[80vh] sm:w-2/3 mx-auto p-4 m-4 bg-gray-100 rounded-md text-center">
             <h2 className="text-xl text-black mb-4">Graphiques des Dépenses</h2>
             <div className="mb-4 flex flex-col sm:flex-row justify-around">
                 <Select
@@ -237,7 +237,7 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
                     styles={customStyles}
                 />
             </div>
-            <div className="sm:h-[50vh]">
+            <div className='sm:h-[60vh] max-sm:h-[50vh]' >
                 <Bar
                     data={chartData}
                     options={{

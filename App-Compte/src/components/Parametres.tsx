@@ -195,7 +195,7 @@ const Parametres: React.FC = () => {
       {user && (
         <form onSubmit={handleUpdate} className="space-y-4">
           <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row sm:justify-evenly gap-4">
               <div className="mb-4">
                 <label>Email</label>
                 <input type="email" value={user.email} disabled className="border p-2 w-full" />
@@ -313,7 +313,7 @@ const Parametres: React.FC = () => {
               <label>Ordre des Colonnes</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto mb-4">
                 {columnOrder.map((column, index) => (
-                  <div key={index} className="flex items-center mb-2 gap-4 mx-auto">
+                  <div key={index} className="flex items-center mb-2 gap-4 mx-auto max-sm:w-[90vw]">
                     <span>{index + 1}.</span>
                     <select
                       value={column}
