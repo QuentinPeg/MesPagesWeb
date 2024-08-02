@@ -69,7 +69,9 @@ const Header: React.FC = () => {
           {user ? (
             <div className="relative flex flex-col items-center pr-4" onClick={toggleMenu} ref={menuRef}>
               <img src={bankingImage} alt="Avatar" className="w-8 h-8 rounded-full cursor-pointer" />
-              <span className="text-sm cursor-pointer">{user.user_metadata?.full_name || user.email}</span>
+              <span className="text-sm cursor-pointer max-w-[75px] max-h-[75px] break-words whitespace-normal text-center overflow-hidden text-ellipsis">
+                {user.user_metadata?.full_name || user.email}
+              </span>
               {menuOpen && (
                 <div className="absolute top-full mt-2 w-48 bg-white text-black rounded shadow-lg">
                   <button onClick={() => navigate('/parametres')} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Paramètres</button>
@@ -118,12 +120,13 @@ const Header: React.FC = () => {
             </div>
           </div>
         ) : null}
-        <div className="relative flex items-center">
+        <div className="sm:hidden relative flex items-center">
           {user ? (
             <div className="relative flex flex-col items-center pr-4" onClick={toggleMenu} ref={menuRef}>
               <img src={bankingImage} alt="Avatar" className="w-8 h-8 rounded-full cursor-pointer" />
-              <span className="text-sm cursor-pointer">{user.user_metadata?.full_name || user.email}</span>
-              {menuOpen && (
+              <span className="text-sm cursor-pointer max-w-[75px] max-h-[75px] break-words whitespace-normal text-center overflow-hidden text-ellipsis">
+                {user.user_metadata?.full_name || user.email}
+              </span>              {menuOpen && (
                 <div className="absolute top-full mt-2 w-48 bg-white text-black rounded shadow-lg">
                   <button onClick={() => navigate('/parametres')} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Paramètres</button>
                   <button onClick={() => navigate('/contact')} className="block w-full text-left px-4 py-2 bg-gray-200 hover:bg-slate-400">Contact</button>
@@ -141,3 +144,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+

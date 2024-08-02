@@ -237,7 +237,7 @@ const AccountCharts: React.FC<AccountChartsProps> = ({ accounts }) => {
                     styles={customStyles}
                 />
             </div>
-            <div className="h-[50vh]">
+            <div className="sm:h-[50vh]">
                 <Bar
                     data={chartData}
                     options={{
