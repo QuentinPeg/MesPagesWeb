@@ -1,4 +1,5 @@
 // src/App.tsx
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -9,6 +10,7 @@ import Auth from './components/Auth';
 import Parametres from './components/Parametres';
 import Home from './components/Home';
 import Contact from './components/Contact';
+import VirtualTransfers from './components/VirtualTransfers'; // Import de la nouvelle page Budget
 import { supabase } from './supabase';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -28,10 +30,19 @@ interface Account {
   [key: string]: any;
 }
 
+interface Livret {
+  id: string;
+  name: string;
+  obtained: boolean;
+  expense: boolean;
+  move: boolean;
+  moveTo?: string[];
+}
+
 const App: React.FC = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [user, setUser] = useState<any>(null);
-  const [livrets, setLivrets] = useState<{ name: string, obtained: boolean, expense: boolean, move: boolean, moveTo?: string[] }[]>([]);
+  const [livrets, setLivrets] = useState<Livret[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -168,18 +179,19 @@ const App: React.FC = () => {
   }
 
   return (
-    <Router >{/*basename="/Personal_Banking"*/}
+    <Router>
       <div className="App w-full h-full">
         <Header />
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/accountform" /> : <Navigate to="/Home" />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/accountform" element={user ? <AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
-          <Route path="/tableau" element={user ? <AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} /> : <Navigate to="/" />} />
-          <Route path="/graphique" element={user ? <AccountCharts accounts={accounts} /> : <Navigate to="/" />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/parametres" element={user ? <Parametres /> : <Navigate to="/" />} />
-          <Route path="/contact" element={user ? <Contact /> : <Navigate to="/" />} />
+          <Route key="home" path="/" element={user ? <Navigate to="/accountform" /> : <Navigate to="/Home" />} />
+          <Route key="home-alt" path="/Home" element={<Home />} />
+          <Route key="accountform" path="/accountform" element={user ? <AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
+          <Route key="tableau" path="/tableau" element={user ? <AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} /> : <Navigate to="/" />} />
+          <Route key="graphique" path="/graphique" element={user ? <AccountCharts accounts={accounts} /> : <Navigate to="/" />} />
+          <Route key="budget" path="/budget" element={user ? <VirtualTransfers accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
+          <Route key="auth" path="/auth" element={<Auth />} />
+          <Route key="parametres" path="/parametres" element={user ? <Parametres /> : <Navigate to="/" />} />
+          <Route key="contact" path="/contact" element={user ? <Contact /> : <Navigate to="/" />} />
         </Routes>
       </div>
     </Router>
@@ -187,4 +199,4 @@ const App: React.FC = () => {
 };
 
 export default App;
-  
+

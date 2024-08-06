@@ -68,6 +68,7 @@ const Header: React.FC = () => {
               <Link to="/accountform" className="text-white border border-gray-200 rounded-md p-2">Accueil</Link>
               <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2">Tableau</Link>
               <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2">Graphique</Link>
+              <Link to="/budget" className="text-white border border-gray-200 rounded-md p-2">Budget</Link> {/* Ajout du lien Budget */}
             </div>
           ) : null}
 
@@ -99,7 +100,8 @@ const Header: React.FC = () => {
               <div ref={menuRef} className={`flex sm:w-full sm:flex-row flex-col justify-evenly items-center sm:static sm:top-auto max-sm:absolute max-sm:top-[100px] max-sm:left-1/2 transform max-sm:-translate-x-1/2 bg-blue-500 p-4 rounded-md w-[100vw] z-10 ${isVisible ? 'block' : 'hidden'} sm:block`}>
                 <Link to="/accountform" className="text-white border border-gray-200 rounded-md p-2 mb-2 sm:mb-0">Accueil</Link>
                 <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2 mb-2 sm:mb-0">Tableau</Link>
-                <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2">Graphique</Link>
+                <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2 mb-2 sm:mb-0">Graphique</Link>
+                <Link to="/budget" className="text-white border border-gray-200 rounded-md p-2">Budget</Link> {/* Ajout du lien Budget */}
               </div>
             </div>
           ) : null}
