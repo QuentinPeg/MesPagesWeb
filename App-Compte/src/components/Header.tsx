@@ -68,7 +68,7 @@ const Header: React.FC = () => {
               <Link to="/accountform" className="text-white border border-gray-200 rounded-md p-2">Accueil</Link>
               <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2">Tableau</Link>
               <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2">Graphique</Link>
-              <Link to="/budget" className="text-white border border-gray-200 rounded-md p-2">Budget</Link> {/* Ajout du lien Budget */}
+              <Link to="/EnvellopesVirtuelles" className="text-white border border-gray-200 rounded-md p-2">Envellopes Virtuelles</Link> {/* Ajout du lien Budget */}
             </div>
           ) : null}
 
@@ -101,7 +101,7 @@ const Header: React.FC = () => {
                 <Link to="/accountform" className="text-white border border-gray-200 rounded-md p-2 mb-2 sm:mb-0">Accueil</Link>
                 <Link to="/tableau" className="text-white border border-gray-200 rounded-md p-2 mb-2 sm:mb-0">Tableau</Link>
                 <Link to="/graphique" className="text-white border border-gray-200 rounded-md p-2 mb-2 sm:mb-0">Graphique</Link>
-                <Link to="/budget" className="text-white border border-gray-200 rounded-md p-2">Budget</Link> {/* Ajout du lien Budget */}
+                <Link to="/EnvellopesVirtuelles" className="text-white border border-gray-200 rounded-md p-2">Envellopes Virtuelles</Link> {/* Ajout du lien Budget */}
               </div>
             </div>
           ) : null}

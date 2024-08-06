@@ -179,7 +179,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <Router>
+    <Router basename="/Personal_Banking">{/*basename="/Personal_Banking"*/}
       <div className="App w-full h-full">
         <Header />
         <Routes>
@@ -188,7 +188,7 @@ const App: React.FC = () => {
           <Route key="accountform" path="/accountform" element={user ? <AccountForm addAccount={addAccount} accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
           <Route key="tableau" path="/tableau" element={user ? <AccountList accounts={accounts} deleteAccount={deleteAccount} updateAccount={updateAccount} livrets={livrets} /> : <Navigate to="/" />} />
           <Route key="graphique" path="/graphique" element={user ? <AccountCharts accounts={accounts} /> : <Navigate to="/" />} />
-          <Route key="budget" path="/budget" element={user ? <VirtualTransfers accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
+          <Route key="EnvellopesVirtuelles" path="/EnvellopesVirtuelles" element={user ? <VirtualTransfers accounts={accounts} livrets={livrets} /> : <Navigate to="/" />} />
           <Route key="auth" path="/auth" element={<Auth />} />
           <Route key="parametres" path="/parametres" element={user ? <Parametres /> : <Navigate to="/" />} />
           <Route key="contact" path="/contact" element={user ? <Contact /> : <Navigate to="/" />} />

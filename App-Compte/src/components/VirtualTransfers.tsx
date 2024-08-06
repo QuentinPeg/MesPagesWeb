@@ -121,68 +121,92 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
       <AccountSummary accounts={accounts} />
 
       <h2 className="text-xl mb-4">Déplacements Virtuels</h2>
-      <div className="mb-4 flex flex-wrap gap-4 items-end">
-        <input
-          type="text"
-          name="nom"
-          value={newTransfer.nom}
-          onChange={handleInputChange}
-          placeholder="Nom"
-          className="border p-1"
-        />
-        <input
-          type="number"
-          name="montant"
-          value={newTransfer.montant}
-          onChange={handleInputChange}
-          placeholder="Montant (€)"
-          className="border p-1"
-        />
-        <select
-          name="frequence"
-          value={newTransfer.frequence}
-          onChange={handleInputChange}
-          className="border p-1"
-        >
-          <option value="par mois">Par mois</option>
-          <option value="annuel">Annuel</option>
-          <option value="quotidien">Quotidien</option>
-          <option value="ponctuel">Ponctuel</option>
-        </select>
-        <select
-          name="comptesource"
-          value={newTransfer.comptesource}
-          onChange={handleInputChange}
-          className="border p-1"
-        >
-          {livrets.map(livret => (
-            <option key={livret.id} value={livret.name}>
-              {livret.name}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          name="occurrences"
-          value={newTransfer.occurrences}
-          onChange={handleInputChange}
-          placeholder="Nombre de fois"
-          className="border p-1"
-        />
-        <input
-          type="date"
-          name="date"
-          value={newTransfer.date}
-          onChange={handleInputChange}
-          className="border p-1"
-        />
+      <div className="mb-4 flex max-sm:flex-col max-sm:items-center flex-wrap gap-4 items-end">
+        <div className="flex flex-col">
+          <label htmlFor="nom">Nom</label>
+          <input
+            type="text"
+            id="nom"
+            name="nom"
+            value={newTransfer.nom}
+            onChange={handleInputChange}
+            placeholder="Nom"
+            className="border p-1"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="montant">Montant (€)</label>
+          <input
+            type="number"
+            id="montant"
+            name="montant"
+            value={newTransfer.montant}
+            onChange={handleInputChange}
+            placeholder="Montant (€)"
+            className="border p-1"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="frequence">Fréquence</label>
+          <select
+            name="frequence"
+            id="frequence"
+            value={newTransfer.frequence}
+            onChange={handleInputChange}
+            className="border p-1"
+          >
+            <option value="par mois">Par mois</option>
+            <option value="annuel">Annuel</option>
+            <option value="quotidien">Quotidien</option>
+            <option value="ponctuel">Ponctuel</option>
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="comptesource">Compte Source</label>
+          <select
+            name="comptesource"
+            id="comptesource"
+            value={newTransfer.comptesource}
+            onChange={handleInputChange}
+            className="border p-1"
+          >
+            {livrets.map(livret => (
+              <option key={livret.id} value={livret.name}>
+                {livret.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="occurrences">Nombre de fois</label>
+          <input
+            type="number"
+            id="occurrences"
+            name="occurrences"
+            value={newTransfer.occurrences}
+            onChange={handleInputChange}
+            placeholder="Nombre de fois"
+            className="border p-1"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={newTransfer.date}
+            onChange={handleInputChange}
+            className="border p-1"
+          />
+        </div>
         <button onClick={addTransfer} className="bg-blue-500 text-white px-4 py-2 rounded">Ajouter</button>
       </div>
       <ul className="mt-4 space-y-4">
         {virtualTransfers.map(transfer => (
           <li key={transfer.id} className="border p-2 flex justify-between items-center">
-            <span>
-              Transfert virtuel : Date de début {transfer.date}, {transfer.nom} de {transfer.montant}€ ({transfer.frequence}) déplacé depuis : {transfer.comptesource}, {transfer.occurrences} fois. 
+            <span className='mb-2 sm:mb-0'>
+              Transfert virtuel : Date de début {transfer.date}, {transfer.nom} de {transfer.montant}€ ({transfer.frequence}) déplacé depuis : {transfer.comptesource}, {transfer.occurrences} fois.
             </span>
             <button onClick={() => deleteTransfer(transfer.id)} className="bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
           </li>
