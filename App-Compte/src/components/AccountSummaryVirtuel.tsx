@@ -123,7 +123,7 @@ const AccountSummaryVirtuel: React.FC<{ accounts: Account[], virtualTransfers: V
 
         // Soustraire du compte source si pertinent
         if (sourceName && newTotals[sourceName] !== undefined) {
-          newTotals[sourceName] -= totalAmount;
+          newTotals[sourceName] = newTotals[sourceName] - (totalAmount);
         }
       });
 
@@ -149,7 +149,7 @@ const AccountSummaryVirtuel: React.FC<{ accounts: Account[], virtualTransfers: V
           const total = totals[livretName] || 0;
           return (
             <li key={livretName} className="p-2 border border-gray-200 rounded-md">
-              Virtuellement <br/> sur le compte {formattedName}: <span className="font-semibold">{total.toFixed(2)} €</span>
+              Virtuellement <br/> sur le compte {formattedName}: <span className={`font-semibold ${total < 0 ? 'text-red-500' : ''}`}>{total.toFixed(2)} €</span>
             </li>
           );
         })}
@@ -157,7 +157,7 @@ const AccountSummaryVirtuel: React.FC<{ accounts: Account[], virtualTransfers: V
       <hr className="my-2" />
       <div className='flex justify-center mt-4'>
         <div className="p-2 border border-gray-200 rounded-md inline-block">
-          Total: <span className="font-bold">{generalTotal.toFixed(2)} €</span>
+          Total: <span className={`font-bold ${generalTotal < 0 ? 'text-red-500' : ''}`}>{generalTotal.toFixed(2)} €</span>
         </div>
       </div>
     </div>

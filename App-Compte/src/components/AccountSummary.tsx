@@ -114,7 +114,7 @@ const AccountSummary: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
                     const total = totals[livretName] || 0;
                     return (
                         <li key={livretName} className="p-2 border border-gray-200 rounded-md">
-                            Sur le compte {formattedName}: <span className="font-semibold">{total.toFixed(2)} €</span>
+                            Sur le compte {formattedName}: <span className={`font-semibold ${total < 0 ? 'text-red-500' : ''}`}>{total.toFixed(2)} €</span>
                         </li>
                     );
                 })}
@@ -122,12 +122,12 @@ const AccountSummary: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
             <hr className="my-2" />
             <div className='flex justify-center mt-4'>
                 <div className="p-2 border border-gray-200 rounded-md inline-block">
-                    Total: <span className="font-bold">{livrets.reduce((sum, livret) => {
-                        return sum + (totals[livret.name] || 0);
-                    }, 0).toFixed(2)} €</span>
+                    Total: <span className={`font-bold ${livrets.reduce((sum, livret) => sum + (totals[livret.name] || 0), 0) < 0 ? 'text-red-500' : ''}`}>
+                        {livrets.reduce((sum, livret) => sum + (totals[livret.name] || 0), 0).toFixed(2)} €
+                    </span>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

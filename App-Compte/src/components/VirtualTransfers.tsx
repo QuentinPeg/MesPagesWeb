@@ -12,7 +12,7 @@ interface VirtualTransfer {
   comptesource: string;
   occurrences: number;
   date: string;
-  user_id: string; // Ajouter l'utilisateur
+  user_id: string;
 }
 
 interface Account {
@@ -37,11 +37,11 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
     nom: '',
     montant: 0,
     frequence: 'par mois',
-    comptesource: livrets.length > 0 ? livrets[0].name : '', // Valeur par défaut basée sur le premier livret
+    comptesource: livrets.length > 0 ? livrets[0].name : '',
     occurrences: 1,
     date: new Date().toISOString().slice(0, 10)
   });
-  const [user, setUser] = useState<any>(null); // État pour stocker l'utilisateur
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -57,11 +57,10 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
 
     const fetchVirtualTransfers = async () => {
       try {
-        // Filtrer les transferts virtuels par user_id
         const { data, error } = await supabase
           .from('virtual_transfers')
           .select('*')
-          .eq('user_id', user.id); // Filtrer par user_id
+          .eq('user_id', user.id);
         if (error) throw error;
         setVirtualTransfers(data || []);
       } catch (error) {
@@ -73,7 +72,6 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
   }, [user]);
 
   useEffect(() => {
-    // Mise à jour de la valeur par défaut de comptesource si les livrets changent
     if (livrets.length > 0 && newTransfer.comptesource === '') {
       setNewTransfer(prev => ({
         ...prev,
@@ -93,7 +91,7 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
   const addTransfer = async () => {
     if (!user) return;
 
-    const transferWithId = { ...newTransfer, id: uuidv4(), user_id: user.id }; // Ajouter user_id
+    const transferWithId = { ...newTransfer, id: uuidv4(), user_id: user.id };
     try {
       const { data, error } = await supabase.from('virtual_transfers').insert([transferWithId]).select();
       if (error) throw error;
@@ -107,6 +105,9 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
   };
 
   const deleteTransfer = async (id: string) => {
+    const confirmation = window.confirm("Voulez-vous vraiment supprimer ce transfert virtuel ?");
+    if (!confirmation) return;
+
     try {
       const { error } = await supabase.from('virtual_transfers').delete().eq('id', id);
       if (error) throw error;
@@ -121,7 +122,7 @@ const VirtualTransfers: React.FC<{ accounts: Account[], livrets: Livret[] }> = (
       <AccountSummary accounts={accounts} />
 
       <h2 className="text-xl mb-4">Déplacements Virtuels</h2>
-      <div className="mb-4 flex max-sm:flex-col max-sm:items-center flex-wrap gap-4 items-end">
+      <div className="mb-4 flex max-sm:flex-col max-sm:items-center flex-wrap gap-4 items-end justify-evenly">
         <div className="flex flex-col">
           <label htmlFor="nom">Nom</label>
           <input
