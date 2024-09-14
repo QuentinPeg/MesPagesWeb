@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Entre-2-Traits</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <img src="../img/logo.webp" alt="Logo L'Entre 2 Traits">
+    </header>
+    <nav>
+        <a href="./index.html">Accueil</a>
+        <a href="../html/atelier.html">Atelier</a>
+        <a href="../html/travaux.html">Travaux d'élèves</a>
+        <a href="../html/interventions.html"><span class="page">Les interventions</span></a>
+        <a href="../html/parcours.html">Parcours</a>
+        <a href="../html/contact.html">Contact</a>
+        <a href="../html/actus.html">Actus</a>
+        <a href="../html/boutique.html">Boutique</a>
+        <span class="panier-link"></span>
+        <img src="../img/panier.png" alt="panier" class="panier">
+        <span class="nombre-articles-panier" id="panier-bulle">0</span>
+    </nav>
+    <main>
+        <!-- Les divs des articles seront insérées ici via JavaScript -->
+    </main>
+    <footer>
+        <p>&copy; 2023 by CREATIVE EVENTS</p>
+        <p>Toutes les photos, images, illustrations ou supports visuels sont soumis aux droits d'auteurs.</p>
+        <div>
+            <a href="https://www.facebook.com/Entre2Traits"><img src="../img/facebook.webp" alt="Facebook"></a>
+            <a href=".https://www.youtube.com/channel/UCJcNeqQNF889gndHbw6mXfA"><img src="../img/youtube.webp"
+                    alt="YouTube"></a>
+        </div>
+    </footer>
+
+    <!-- Script pour charger les articles -->
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+
+    <script>
+        // Remplacer par vos informations Supabase
+        const SUPABASE_URL = 'https://dquhqpoitxwaahkdrkfy.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxdWhxcG9pdHh3YWFoa2Rya2Z5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYzMTc3NTcsImV4cCI6MjA0MTg5Mzc1N30.ayeOG1udDkkBM0yPNI1v9F8Eox_0s7ja-6UVtSgj1KE';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Vérification si le client Supabase est bien initialisé
+        console.log(supabaseClient);  // Vérifier ici si l'initialisation est correcte
+
+        // Fonction pour récupérer les articles depuis Supabase
+        async function fetchArticles() {
+            const { data: articles, error } = await supabaseClient
+                .from('articles')  // Vérifiez que la table est bien nommée "articles"
+                .select('*');
+
+            if (error) {
+                console.error('Erreur lors de la récupération des articles:', error);
+                return;
+            }
+
+            // Appel de la fonction pour afficher les articles
+            displayArticles(articles);
+        }
+
+        // Fonction pour afficher les articles avec les images
+        async function displayArticles(articles) {
+            const main = document.querySelector('main'); // Sélectionner la balise <main> pour y ajouter les divs
+
+            for (const article of articles) {
+                // Vérifiez que l'article a bien une URL d'image
+                if (!article.image_url) {
+                    console.warn('Aucune image URL pour cet article:', article);
+                    continue;
+                }
+
+                // Formatage de la date
+                const dateObj = new Date(article.date);
+                const formattedDate = dateObj.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const articleHTML = `
+            <div class="atelier">
+                <div>
+                    <img src="${article.image_url}" class="img-atelier" alt="Image de l'atelier">
+                    <div class="date-atelier">${formattedDate}</div>
+                </div>
+                <div>
+                    <h2 class="titre-atelier">${article.titre}</h2>
+                    <p class="description-atelier">${article.description.replace(/\n/g, '<br>')}</p>
+                    <a href="${article.lien}" class="lien_atelier"><button>Dossier de présentation</button></a>
+                </div>
+            </div>
+        `;
+
+                // Ajouter chaque article dans le main
+                main.insertAdjacentHTML('beforeend', articleHTML);
+            }
+        }
+
+
+        // Charger les articles dès que la page est prête
+        document.addEventListener('DOMContentLoaded', fetchArticles);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Entre-2-Traits - Ajouter un Article</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <img src="../img/logo.webp" alt="Logo L'Entre 2 Traits">
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="./index.html">Accueil</a>
+        <a href="../html/atelier.html">Atelier</a>
+        <a href="../html/travaux.html">Travaux d'élèves</a>
+        <a href="../html/interventions.html">Les interventions</a>
+        <a href="../html/parcours.html">Parcours</a>
+        <a href="../html/contact.html">Contact</a>
+        <a href="../html/actus.html">Actus</a>
+        <a href="../html/boutique.html">Boutique</a>
+        <span class="panier-link"></span>
+        <img src="../img/panier.png" alt="panier" class="panier">
+        <span class="nombre-articles-panier" id="panier-bulle">0</span>
+    </nav>
+
+    <main>
+        <!-- Formulaire pour ajouter un article -->
+        <form id="article-form">
+            <h2>Ajouter un Article</h2>
+            <input type="text" id="article-title" placeholder="Titre" required>
+            <input type="date" id="article-date" placeholder="Date de l'article" required>
+            
+            <!-- Section d'upload d'image (sans nouveau formulaire) -->
+            <input type="file" id="image-upload" accept="image/*">
+            <button type="button" id="upload-button">Upload Image</button>
+            <p id="upload-status"></p>
+            
+            <textarea id="article-description" placeholder="Description" required></textarea>
+            <input type="text" id="article-link" placeholder="Lien" required>
+            <button type="submit">Ajouter l'Article</button>
+            <p id="article-status"></p>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 by CREATIVE EVENTS</p>
+        <p>Toutes les photos, images, illustrations ou supports visuels sont soumis aux droits d'auteurs.</p>
+        <div>
+            <a href="https://www.facebook.com/Entre2Traits"><img src="../img/facebook.webp" alt="Facebook"></a>
+            <a href="https://www.youtube.com/channel/UCJcNeqQNF889gndHbw6mXfA"><img src="../img/youtube.webp" alt="YouTube"></a>
+        </div>
+    </footer>
+
+    <!-- Import Supabase JS -->
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+
+    <script>
+        // Initialiser le client Supabase
+        const SUPABASE_URL = 'https://dquhqpoitxwaahkdrkfy.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxdWhxcG9pdHh3YWFoa2Rya2Z5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYzMTc3NTcsImV4cCI6MjA0MTg5Mzc1N30.ayeOG1udDkkBM0yPNI1v9F8Eox_0s7ja-6UVtSgj1KE';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Fonction pour uploader l'image
+        async function uploadImage(file) {
+            const fileName = `${Date.now()}_${file.name}`;
+            const { data, error } = await supabaseClient
+                .storage
+                .from('images_interventions')
+                .upload(fileName, file);
+
+            if (error) {
+                console.error('Erreur lors de l\'upload:', error.message);
+                document.getElementById('upload-status').textContent = 'Erreur lors de l\'upload.';
+                return null;
+            }
+
+            const { publicUrl } = supabaseClient
+                .storage
+                .from('images_interventions')
+                .getPublicUrl(fileName).data;
+
+            document.getElementById('upload-status').textContent = `Image uploadée avec succès : ${publicUrl}`;
+            return publicUrl;
+        }
+
+        // Fonction pour ajouter un article
+        async function addArticle(imageUrl, title, description, link, date) {
+            const { data, error } = await supabaseClient
+                .from('articles')
+                .insert([{ image_url: imageUrl, titre: title, description: description, lien: link, date: date }]);
+
+            if (error) {
+                console.error('Erreur lors de l\'ajout de l\'article:', error.message);
+                document.getElementById('article-status').textContent = 'Erreur lors de l\'ajout de l\'article.';
+            } else {
+                document.getElementById('article-status').textContent = 'Article ajouté avec succès.';
+                document.getElementById('article-form').reset(); // Réinitialiser le formulaire
+            }
+        }
+
+        // Gestionnaire de l'événement de soumission du formulaire d'upload
+        document.getElementById('upload-button').addEventListener('click', async () => {
+            const fileInput = document.getElementById('image-upload');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                document.getElementById('upload-status').textContent = 'Veuillez sélectionner une image.';
+                return;
+            }
+
+            const imageUrl = await uploadImage(file);
+            if (imageUrl) {
+                document.getElementById('image-upload').dataset.imageUrl = imageUrl; // Stocker l'URL pour l'utiliser plus tard
+            }
+        });
+
+        // Gestionnaire de l'événement de soumission du formulaire d'article
+        document.getElementById('article-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const imageUrl = document.getElementById('image-upload').dataset.imageUrl;
+            const title = document.getElementById('article-title').value;
+            const description = document.getElementById('article-description').value;
+            const link = document.getElementById('article-link').value;
+            const date = document.getElementById('article-date').value;
+
+            if (!imageUrl) {
+                document.getElementById('article-status').textContent = 'Veuillez d\'abord uploader une image.';
+                return;
+            }
+
+            await addArticle(imageUrl, title, description, link, date);
+        });
+    </script>
+</body>
+
+</html>

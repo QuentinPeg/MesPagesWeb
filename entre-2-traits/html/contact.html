@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Entre-2-Traits</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <img src="../img/logo.webp" alt="Logo L'Entre 2 Traits">
+    </header>
+    <!-- Navigation -->
+    <nav>
+        <a href="./index.html">Accueil</a>
+        <a href="../html/atelier.html">Atelier</a>
+        <a href="../html/travaux.html">Travaux d'élèves</a>
+        <a href="../html/interventions.html">Les interventions</a>
+        <a href="../html/parcours.html">Parcours</a>
+        <a href="../html/contact.html"><span class="page">Contact</span></a>
+        <a href="../html/actus.html">Actus</a>
+        <a href="../html/boutique.html">Boutique</a>
+        <span class="panier-link"></span>
+        <img src="../img/panier.png" alt="panier" class="panier">
+        <span class="nombre-articles-panier" id="panier-bulle">0</span>
+        </span>
+    </nav>
+    <main>
+
+        <section id="main-contact">
+            <h1>Contact</h1>
+            <section>
+                <p>L'Entre 2 Traits <br>
+                    Frédéric Masson-villot</p>
+                <p>18 bis rue Ponsard <br>
+                    38100 Grenoble <br>
+                    06 13 21 20 27
+                </p>
+            </section>
+            <section class="contact-form">
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="name">Nom *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <input type="text" id="subject" name="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone*</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant">Prénom du participant *</label>
+                        <input type="text" id="participant" name="participant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Votre message</label>
+                        <textarea id="message" name="message"></textarea>
+                    </div>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </section>
+
+            <section class="map-section">
+                <div id="map"></div>
+            </section>
+        </section>
+
+
+
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 by CREATIVE EVENTS</p>
+        <p>Toutes les photos, images, illustrations ou supports visuels sont soumis aux droits d'auteurs.</p>
+        <div>
+            <a href="https://www.facebook.com/Entre2Traits"><img src="../img/facebook.webp" alt="Facebook"></a>
+            <a href=".https://www.youtube.com/channel/UCJcNeqQNF889gndHbw6mXfA"><img src="../img/youtube.webp"
+                    alt="YouTube"></a>
+        </div>
+    </footer>
+    <script>
+        function initMap() {
+            var location = { lat: 43.296482, lng: 5.36978 }; // Coordonnées pour Marseille
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: location,
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "L'entre-2-Traits Les Ateliers Graphiques",
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
+
+</body>
+
+</html>
