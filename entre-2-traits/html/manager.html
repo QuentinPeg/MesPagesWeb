@@ -99,7 +99,7 @@
 
         async function fetchImages() {
             const bucket = 'images_interventions';
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .storage
                 .from(bucket)
                 .list();
@@ -110,6 +110,8 @@
             }
 
             const dropdown = document.getElementById('imageDropdown');
+            dropdown.innerHTML = ''; // Clear the dropdown before populating it
+
             data.forEach(file => {
                 const option = document.createElement('option');
                 option.value = file.name;
@@ -117,70 +119,73 @@
                 dropdown.appendChild(option);
             });
 
-            dropdown.addEventListener('change', (event) => {
+            // Handle image preview on change
+            dropdown.addEventListener('change', async (event) => {
                 const selectedImage = document.getElementById('selectedImage');
-                const imageUrl = supabase.storage.from('images_interventions').getPublicUrl(event.target.value).publicURL;
-                selectedImage.src = imageUrl;
+                const { publicUrl, error } = supabaseClient
+                    .storage
+                    .from(bucket)
+                    .getPublicUrl(event.target.value);
+
+                if (error) {
+                    console.error('Erreur lors de la récupération de l\'URL:', error.message);
+                    return;
+                }
+
+                selectedImage.src = publicUrl;
                 selectedImage.style.display = 'block';
             });
         }
 
-        fetchImages();
-        // Fonction pour charger les images depuis le bucket de stockage
         async function loadImages() {
-            const bucket = 'images_interventions';
+        const bucket = 'images_interventions';
 
-            // Lister les fichiers dans le dossier racine
-            const { data: rootFiles, error: rootError } = await supabaseClient
-                .storage
-                .from(bucket)
-                .list('', { limit: 100 }); // Dossier racine
+        // Tenter de récupérer les fichiers dans 'public/images_interventions'
+        const { data: publicFiles, error: publicError } = await supabaseClient
+            .storage
+            .from(bucket)
+            .list('public', { limit: 100 });
 
-            if (rootError) {
-                console.error('Erreur lors de la récupération des images racine:', rootError.message);
-                return;
-            }
-
-            // Lister les fichiers dans le sous-dossier public
-            const { data: publicFiles, error: publicError } = await supabaseClient
-                .storage
-                .from(bucket)
-                .list('public', { limit: 100 }); // Sous-dossier 'public'
-
-            if (publicError) {
-                console.error('Erreur lors de la récupération des images public:', publicError.message);
-                return;
-            }
-
-            // Fusionner les fichiers des deux emplacements
-            const files = [...(rootFiles || []), ...(publicFiles || [])];
-
-            if (files.length === 0) {
-                console.warn('Aucune image trouvée dans le bucket.');
-                return;
-            }
-
-            const select = document.getElementById('article-image');
-            select.innerHTML = '<option value="">Sélectionner une image</option>'; // Réinitialiser le sélecteur
-
-            files.forEach(file => {
-                const { publicUrl, error } = supabaseClient
-                    .storage
-                    .from(bucket)
-                    .getPublicUrl(file.name.includes('public') ? `public/${file.name}` : file.name);
-
-                if (error) {
-                    console.error(`Erreur lors de la génération de l'URL pour ${file.name}:`, error.message);
-                    return;
-                }
-
-                const option = document.createElement('option');
-                option.value = publicUrl;
-                option.textContent = file.name;
-                select.appendChild(option);
-            });
-
+        if (publicError) {
+            console.error('Erreur lors de la récupération des images public:', publicError.message);
+            return;
         }
+
+        // Vérification si des fichiers sont présents dans le sous-dossier public
+        if (!publicFiles || publicFiles.length === 0) {
+            console.warn('Aucune image trouvée dans le sous-dossier public.');
+            return;
+        }
+
+        console.log('Fichiers trouvés dans public/images_interventions:', publicFiles); // Log pour vérifier les fichiers
+
+        const select = document.getElementById('article-image');
+        select.innerHTML = '<option value="">Sélectionner une image</option>';
+
+        publicFiles.forEach(file => {
+            // Générer l'URL publique des fichiers dans 'public/images_interventions'
+            const { publicUrl, error } = supabaseClient
+                .storage
+                .from(bucket)
+                .getPublicUrl(`public/${file.name}`);
+
+            if (error) {
+                console.error(`Erreur lors de la génération de l'URL pour ${file.name}:`, error.message);
+                return;
+            }
+
+            // Ajouter l'image dans le sélecteur
+            const option = document.createElement('option');
+            option.value = publicUrl;
+            option.textContent = file.name;
+            select.appendChild(option);
+        });
+    }
+
+        fetchImages();
+        loadImages();
+
+
         // Fonction pour ajouter une image
         async function uploadImage(file) {
             const fileName = `${Date.now()}_${file.name}`;
