@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <title>Portfolio | Peguin Quentin</title>
+    <link rel="stylesheet" href="../Css/Dossier.css">
+    <link rel="stylesheet" href="../Css/header_footer_nav.css">
+</head>
+
+<body>
+    <header>
+        <section>
+            <h1>Mon portfolio</h1>
+            <p>Jeune étudiant en informatique, je consacre une grande partie de mon temps au développement de projets
+                personnels
+                et professionnels dans le but d'enrichir mes compétences. Passionné par l'informatique et le réseau,
+                mon objectif professionnel est de travailler dans le
+                domaine de la cybersécurité ou du réseau. En créant et maintenant quelque sites web.</p>
+            <p>Le thème de mon site web tourne autour des nuages et des
+                enveloppes, symbolisant ainsi le cloud et la transmission de données.</p>
+        </section>
+        <div>
+            <img src="../Images/photoprofil.jpeg" alt="Photo de profil">
+            <p>Quentin Peguin<br><span id="age"></span>ans</p>
+        </div>
+        <!-- Bouton pour le menu hamburger -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    </header>
+
+    <!-- Barre de navigation -->
+    <nav>
+        <div class="contenu-nav">
+            <a href="../html/Accueil.html">Accueil </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Projets_Academiques.html"><span class="souligne">Projets </span></a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Projets_Familiaux.html">Projets Familiaux </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Mes_pages_personnelles.html">Mes Pages Personnelles </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Mon_profil.html">Profil & Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Projets Académiques</h1>
+        <div id="main">
+            <article>
+                <h2>Projet classification (automatisé) Java</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Implémenter des conceptions simples</li>
+                    <li>Élaborer des conceptions simples</li>
+                    <li>Analyser un problème avec méthode (découpage en éléments algorithmiques simples, structure de
+                        données…)</li>
+                    <li>Comparer des algorithmes pour des problèmes classiques (tris simples, recherche…)</li>
+                    <li>Formaliser et mettre en œuvre des outils mathématiques pour l’informatique</li>
+                    <li>Faire des essais et évaluer leurs résultats en regard des spécifications</li>
+                </ul>
+
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 2</li>
+                        <li>Durée : 1 semaine</li>
+                        <li>Objectif : créer différents programmes en Java permettant de classer des dépêches et de
+                            tester
+                            leur efficacité</li>
+                        <li>Rendu : Le programme Java et un compte rendu en anglais</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite1" class="lire-suite-checkbox">
+                    <label for="lireSuite1" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>Nous avons mis en place trois techniques de classification de dépêches avec :
+                            <br>- un dictionnaire manuel,
+                            <br>- un programme permettant de créer des dictionnaires,
+                            <br>- le KNN (Algorithme des k plus proches voisins) simplifié pour le
+                            projet. Il est majoritairement utilisé de nos jours pour classer des dépêches.
+                            <br><br>J’ai réfléchi à la structure des différents programmes dont j'ai
+                            codé certaines parties. Puis j'ai rédigé le compte rendu en anglais.
+                        </p>
+                    </ul>
+                </div>
+                <a href="../Autre_dossier/Projet_SAE_JAVA.zip" download="Projet_Classification_JAVA.zip">
+                    <img src="../Images/projet4k.jpeg" alt="Projet Java Classification">
+                </a>
+            </article>
+
+            <article>
+                <h2>Projet d'installation d'un poste de développement Linux</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Identifier les différents composants (matériels et logiciels) d’un système numérique</li>
+                    <li>Utiliser les fonctionnalités de base d’un système multitâches / multiutilisateurs</li>
+                    <li>Installer et configurer un système d’exploitation et des outils de développement</li>
+                    <li>Configurer un poste de travail dans un réseau d’entreprise</li>
+                    <li>Formaliser et mettre en œuvre des outils mathématiques pour l’informatique</li>
+                </ul>
+
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 1</li>
+                        <li>Durée : 1 demi-journée</li>
+                        <li>Objectif : Installation d’un poste pour le développement sous IntelliJ</li>
+                        <li>Rendu : Une machine virtuelle pour le développement et une carte mentale</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite2" class="lire-suite-checkbox">
+                    <label for="lireSuite2" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>J’ai commencé par installer Debian sur la station, puis j’ai paramétré la machine
+                            virtuelle.
+                            <br>Une fois cela fait, j’ai pu lancer la station et finir de la paramétrer de
+                            l’intérieur.
+                            <br>Enfin, vu que le projet devait permettre l’utilisation par une personne faisant du
+                            développement, j’ai installé les packages nécessaires, dont IntelliJ pour le développement.
+                            <br>En parallèle du processus d’installation, j'ai réalisé une carte mentale permettant
+                            l’installation d’un poste de travail pour le développement.
+                        </p>
+                    </ul>
+                </div>
+                <a href="../Autre_dossier/SAE1.03.zip" download="Projet_Linux.zip">
+                    <img src="../Images/projet4k.jpeg" alt="Projet Linux">
+                </a>
+            </article>
+
+            <article>
+                <h2>Concevoir une base de données</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Mettre à jour et interroger une base de données relationnelle (en requêtes directes ou à travers
+                        une
+                        application)</li>
+                    <li>Visualiser des données</li>
+                    <li>Concevoir une base de données relationnelle à partir d’un cahier des charges</li>
+                </ul>
+
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 2</li>
+                        <li>Durée : 1 mois</li>
+                        <li>Objectif : Concevoir une base de données utilisable en partant de données open source</li>
+                        <li>Rendu : Règle de gestion + Schéma Entité Association + Schéma Logique Relationnel (SLR) +
+                            fichier de création des tables + fichier de manipulation des tables</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite3" class="lire-suite-checkbox">
+                    <label for="lireSuite3" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>Pendant ce projet, nous avons développé nos compétences de manipulation d'une base de données
+                            en
+                            commençant par le repérage des différentes tâches que nous allions réaliser. Ensuite, les
+                            différents schémas nous ont permis de modéliser nos premières idées. Enfin, les tests à
+                            réaliser
+                            lors de la dernière étape nous ont montré les failles de nos précédents schémas et nous ont
+                            permis d'adapter notre base de données.</p>
+                    </ul>
+                </div>
+                <a href="../Autre_dossier/S1.04.zip" download="Projet_SQL.zip">
+                    <img src="../Images/projet4k.jpeg" alt="Projet SQL">
+                </a>
+            </article>
+
+            <article>
+                <h2>Projet création de site web (Hardis groupe)</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Appréhender les besoins du client et de l’utilisateur</li>
+                    <li>Mettre en place les outils de gestion de projet (Whimsical)</li>
+                    <li>Conduire un projet</li>
+                    <li>Identifier les statuts, les fonctions et les rôles de chaque membre d’une équipe
+                        pluridisciplinaire
+                    </li>
+                    <li>Acquérir les compétences interpersonnelles pour travailler en équipe</li>
+                </ul>
+
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 3</li>
+                        <li>Durée : 3 semaines (1 semaine recueil des besoins + 1 semaine grille de projet et
+                            préparation
+                            orale + 1 semaine code du site)</li>
+                        <li>Langages abordés : HTML, CSS (+ un peu de JavaScript)</li>
+                        <li>Objectif : Création d'un site web pour une entreprise du bassin grenoblois</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite4" class="lire-suite-checkbox">
+                    <label for="lireSuite4" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>C'était notre premier projet de l'année et j'ai pris la tête de celui-ci.
+                            <br>Nous avons commencé par le recueil des besoins de l'entreprise en regardant leur site
+                            actuel.
+                            <br>Nous avons ensuite rempli une grille nous permettant de voir quels étaient les aspects
+                            sur lesquels nous avions besoin de progresser. Mais aussi une grille concernant les
+                            changements
+                            dont nous avions besoin pour rendre notre site le plus proche possible de ce que voulait
+                            l'entreprise (la consigne étant de leur refaire un site web facilitant l'insertion des
+                            élèves de
+                            troisième pour leur stage).
+                            <br>Enfin, nous avons codé le site en utilisant les outils que nous avions vus en cours,
+                            notamment Visual Studio Code pour la partie HTML, CSS, et JavaScript.
+                        </p>
+                    </ul>
+                </div>
+                <a class="aiframe" href="../Autre_dossier/SAE05.06/html/accueil.html" target="_blank">
+                    <iframe src="../Autre_dossier/SAE05.06/html/accueil.html" frameborder="0" scrolling="no"></iframe>
+                </a>
+            </article>
+
+            <article>
+                <h2>Projet Application de gestion de marché (LeBonStand)</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Développer des interfaces utilisateur</li>
+                    <li>Faire des essais et évaluer leurs résultats par rapport aux spécifications</li>
+                    <li>Comparer des algorithmes pour des problèmes classiques (tris simples, recherche...)</li>
+                    <li>Analyser un problème avec méthode (découpage en éléments algorithmiques simples, structures de données...)</li>
+                    <li>Mettre en place les outils de gestion de projet</li>
+                    <li>Comprendre les besoins du client et de l’utilisateur</li>
+                    <li>Identifier les statuts, fonctions et rôles de chaque membre d’une équipe pluridisciplinaire</li>
+                    <li>Acquérir les compétences interpersonnelles pour travailler en équipe</li>
+                </ul>
+            
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 6</li>
+                        <li>Durée : 3 semaines (~700 heures de travail cumulé)</li>
+                        <li>Langages abordés : Java, JavaFX</li>
+                        <li>Rendu : Application + 3 oraux + dossier de conception + document de conception des interfaces (personas, maquettes, critères ergonomiques sélectionnés et leur mise en œuvre) + Document Graphes analyse de gestion de tâches + optimisation multicritères + cadrage du projet + bilan</li>
+                        <li>Objectif : Réaliser une application de gestion d'événements de bout en bout (gestion d'équipe, gestion des risques,...)</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite5" class="lire-suite-checkbox">
+                    <label for="lireSuite5" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>Ce projet était notre projet de fin d'année, pluridisciplinaire et en groupe, semblable à une entreprise. Nous avons commencé par la gestion du projet, la direction à prendre, la répartition des tâches, et trouvé une identité de projet. Puis, nous sommes passés à la partie IHM (Interface Homme-Machine) avec la création de la base de notre projet et de nombreux diagrammes afin de bien comprendre le fonctionnement de notre application dans les moindres détails. Ensuite, nous avons commencé la partie développement avec la création des différentes interfaces utilisateur. Nous avons fait des tests et des corrections pour rendre l'application la plus fonctionnelle possible. Enfin, nous avons travaillé sur la communication de notre application avec 3 oraux différents : un oral de marketing, un oral d'anglais et un oral de démonstration de notre application.</p>
+                    </ul>
+                </div>
+                <a href="../Autre_dossier/LeBonStand.zip" download="LeBonStand.zip">
+                    <img src="../Images/projet4k.jpeg" alt="Projet LeBonStand">
+                </a>
+            </article>
+            
+            
+            <article>
+                <h2>Installation de services réseau</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Identifier les différents composants (matériels et logiciels) d’un système numérique</li>
+                    <li>Utiliser les fonctionnalités de base d’un système multitâche / multiutilisateur</li>
+                    <li>Installer et configurer un système d’exploitation et des outils de développement</li>
+                    <li>Configurer un poste de travail dans un réseau d’entreprise</li>
+                </ul>
+            
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 1</li>
+                        <li>Durée : 2 semaines</li>
+                        <li>Langages abordés : PostgreSQL, PhpPgAdmin, Shell</li>
+                        <li>Objectif : Réaliser un guide d'installation en anglais d'un serveur Debian 12 avec PostgreSQL, Apache2 et PhpPgAdmin</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite6" class="lire-suite-checkbox">
+                    <label for="lireSuite6" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>Ce projet a été réalisé dans l'optique de nous apprendre l'installation d'un serveur en autonomie ainsi que sa configuration. Le but final était de retranscrire le tout dans un guide d'installation complet, compréhensible et réalisable par quelqu'un ayant des bases en informatique. J'ai personnellement fait le choix de l'adapter de sorte à ce que tout le monde puisse réaliser son installation.</p>
+                    </ul>
+                </div>
+                <a href="../Autre_dossier/installation_guide_PEGUIN_D1.pdf" download="GuideInstallationDebian12.pdf">
+                    <img src="../Images/projet4k.jpeg" alt="Guide d'Installation Debian12">
+                </a>
+            </article>
+            
+            
+            <article>
+                <h2>Exploitation d’une base de données</h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li>Mettre à jour et interroger une base de données relationnelle (en requêtes directes ou à travers une application)</li>
+                    <li>Visualiser des données</li>
+                    <li>Concevoir une base de données relationnelle à partir d’un cahier des charges</li>
+                </ul>
+            
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : 2</li>
+                        <li>Durée : 2 semaines</li>
+                        <li>Langages abordés : PostgreSQL</li>
+                        <li>Objectif : Filtrer une base de données pour obtenir des données cohérentes</li>
+                        <li>Rendu : Base de données nettoyée et transformée + Rapport statistique en anglais</li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite7" class="lire-suite-checkbox">
+                    <label for="lireSuite7" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>Le projet consistait à filtrer une base de données pour obtenir des données cohérentes. Il nous était imposé de partir de la base de données des Nutri-Scores des produits, une base de données open source et donc conséquente en données. Pour notre projet, nous devions filtrer les données sur les volailles aux États-Unis, les rendre cohérentes en enlevant toutes les valeurs aberrantes que l'on pouvait trouver, et cela sous forme de script. Enfin, nous avons rédigé un rapport statistique en anglais sur R pour analyser le sujet des volailles aux États-Unis d'après le Nutri-Score et les informations de la base de données.</p>
+                    </ul>
+                </div>
+                <a href="../Autre_dossier/SAE1.03.zip" download="Projet_Linux.zip">
+                    <img src="../Images/projet4k.jpeg" alt="Projet Linux">
+                </a>
+            </article>
+            
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>À propos</h3>
+                <p>Quentin Peguin, étudiant en informatique passionné par le développement web, la cybersécurité et les
+                    réseaux.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../html/Accueil.html">Accueil</a></li>
+                    <li><a href="../html/Projets_Academiques.html">Projets Académiques</a></li>
+                    <li><a href="../html/Projets_Familiaux.html">Projets Familiaux</a></li>
+                    <li><a href="../html/Mes_Pages_Personnelles.html">Mes Pages Personnelles</a></li>
+                    <li><a href="../html/Mon_profil.html">Profil & Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h3>Contact</h3>
+                <p>Rendez-vous sur la page : <a href="../html/Mon_profil.html">Profil & Contact</a></p>
+                <p>ou</p>
+                <p>Email: <a onclick="copyEmail()">quentin.peguin&#64;etu&#46;univ-grenoble-alpes.fr</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Quentin Peguin | Tous droits réservés</p>
+        </div>
+    </footer>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/email.js"></script>
+    <script src="../js/age.js"></script>
+    <script src="../js/webhost.js"></script>
+</body>
+
+<!-- 
+<article>
+                <h2></h2>
+                <h3>Les compétences mises en œuvre</h3>
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <div class="grpspecification">
+                    <ul>
+                        <li>Nombre de personnes sur le projet : </li>
+                        <li>Durée : </li>
+                        <li>Langages abordés : </li>
+                        <li>Objectif : </li>
+                    </ul>
+                    <input type="checkbox" id="lireSuite4" class="lire-suite-checkbox">
+                    <label for="lireSuite4" class="lire-suite-label">
+                        <span class="label-text"></span>
+                    </label>
+                    <ul class="suite">
+                        <li>Contenu du projet :</li>
+                        <p>C'.
+                        </p>
+                    </ul>
+                </div>
+                <a class="aiframe" href="" target="_blank">
+                    <iframe src="" frameborder="0" scrolling="no"></iframe>
+                </a>
+            </article>
+            -->
+
+</html>

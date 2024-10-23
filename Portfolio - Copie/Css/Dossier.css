@@ -1,0 +1,227 @@
+/* Background */
+body {
+    background-image: url(../Images/background_cloud.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    margin: 0;
+}
+
+html {
+    overflow-x: hidden;
+
+}
+main{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main>h1{
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+#main {
+    padding: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: fit-content;
+    justify-content: space-around;
+    align-items: start;
+    overflow: hidden;
+}
+
+#main>article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 10%;
+    width: 40%;
+    min-width: 300px;
+    height: fit-content;
+}
+
+article>h2, article>h3{
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+article>p {
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+article>ul {
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    padding-left: 30px;
+}
+
+article>.grpspecification {
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+div>img {
+    margin: 0;
+    width: auto;
+    height: 150px;
+    border-radius: 50%;
+}
+
+article>a>img {
+    width: calc(0.35*100vw);
+    border-radius: 10px;
+
+}
+
+article>a {
+    width: calc(0.35*100vw);
+}
+
+article>a>iframe {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    transform-origin: top left;
+    transform: scale(0.35);
+    pointer-events: none;
+}
+
+
+.aiframe {
+    height: calc(0.35* 100vh);
+}
+
+/*Lire la suite*/
+
+.lire-suite-checkbox {
+    display: none;
+}
+
+.lire-suite-label {
+    color: gray;
+    background-color: white;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+}
+
+.lire-suite-label .label-text:after {
+    content: "Lire la suite";
+}
+
+.lire-suite-checkbox:checked~.lire-suite-label .label-text:after {
+    content: "Réduire";
+}
+
+.lire-suite-label:hover {
+    text-decoration: underline;
+}
+
+.lire-suite-checkbox:checked~.suite {
+    display: block;
+}
+
+.suite {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    margin-bottom: 10px;
+}
+
+.lire-suite-checkbox:checked~.suite {
+    max-height: 1000px;
+    transition: max-height 0.5s ease-in;
+}
+
+@media only screen and (max-width: 1000px) {
+    #main {
+        padding: 10px;
+        /* Ajuster le padding pour les écrans de petite taille */
+        overflow: hidden;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    article {
+        padding-left: 5% !important;
+        /* Réduire le padding gauche */
+        width: 80% !important;
+        /* Utiliser une largeur relative */
+        max-width: none;
+        /* Réinitialiser la largeur maximale */
+    }
+
+    article>a>img {
+        width: calc(0.65*100vw);
+        border-radius: 10px;
+
+    }
+
+    article>a {
+        width: calc(0.65*100vw);
+    }
+
+    article>ul {
+        padding-left: 10% !important;
+    }
+
+    .aiframe {
+        height: calc(0.65* 100vh);
+    }
+
+    article>a>iframe {
+        width: 100vw;
+        height: 100vh;
+        border: none;
+        transform-origin: top left;
+        transform: scale(0.65);
+        pointer-events: none;
+    }
+}
+
+article>.star-rating {
+    /* Taille des étoiles */
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: default;
+    color: gold;
+    /* Couleur des étoiles pleines */
+    margin: 0 5px;
+}
+
+.star.empty {
+    color: lightgray;
+    /* Couleur des étoiles vides */
+}
+
+
+.obligatoire{
+    color: gray;
+    font-style: italic;
+    height: fit-content;
+}

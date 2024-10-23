@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <title>Portfolio | Mes pages personnelles | Quentin Peguin</title>
+    <link rel="stylesheet" href="../Css/Dossier.css">
+    <link rel="stylesheet" href="../Css/header_footer_nav.css">
+</head>
+
+<body>
+    <header>
+        <section>
+            <h1>Mon portfolio</h1>
+            <p>Jeune étudiant en informatique, je consacre une grande partie de mon temps au développement de projets
+                personnels
+                et professionnels dans le but d'enrichir mes compétences. Passionné par l'informatique et le réseau,
+                mon objectif professionnel est de travailler dans le
+                domaine de la cybersécurité ou du réseau. En créant et maintenant quelque sites web.</p>
+            <p>Le thème de mon site web tourne autour des nuages et des
+                enveloppes, symbolisant ainsi le cloud et la transmission de données.</p>
+        </section>
+        <div>
+            <img src="../Images/photoprofil.jpeg" alt="Photo de profil">
+            <p>Quentin Peguin<br> <span id="age"></span> ans</p>
+        </div>
+        <!-- Bouton pour le menu hamburger -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    </header>
+
+    <!-- Barre de navigation -->
+    <nav>
+        <div class="contenu-nav">
+            <a href="../html/Accueil.html"> Accueil </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Projets_Academiques.html"> Projets Académiques </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Projets_Familiaux.html"> Projets Familiaux </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Mes_pages_personnelles.html"><span class="souligne">Mes Pages Personnelles</span></a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Mon_profil.html"> Profil & Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Mes Pages Personnelles</h1>
+        <div id="main">
+            <article>
+                <h2>Personal Banking</h2>
+                <p>Application de gestion de compte. Cette application permet de
+                    faire vos comptes et de Visualiser vos dépenses de manière simple. Vous pouvez aussi vous voir vos
+                    envellopes de budget.</p>
+                <p>Langages utilisées : React + Vite + Tailwind + Supabase</p>
+                <p>Temps de codes : ~ 300 heures</p>
+                <a class="aiframe" href="https://quentinpeg.github.io/Personal_Banking/" target="_blank">
+                    <iframe src="https://quentinpeg.github.io/Personal_Banking/" frameborder="0"
+                        scrolling="no"></iframe>
+                </a>
+            </article>
+<!--            <h2>Ma page</h2>
+                <a class="aiframe" href="https://mon-portfolio-iut.000webhostapp.com/Mon_site/html/Mes-recettes.html"
+                    target="_blank">
+                    <iframe src="https://mon-portfolio-iut.000webhostapp.com/Mon_site/html/Mes-recettes.html"
+                        frameborder="0" scrolling="no"></iframe>
+                </a>
+            </article>
+            <article>
+                <h2>Bibliothèque d'effets</h2>
+                <p>Les effets que je peux implémenter dans mes pages internet (libres de droit)</p>
+                <a href="../../Truc_interessant.zip" download="Bibliotheque.zip">
+                    <img src="../Images/projet4k.jpeg" alt="Bibliothèque">
+                </a>
+            </article>-->
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>À propos</h3>
+                <p>Quentin Peguin, étudiant en informatique passionné par le développement web, la cybersécurité et les
+                    réseaux.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../html/Accueil.html">Accueil</a></li>
+                    <li><a href="../html/Projets_Academiques.html">Projets Académiques</a></li>
+                    <li><a href="../html/Projets_Familiaux.html">Projets Familiaux</a></li>
+                    <li><a href="../html/Mes_Pages_Personnelles.html">Mes Pages Personnelles</a></li>
+                    <li><a href="../html/Mon_profil.html">Profil & Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h3>Contact</h3>
+                <p>Rendez-vous sur la page : <a href="../html/Mon_profil.html">Profil & Contact</a> </p>
+                <p>ou</p>
+                <p>Email: <a onclick="copyEmail()">quentin.peguin&#64;etu&#46;univ-grenoble-alpes.fr</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Quentin Peguin | Tous droits réservés</p>
+        </div>
+    </footer>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/email.js"></script>
+    <script src="../js/age.js"></script>
+    <script src="../js/webhost.js"></script>
+</body>
+
+</html>

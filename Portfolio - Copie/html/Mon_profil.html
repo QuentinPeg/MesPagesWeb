@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Images/Icon-page.png">
+    <title>Portfolio | Quentin Peguin</title>
+    <link rel="stylesheet" href="../Css/Dossier.css">
+    <link rel="stylesheet" href="../Css/header_footer_nav.css">
+</head>
+
+<body>
+    <header>
+        <section>
+            <h1>Mon portfolio</h1>
+        </section>
+        <!-- Bouton pour le menu hamburger -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    </header>
+
+    <!-- Barre de navigation -->
+    <nav>
+        <div class="contenu-nav">
+            <a href="../html/Accueil.html"> Accueil </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Projets_Academiques.html"> Projets Académiques </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Projets_Familiaux.html"> Projets Familiaux </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Mes_pages_personnelles.html"> Mes Pages Personnelles </a>
+        </div>
+        <br>
+        <div class="contenu-nav">
+            <a href="../html/Mon_profil.html"><span class="souligne">Profil & Contact</span></a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Profil & Contact</h1>
+        <div id="main">
+            <article>
+                <h2>Profil et Contact</h2>
+                <div>
+                    <img src="../Images/photoprofil.jpeg" alt="Photo de profil">
+                </div>
+                <p>Je m'appelle Quentin Peguin, j'ai <span id="age"></span> ans et je suis en BUT informatique (parcours cybersécurité et réseaux) à
+                    Grenoble avec pour BUT de devenir pen-tester.
+                </p>
+                <p>Ce portfolio a été conçu dans le but de rassembler mes différents projets informatiques. J'ai pu
+                    réaliser
+                    ces projets avec l'IUT mais aussi en dehors, pendant mon temps personnel. Pendant mon parcours, j'ai
+                    appris à coder des pages internet, ce qui ne m'intéressait pas avant. J'ai appris à coder en HTML,
+                    CSS,
+                    JS et un peu en PHP. Cela m'a permis de créer des pages internet, notamment mon plus gros projet, un
+                    site de vente pour ma sœur.</p>
+            </article>
+            <article>
+                <h2>Mes compétences en langage</h2>
+                <div class="star-rating">
+                    <h3>HTML :</h3>
+                    <div class="stars" data-rating="4">
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star empty">&#9734;</span>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <h3>CSS :</h3>
+                    <div class="stars" data-rating="4">
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star empty">&#9734;</span>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <h3>JS :</h3>
+                    <div class="stars" data-rating="2">
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star empty">&#9734;</span>
+                        <span class="star empty">&#9734;</span>
+                        <span class="star empty">&#9734;</span>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <h3>PHP :</h3>
+                    <div class="stars" data-rating="2">
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star empty">&#9734;</span>
+                        <span class="star empty">&#9734;</span>
+                        <span class="star empty">&#9734;</span>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <h3>JAVA :</h3>
+                    <div class="stars" data-rating="2">
+                        <span class="star full">&#9733;</span>
+                        <span class="star full">&#9733;</span>
+                        <span class="star empty">&#9734;</span>
+                        <span class="star empty">&#9734;</span>
+                        <span class="star empty">&#9734;</span>
+                    </div>
+                </div>
+            </article>
+            <div class="container">
+                <h2>Me contacter</h2>
+                <span class="obligatoire">Les champs avec * sont obligatoires pour envoyer un message. <br><br></span>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" placeholder="Nom*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" name="email" placeholder="Email*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message :</label>
+                        <textarea id="message" name="message" placeholder="Message*" required></textarea>
+                    </div>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>À propos</h3>
+                <p>Quentin Peguin, étudiant en informatique passionné par le développement web, la cybersécurité et les
+                    réseaux.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../html/Accueil.html">Accueil</a></li>
+                    <li><a href="../html/Projets_Academiques.html">Projets Académiques</a></li>
+                    <li><a href="../html/Projets_Familiaux.html">Projets Familiaux</a></li>
+                    <li><a href="../html/Mes_Pages_Personnelles.html">Mes Pages Personnelles</a></li>
+                    <li><a href="../html/Mon_profil.html">Profil & Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h3>Contact</h3>
+                <p>Rendez-vous sur la page : <a href="../html/Mon_profil.html">Profil & Contact</a> </p>
+                <p>ou</p>
+                <p>Email: <a onclick="copyEmail()">quentin.peguin&#64;etu&#46;univ-grenoble-alpes.fr</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Quentin Peguin | Tous droits réservés</p>
+        </div>
+    </footer>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/email.js"></script>
+    <script src="../js/age.js"></script>
+    <script src="../js/webhost.js"></script>
+</body>
+
+</html>
