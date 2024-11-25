@@ -1,22 +1,15 @@
-#entcontact {
-    padding-right: 15px;
-    transition: font-size 0.3s ease;
-
-}
-
-#entcontact>a {
+/* HEADER */
+header>a {
     color: black;
     font-size: medium;
     transition: font-size 0.3s ease;
 }
 
-#entcontact>a.shrink {
-    font-size: small;
-}
-
+/* MAIN*/
 main {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 article {
@@ -28,41 +21,36 @@ article {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 10px;
-    width: 400px;
-    height: 500px;
+    width: 45vw;
+    height: fit-content;
+    min-height: fit-content;
     min-width: 300px;
-    min-height: 375px;
-}
 
-header>a {
-    color: black;
-    font-size: medium;
-    transition: font-size 0.3s ease;
 }
-
 
 article>section>section {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 25px;
+    gap: 15%;
 }
 
-/* Style ddu carroussel*/
+/* CARROUSEL */
 .carousel {
     display: flex;
     overflow: hidden;
-    max-height: 500px;
+    width: 100%;
+    height: 500px;
+    position: relative;
 }
 
 .carousel img {
-    width: auto;
-    height: 100%;
     width: 100%;
+    height: 100%;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
-/* Styles pour les flèches */
 .prev,
 .next {
     position: absolute;
@@ -90,8 +78,14 @@ article>section>section {
     right: 10px;
 }
 
+section>a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
-/**/
+/* LIRE LA SUITE FONCTION */
 
 .lire-suite-checkbox {
     display: none;
@@ -135,11 +129,24 @@ article>section>section {
     transition: max-height 0.5s ease-in;
 }
 
+.class-btn-retour {
+    width: 20% !important;
+    min-width: 70px;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 15%;
+}
+
+/* BOUTON */
+
 .btn-retour {
     display: flex;
-    width: 100%;
+    width: fit-content;
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 100%;
     padding: 12px;
     background-color: #3498db;
     color: #fff;
@@ -154,14 +161,44 @@ article>section>section {
     background-color: #2980b9;
 }
 
-footer {
-    margin-top: 15%;
+.btn-ajouter-article {
+    min-width: 70px;
+    width: 20% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: #7bba7f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
 }
 
+.btn-ajouter-article:hover {
+    background-color: #659f69;
+}
+
+/* APPAREIL MOBILE */
 @media only screen and (max-width: 600px) {
     main {
         flex-direction: column;
         padding-bottom: 20%;
         align-items: center;
+    }
+
+    article {
+        height: fit-content;
+        min-height: fit-content;
+    }
+
+    .carousel {
+        height: 300px;
+        /* Hauteur ajustée pour les appareils mobiles */
     }
 }

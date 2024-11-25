@@ -8,42 +8,176 @@ function fermerPrecommande() {
 function afficherRecapArticles() {
     var recapArticlesDiv = document.getElementById('recap-articles');
     recapArticlesDiv.textContent = '';
-    
+
     // Récupérer le panier du localStorage
     var panierSauvegarde = JSON.parse(localStorage.getItem('panier'));
     if (panierSauvegarde) {
         panier = panierSauvegarde; // Remplace le panier actuel par le panier sauvegardé
     }
 
-    for (var i = 0; i < panier.length; i++) {
-        var article = panier[i];
+    panier.forEach((article) => {
         var quantite = article.quantite;
         var nom = article.nom;
-        var keyFormat = `${nom}-${article.format}-Format`;
-        var keyPlastifie = `${nom}-${article.format}-Plastifie`;
+        var format = article.format;
+        var plastifie = article.plastifie;
+        var sousTotal = calculerSousTotal(article);
 
-        var articleText = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+        // Créer l'affichage pour l'article
+        var articleText = document.createElement('span');
+        articleText.textContent = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
+
+        // Afficher le sous-total
+        var sousTotalText = document.createElement('span');
+        sousTotalText.textContent = ` : ${sousTotal.toFixed(2)} €`;
+
+        // Créer les boutons d'augmentation et de diminution
+        var btnDecrease = document.createElement('button');
+        btnDecrease.textContent = '-';
+        btnDecrease.className = 'btn-quantite';
+        btnDecrease.type = 'button';
+
+        var btnIncrease = document.createElement('button');
+        btnIncrease.textContent = '+';
+        btnIncrease.className = 'btn-quantite';
+        btnIncrease.type = 'button';
+
+        // Créer l'élément pour la quantité
+        var quantitediv = document.createElement('span');
+        quantitediv.style.display = 'flex'; // Permet d'aligner les éléments en ligne
+        quantitediv.style.alignItems = 'center'; // Centrer verticalement les éléments
+        quantitediv.style.gap = '10px'; // Ajoute un espace de 5 pixels entre les éléments
+
+        var quantiteElement = document.createElement('span');
+        quantiteElement.textContent = `[${quantite}]`;
+        quantiteElement.setAttribute('data-quantity', quantite);
+
+        // Créer l'élément d'article
         var articleElement = document.createElement('p');
-        articleElement.id = quantite > 1 ? `[${quantite}] x ${nom}` : nom;
-        articleElement.textContent = articleText;
+        articleElement.id = `${nom}-${format}-${plastifie}`;
+        quantitediv.appendChild(btnDecrease);
+        quantitediv.appendChild(quantiteElement);
+        quantitediv.appendChild(btnIncrease);
+        articleElement.appendChild(quantitediv);
+        articleElement.appendChild(document.createTextNode(` x ${nom}`));
 
+        // Ajouter des écouteurs d'événements aux boutons
+        btnDecrease.addEventListener('click', function () {
+            var currentQuantity = parseInt(quantiteElement.getAttribute('data-quantity'), 10);
+            if (currentQuantity > 0) {
+                quantiteElement.setAttribute('data-quantity', currentQuantity - 1);
+                quantiteElement.textContent = `[${currentQuantity - 1}]`;
+                updateCart('decrement', nom, format, plastifie);
+
+                // Recalculer et mettre à jour le sous-total
+                let sousTotal = calculerSousTotal(panier.find(article =>
+                    article.nom === nom && article.format === format && article.plastifie === plastifie
+                ));
+                sousTotalText.textContent = ` : ${sousTotal.toFixed(2)} €`;
+
+                calculerTotal(); // Recalculer le total après mise à jour
+
+                // Si la quantité devient 0, supprimer l'article de l'affichage
+                if (currentQuantity - 1 === 0) {
+                    articleElement.remove(); // Retire l'élément visuel
+                }
+            }
+        });
+
+        btnIncrease.addEventListener('click', function () {
+            var totalQuantite = panier.reduce((acc, article) => acc + article.quantite, 0);
+
+            if (totalQuantite >= 10) {
+                alert('Vous ne pouvez pas avoir plus de 10 articles au total dans votre panier.');
+                return;
+            }
+
+            var currentQuantity = parseInt(quantiteElement.getAttribute('data-quantity'), 10);
+            quantiteElement.setAttribute('data-quantity', currentQuantity + 1);
+            quantiteElement.textContent = `[${currentQuantity + 1}]`;
+            updateCart('increment', nom, format, plastifie);
+
+            // Recalculer et mettre à jour le sous-total
+            let sousTotal = calculerSousTotal(panier.find(article =>
+                article.nom === nom && article.format === format && article.plastifie === plastifie
+            ));
+            sousTotalText.textContent = ` : ${sousTotal.toFixed(2)} €`;
+
+            calculerTotal(); // Recalculer le total après mise à jour
+        });
+        // Créer les éléments de format et plastification
         var labelFormat = document.createElement('label');
         labelFormat.textContent = 'Format :';
-        var selectFormat = createFormatSelect(nom, quantite, keyFormat, article.format);
+        var selectFormat = createFormatSelect(nom, quantite, `${nom}-${format}-Format`, format);
 
         var labelPlastifie = document.createElement('label');
         labelPlastifie.textContent = 'Plastifié :';
-        var selectPlastifie = createPlastifieSelect(nom, quantite, keyPlastifie, article.plastifie);
+        var selectPlastifie = createPlastifieSelect(nom, quantite, `${nom}-${format}-Plastifie`, plastifie);
 
-        selectFormat.setAttribute('data-format', article.format);
-        selectPlastifie.setAttribute('data-plastifie', article.plastifie);
+        selectFormat.setAttribute('data-format', format);
+        selectPlastifie.setAttribute('data-plastifie', plastifie);
 
+        // Ajouter les éléments au DOM
         articleElement.appendChild(labelFormat);
         articleElement.appendChild(selectFormat);
         articleElement.appendChild(labelPlastifie);
         articleElement.appendChild(selectPlastifie);
+        articleElement.appendChild(sousTotalText);
 
         recapArticlesDiv.appendChild(articleElement);
+    });
+}
+
+function updateCart(action, nom, format, plastifie) {
+    // Trouver l'article dans le panier correspondant aux attributs nom, format, et plastifie
+    var articleIndex = panier.findIndex(article =>
+        article.nom === nom &&
+        article.format === format &&
+        article.plastifie === plastifie
+    );
+
+    if (articleIndex !== -1) {
+        // Ajuster la quantité en fonction de l'action
+        if (action === 'increment') {
+            panier[articleIndex].quantite += 1;
+        } else if (action === 'decrement') {
+            panier[articleIndex].quantite -= 1;
+
+            // Si la quantité atteint 0, supprimer l'article du panier
+            if (panier[articleIndex].quantite === 0) {
+                panier.splice(articleIndex, 1);
+                mettreAJourNombreArticlesPanier();
+            }
+        }
+
+        // Mettre à jour le localStorage avec le nouveau panier
+        localStorage.setItem('panier', JSON.stringify(panier));
+    }
+
+    // Recompte les articles
+    mettreAJourNombreArticlesPanier();
+    rechargerPanierDepuisLocalStorage()
+    // Recalculer le total après mise à jour
+    calculerTotal();
+}
+
+function calculerSousTotal(article) {
+    // Vérifier si l'article a un prix défini dans articlesPrix
+    if (articlesPrix[article.nom] && articlesPrix[article.nom][article.format]) {
+        // Récupérer le prix de base depuis articlesPrix
+        const prixUnitaire = articlesPrix[article.nom][article.format];
+        // Calculer le sous-total pour cet article
+        let sousTotal = prixUnitaire * article.quantite;
+
+        // Ajouter 10% si l'article est plastifié
+        if (article.plastifie === "Oui") {
+            sousTotal *= 1.10;
+        }
+
+        // Retourner le sous-total calculé
+        return sousTotal;
+    } else {
+        console.error(`Prix non trouvé pour l'article ${article.nom} avec le format ${article.format}`);
+        return 0; // Retourner 0 si le prix n'est pas trouvé
     }
 }
 
@@ -63,7 +197,6 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
 
     selectFormat.addEventListener('change', function (event) {
         var selectedFormat = event.target.value;
-        var key = event.target.getAttribute('data-key');
 
         // Correction : Utiliser une comparaison correcte pour trouver l'article
         var articleIndex = panier.findIndex(a => a.nom === nom && a.quantite === quantite);
@@ -76,6 +209,10 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
 
         // Mettre à jour localStorage avec les nouvelles informations
         localStorage.setItem('panier', JSON.stringify(panier));
+        // Recalculer le sous-total et le mettre à jour
+        let sousTotal = calculerSousTotal(panier[articleIndex]);
+        const sousTotalText = event.target.closest('p').querySelector('span:last-child');
+        sousTotalText.textContent = ` : ${sousTotal.toFixed(2)} €`;
 
         // Recalculer le total après modification
         calculerTotal();
@@ -84,14 +221,11 @@ function createFormatSelect(nom, quantite, key, selectedFormat) {
     return selectFormat;
 }
 
-
-// Ajout d'une fonction pour créer les options Plastifie avec la bonne sélection
-// Fonction pour créer les options Plastifie avec la bonne sélection
 function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
     var selectPlastifie = document.createElement('select');
     selectPlastifie.setAttribute('data-nom', nom);
     selectPlastifie.setAttribute('data-quantite', quantite);
-    selectPlastifie.setAttribute('data-key', key); // Utiliser la clé fournie comme attribut data-key
+    selectPlastifie.setAttribute('data-key', key);
 
     var optionNon = createOption('Non', 'Non', selectedPlastifie);
     var optionOui = createOption('Oui', 'Oui', selectedPlastifie);
@@ -99,28 +233,37 @@ function createPlastifieSelect(nom, quantite, key, selectedPlastifie) {
     selectPlastifie.appendChild(optionNon);
     selectPlastifie.appendChild(optionOui);
 
-    // Sélectionnez la bonne option en fonction de la plastification actuelle de l'article
     selectPlastifie.value = selectedPlastifie;
+
     selectPlastifie.addEventListener('change', function (event) {
         var selectedPlastifie = event.target.value;
-        var key = event.target.getAttribute('data-key');
-        var articleIndex = panier.findIndex(a => `${a.nom}-${a.format}-Plastifie` === key); // Vérifier la clé Plastifié
+
+        // Recherche de l'article dans le panier par nom et format
+        var articleIndex = panier.findIndex(a => a.nom === nom && a.quantite === quantite);
         if (articleIndex !== -1) {
-            panier[articleIndex].plastifie = selectedPlastifie;
+            panier[articleIndex].plastifie = selectPlastifie;
         }
 
-        // Mettre à jour l'attribut data-plastifie avec le nouveau plastifié sélectionné
-        event.target.setAttribute('data-plastifie', selectedPlastifie);
-        localStorage.setItem('panier', JSON.stringify(panier));
-        console.log(localStorage.getItem('panier'))
 
+        if (articleIndex !== -1) {
+            // Mettre à jour la plastification de l'article dans le panier
+            panier[articleIndex].plastifie = selectedPlastifie;
+
+        }
+
+        // Forcer la mise à jour du localStorage
+        localStorage.setItem('panier', JSON.stringify(panier));
+        // Recalculer le sous-total et le mettre à jour
+        let sousTotal = calculerSousTotal(panier[articleIndex]);
+        const sousTotalText = event.target.closest('p').querySelector('span:last-child');
+        sousTotalText.textContent = ` : ${sousTotal.toFixed(2)} €`;
+
+        // Recalculer le total après modification
         calculerTotal();
     });
 
-
     return selectPlastifie;
 }
-
 
 function createOption(value, text, selectedValue) {
     var option = document.createElement('option');
@@ -132,44 +275,35 @@ function createOption(value, text, selectedValue) {
     return option;
 }
 
-
-
 function calculerTotal() {
     var total = 0;
 
-    for (var i = 0; i < panier.length; i++) {
-        var article = panier[i];
+    // Parcourir chaque article dans le panier
+    panier.forEach(article => {
+        // Vérifier si le nom et le format de l'article existent dans la variable articlesPrix
+        if (articlesPrix[article.nom] && articlesPrix[article.nom][article.format]) {
+            // Récupérer le prix de base depuis articlesPrix
+            var prixUnitaire = articlesPrix[article.nom][article.format];
 
-        // Utilisez le format et la plastification de la fenêtre flottante de la précommande s'ils existent
-        var formatSelect = document.querySelector(`select[data-nom="${article.nom}"][data-quantite="${article.quantite}"][data-key="${article.nom}-${article.format}-Format"]`);
-        var plastifieSelect = document.querySelector(`select[data-nom="${article.nom}"][data-quantite="${article.quantite}"][data-key="${article.nom}-${article.format}-Plastifie"]`);
+            // Calculer le sous-total pour cet article
+            var sousTotal = prixUnitaire * article.quantite;
 
+            // Ajouter 10% si l'article est plastifié
+            if (article.plastifie === "Oui") {
+                sousTotal *= 1.10;
+            }
 
-        // Assurez-vous que les sélecteurs existent avant de récupérer les valeurs
-        var format = formatSelect ? formatSelect.value : article.format;
-        var plastifie = plastifieSelect ? plastifieSelect.value : article.plastifie;
-
-        // Condition de plastification
-        var prixUnitaire = obtenirPrixArticle(article.nom, format, plastifie);
-        var prixUnitairePlastifie = obtenirPrixArticle(article.nom, format, 'Oui');
-        if (plastifie === 'Oui') {
-            // Augmentez le prix de 10% par rapport au prix plastifié
-            prixUnitaire += prixUnitaire * 0.10;
-            article.plastifie = 'Non';
-        } else if (plastifie === 'Non') {
-            // Appliquer une réduction de 10% si l'article était initialement plastifié
-            prixUnitaire = prixUnitairePlastifie;
+            // Ajouter le sous-total au total général
+            total += sousTotal;
+        } else {
+            console.error(`Prix non trouvé pour l'article ${article.nom} avec le format ${article.format}`);
         }
+    });
 
-        total += prixUnitaire * article.quantite;
-    }
-
-    // Mettre à jour le total dans l'élément HTML correspondant en utilisant la fonction de formatage
-    document.getElementById('amount').value = total;
+    // Mettre à jour l'affichage du total dans les éléments HTML correspondants
+    document.getElementById('amount').value = total.toFixed(2);
     document.getElementById("prixTotal").textContent = formaterPrix(total);
 }
-
-
 
 // Fonction pour formater le prix avec une virgule si nécessaire
 function formaterPrix(prix) {

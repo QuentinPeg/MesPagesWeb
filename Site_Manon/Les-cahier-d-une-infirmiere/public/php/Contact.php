@@ -48,9 +48,7 @@
 
 
 
-        var message = `Message de ${nom} ,
-        
-        Adresse de contact du clent : ${email},
+        var message = `Adresse de contact du client : ${email}, nom : ${nom},
         message : ${mess}`;
 
         var parms = {

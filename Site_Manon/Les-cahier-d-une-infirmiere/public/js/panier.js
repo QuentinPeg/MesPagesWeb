@@ -1,6 +1,9 @@
 var panierAffiche = false;
 var nombreArticlesPanier = 0;
 var panier = [];
+window.onload = function () {
+    rechargerPanierDepuisLocalStorage();
+};
 
 function togglePanier(e) {
     e.stopPropagation();
@@ -17,6 +20,28 @@ function togglePanier(e) {
     }
 }
 
+function rechargerPanierDepuisLocalStorage() {
+    var panierListe = document.getElementById('panier-liste');
+    panierListe.innerHTML = ''; // Effacer l'affichage actuel du panier
+
+    // Charger le panier à partir du localStorage
+    var panierStocke = JSON.parse(localStorage.getItem('panier')) || [];
+    panier = panierStocke; // Mettre à jour la variable panier
+
+    // Ajouter chaque article du panier au DOM
+    panier.forEach(article => ajouterElementAuPanier(article));
+
+    // Mettre à jour le nombre total d'articles dans la bulle du panier
+    mettreAJourNombreArticlesPanier();
+
+    // Mettre à jour le prix total affiché
+    document.getElementById("prixTotal").innerHTML = getPrixPanier();
+    afficherRecapArticles();
+    mettreAJourMontant();
+
+}
+
+
 function fermerPanierSiClicExterieur(e) {
     var panierFenetre = document.getElementById('panier-fenetre');
 
@@ -28,59 +53,88 @@ function fermerPanierSiClicExterieur(e) {
 }
 
 function ajouterAuPanier(nomArticle, format = 'A5', plastifie = 'Non') {
-    var panierListe = document.getElementById('panier-liste');
     var articleExistant = panier.find(article => article.nom === nomArticle && article.format === format && article.plastifie === plastifie);
 
     if (articleExistant) {
         // Si l'article existe déjà, augmenter la quantité
         articleExistant.quantite++;
-        articleExistant.prix = obtenirPrixArticle(nomArticle, format, plastifie); // Mettre à jour le prix avec le paramètre plastification
-        mettreAJourQuantiteArticle(articleExistant);
+        articleExistant.prix = obtenirPrixArticle(nomArticle, format, plastifie);
     } else {
-        // Sinon, ajouter un nouvel article au panier avec le format et la plastification spécifiés
+        // Sinon, ajouter un nouvel article au panier avec les spécifications fournies
         var nouvelArticle = {
             nom: nomArticle,
             format: format,
-            plastifie: plastifie, // Ajoutez cette ligne pour définir la propriété plastifie
+            plastifie: plastifie,
             quantite: 1,
             prix: obtenirPrixArticle(nomArticle, format, plastifie)
         };
-
-
         panier.push(nouvelArticle);
-        ajouterElementAuPanier(nouvelArticle);
     }
 
-
-    // Mettre à jour le nombre d'articles dans la bulle du panier
-    nombreArticlesPanier++;
-    mettreAJourNombreArticlesPanier();
-    document.getElementById('panier-bulle').textContent = nombreArticlesPanier;
-
-    // Stocker le panier dans localStorage
+    // Mettre à jour le localStorage avec le panier
     localStorage.setItem('panier', JSON.stringify(panier));
 
-    // Appel pour mettre à jour le total
-    calculerTotal();
-    document.getElementById("prixTotal").innerHTML = getPrixPanier();
-
-    // Mettre à jour le récapitulatif après l'ajout
-    afficherRecapArticles();
+    // Recharger l'affichage du panier pour refléter les nouvelles données
+    rechargerPanierDepuisLocalStorage();
 }
 
 function ajouterElementAuPanier(article) {
     var panierListe = document.getElementById('panier-liste');
     var nouvelArticle = document.createElement('li');
 
-    // Ajout du bouton de suppression avec un appel à la fonction supprimerArticle
     nouvelArticle.innerHTML = `
-        [${article.quantite}] ${article.nom}
+        <span class="nom-article">${article.nom}</span> :                <button class="btn-quantite" onclick="reduireQuantite(event, this)">-</button>
+        <span class="quantite-article">${article.quantite}</span>
+        <button class="btn-quantite" onclick="ajouterQuantite(event, this)">+</button>
+
         <button class="btn-supprimer-article" onclick="supprimerArticle(event, this)">&#10006;</button>
         <span class="plastifie" data-value="${article.plastifie}"></span>
     `;
 
     panierListe.appendChild(nouvelArticle);
 }
+
+function ajouterQuantite(event, bouton) {
+    // Trouver l'article dont la quantité doit être augmentée
+    var liArticle = bouton.closest('li');  // Trouver l'élément li de l'article
+    var nomArticle = liArticle.querySelector('.nom-article').textContent.trim(); // Récupérer le nom de l'article
+    var article = panier.find(a => a.nom === nomArticle); // Chercher l'article dans le panier
+
+    if (article) {
+        article.quantite++; // Incrémenter la quantité
+        article.prix = obtenirPrixArticle(article.nom, article.format, article.plastifie); // Recalculer le prix si nécessaire
+
+        // Mettre à jour le localStorage
+        localStorage.setItem('panier', JSON.stringify(panier));
+
+        // Recharger l'affichage du panier
+        rechargerPanierDepuisLocalStorage();
+    }
+
+    event.stopPropagation(); // Empêcher la propagation de l'événement
+}
+
+
+function reduireQuantite(event, bouton) {
+    // Trouver l'article dont la quantité doit être diminuée
+    var liArticle = bouton.closest('li');  // Trouver l'élément li de l'article
+    var nomArticle = liArticle.querySelector('.nom-article').textContent.trim(); // Récupérer le nom de l'article
+    var article = panier.find(a => a.nom === nomArticle); // Chercher l'article dans le panier
+
+    if (article && article.quantite > 1) {
+        article.quantite--; // Réduire la quantité
+        article.prix = obtenirPrixArticle(article.nom, article.format, article.plastifie); // Recalculer le prix si nécessaire
+
+        // Mettre à jour le localStorage
+        localStorage.setItem('panier', JSON.stringify(panier));
+
+        // Recharger l'affichage du panier
+        rechargerPanierDepuisLocalStorage();
+    }
+
+    event.stopPropagation(); // Empêcher la propagation de l'événement
+}
+
 
 function mettreAJourQuantiteArticle(article) {
     var panierListe = document.getElementById('panier-liste');
@@ -99,80 +153,31 @@ function mettreAJourQuantiteArticle(article) {
 }
 
 function supprimerArticle(event, boutonSupprimer) {
-    var panierListe = document.getElementById('panier-liste');
-    var elementASupprimer = boutonSupprimer.parentNode;
-
-    if (elementASupprimer) {
-        var nomArticle = elementASupprimer.firstChild.textContent.replace(/\[\d+\] /g, '').replace(/\[\d+\] x?/g, "").trim();
-        if (nomArticle.startsWith('x')) {
-            nomArticle = nomArticle.replace('x', '').trim();
-        }
-
-        // Stocker l'identifiant de l'article à supprimer   
-        var idArticleASupprimer = null;
-        var elementsArticlesPrecommande = document.getElementById('recap-articles').getElementsByTagName('p');
-        for (var i = 0; i < elementsArticlesPrecommande.length; i++) {
-            var articlePrecommande = elementsArticlesPrecommande[i];
-            var idArticle = articlePrecommande.id.replace(/\[\d+\] /g, '').replace(/\[\d+\] x?/g, "").trim();
-            if (idArticle.startsWith('x')) {
-                idArticle = idArticle.replace('x', '').trim();
-            }
-            if (idArticle === nomArticle) {
-                idArticleASupprimer = articlePrecommande.id;
-                break; // Pas besoin de continuer à boucler une fois que l'ID est trouvé
-            }
-        }
-
-        if (idArticleASupprimer) {
-            // Recherche de l'indice du premier crochet ouvrant
-            var debutCrochet = idArticleASupprimer.indexOf("[");
-            // Recherche de l'indice du premier crochet fermant après le crochet ouvrant
-            var finCrochet = idArticleASupprimer.indexOf("]", debutCrochet);
-
-            // Si les deux indices sont trouvés, extraire la valeur entre crochets et l'assigner à nbasupprimer
-            var nbasupprimer = 1;
-            nbasupprimer = idArticleASupprimer.substring(debutCrochet + 1, finCrochet);
-
-            if (nbasupprimer === "") {
-                nbasupprimer = 1;
-            }
-            // Supprimer l'article correspondant du panier
-            panierListe.removeChild(elementASupprimer);
-            var index = panier.findIndex(article => article.nom === nomArticle);
-            if (index !== -1) {
-                panier.splice(index, 1);
-            }
-
-            // Supprimer le paragraphe correspondant de la div recap-articles
-            var articleASupprimer = document.getElementById(idArticleASupprimer);
-            if (articleASupprimer) {
-                articleASupprimer.parentNode.removeChild(articleASupprimer);
-            }
-
-            // Mettre à jour le nombre d'articles dans la bulle du panier
-            nombreArticlesPanier = nombreArticlesPanier - nbasupprimer;
-            mettreAJourNombreArticlesPanier();
-
-            // Stocker le panier dans localStorage
-            localStorage.setItem('panier', JSON.stringify(panier));
-
-            // Mettre à jour le total
-            document.getElementById('amount').value = getPrixPanier().replace('€', '').trim();
-            document.getElementById("prixTotal").innerHTML = getPrixPanier();
-        }
-    }
-
-    // Si la liste est vide, masquer la fenêtre flottante du panier
-    if (panierListe.childElementCount === 0) {
-        masquerPanier();
-    }
+    var nomArticle = boutonSupprimer.parentNode.textContent.replace(/ \[\d+\] |✖/g, '').trim().split(':')[0].trim();
     
-    // Empêcher la propagation du clic au conteneur du panier
-    event.stopPropagation();
+    // Supprimer l'article du panier
+    panier = panier.filter(article => article.nom !== nomArticle);
+    
+    // Mettre à jour le localStorage
+    localStorage.setItem('panier', JSON.stringify(panier));
 
-    // Mettre à jour le récapitulatif après la suppression
-    afficherRecapArticles();
+    // Recharger l'affichage du panier
+    rechargerPanierDepuisLocalStorage();
+
+    // Empêcher la propagation du clic
+    event.stopPropagation();
 }
+
+function supprimerToutPanier() {
+    panier = []; // Vider le tableau panier
+
+    // Mettre à jour le localStorage
+    localStorage.setItem('panier', JSON.stringify(panier));
+
+    // Recharger l'affichage du panier
+    rechargerPanierDepuisLocalStorage();
+}
+
 
 function masquerPanier() {
     var panierFenetre = document.getElementById('panier-fenetre');
@@ -191,6 +196,12 @@ function afficherPanier() {
 function mettreAJourNombreArticlesPanier() {
     var bullePanier = document.getElementById('panier-bulle');
 
+    // Récupérer le panier du localStorage et le parser
+    var panier = JSON.parse(localStorage.getItem('panier')) || [];
+
+    // Calculer le nombre total d'articles dans le panier en sommant les quantités
+    var nombreArticlesPanier = panier.reduce((total, article) => total + article.quantite, 0);
+
     // Mettre à jour le contenu de la bulle avec le nombre d'articles
     bullePanier.textContent = nombreArticlesPanier;
 
@@ -201,7 +212,7 @@ function mettreAJourNombreArticlesPanier() {
 document.querySelector('.panier-link').addEventListener('click', togglePanier);
 
 // Charger le panier depuis localStorage
-window.onload = function() {
+window.onload = function () {
     var panierStocke = localStorage.getItem('panier');
     if (panierStocke) {
         panier = JSON.parse(panierStocke);
@@ -210,35 +221,8 @@ window.onload = function() {
         panier.forEach(article => ajouterElementAuPanier(article));
         document.getElementById("prixTotal").innerHTML = getPrixPanier();
     }
+    mettreAJourMontant();
 };
-
-
-function supprimerToutPanier() {
-    var panierListe = document.getElementById('panier-liste');
-    panierListe.innerHTML = ''; // Supprimer tous les éléments de la liste
-
-    // Réinitialiser le tableau panier
-    panier = [];
-
-    // Mettre à jour le nombre d'articles dans la bulle du panier
-    nombreArticlesPanier = 0;
-    mettreAJourNombreArticlesPanier();
-
-    // Masquer la fenêtre flottante du panier
-    masquerPanier();
-
-    // Stockez le panier dans localStorage
-    localStorage.setItem('panier', JSON.stringify(panier));
-
-    // Mettre à jour le total
-    document.getElementById('amount').value = 0;
-
-    document.getElementById("prixTotal").innerHTML = '0 €'; // Réinitialiser le prix total à zéro
-
-    // Mettre à jour le récapitulatif après la suppression de tout le panier
-    afficherRecapArticles();
-
-}
 
 function afficherPrecommande() {
 
@@ -262,33 +246,80 @@ function afficherPrecommande() {
 }
 
 function validerOuverturePreco() {
-    // Obtenez les éléments de liste (li) dans le panier
-    var elementsPanier = document.querySelectorAll('#panier-liste li');
-    var totalQuantite = 0;
+    // Récupérer le panier du localStorage
+    var panier = JSON.parse(localStorage.getItem('panier')) || [];
 
-    // Vérifiez s'il y a des éléments dans le panier
-    if (elementsPanier.length === 0) {
+    // Calculer la somme des quantités des articles dans le panier
+    var totalQuantite = panier.reduce((total, article) => total + article.quantite, 0);
+
+    // Vérifier s'il y a des éléments dans le panier
+    if (panier.length === 0) {
         alert('Votre panier est vide. Veuillez ajouter des articles.');
         return false;
     }
 
-    // Parcourez les éléments du panier pour calculer la somme des quantités
-    elementsPanier.forEach(function(element) {
-        // Extraire la quantité en utilisant une expression régulière
-        var texte = element.textContent;
-        var match = texte.match(/\[(\d+)\]/); // Cherche un nombre entre crochets
-
-        if (match) {
-            var quantite = parseInt(match[1], 10); // Convertit la quantité en entier
-            totalQuantite += quantite;
-        }
-    });
-
-    // Vérifiez si la somme des quantités dépasse 10
+    // Vérifier si la somme des quantités dépasse 10
     if (totalQuantite > 10) {
         alert('Vous ne pouvez pas avoir plus de 10 articles dans votre panier.');
         return false;
     }
 
     return true; // Si tout est valide, retourner true
+}
+function mettreAJourMontant() {
+    // Calculer le montant total du panier
+    const panier = JSON.parse(localStorage.getItem('panier')) || [];
+    const montantTotal = panier.reduce((total, article) => total + (article.prix * article.quantite), 0);
+
+    // Mettre à jour la valeur de l'input hidden "amount"
+    const inputAmount = document.getElementById('amount');
+    if (inputAmount) {
+        inputAmount.value = montantTotal.toFixed(2); // Arrondir à 2 décimales
+    }
+
+    // Afficher le montant total dans le résumé du panier (optionnel)
+    document.getElementById("prixTotal").innerHTML = montantTotal.toFixed(2) + " €";
+}
+function envoyerMail() {
+    // Initialiser EmailJS
+    (function () {
+        emailjs.init("ixOrs32Cy-jH_Xqoi");
+    })();
+
+    // Récupérer `mailData` depuis le localStorage
+    const mailData = JSON.parse(localStorage.getItem('mailData'));
+    
+    // Vérifier si `mailData` existe
+    if (!mailData) {
+        alert("Aucune donnée à envoyer. Veuillez vérifier votre panier.");
+        return;
+    }
+
+    // Préparer les paramètres pour EmailJS
+    let sendername = mailData.sendername || "Client";
+    let replyto = mailData.replyto || "no-reply@example.com";
+    let message = mailData.message || "Message non disponible";
+
+    // Paramètres pour EmailJS
+    let parms = {
+        sendername: sendername,
+        replyto: replyto,
+        message: message
+    };
+
+    // Identifiants de service et template EmailJS
+    let serviceID = "service_b1jfzdk";
+    let templateID = "template_qcjv2ql";
+
+    // Envoi de l'email via EmailJS
+    emailjs.send(serviceID, templateID, parms)
+        .then((response) => {
+            alert("Précommande envoyée !\nNous vous contacterons sous 3 jours.\n(Envoi de la commande en moins d'une semaine)");
+
+            // Vider le localStorage après un envoi réussi
+            localStorage.clear();
+        })
+        .catch((error) => {
+            alert("Une erreur est survenue lors de l'envoi de la précommande.\nVeuillez nous contacter pour confirmer la commande.\nErreur :", error);
+        });
 }

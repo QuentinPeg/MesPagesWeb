@@ -22,7 +22,8 @@
                 serviront toujours.</p>
             <p>Ce pack regroupe :</p>
             <ul>
-                <li><a href="../php/Processus_psychopathologique_S5.php">Processus psychopathologiques semestre 5</a></li>
+                <li><a href="../php/Processus_psychopathologique_S5.php">Processus psychopathologiques semestre 5</a>
+                </li>
                 <li><a href="../php/Processus_tumoraux.php">Processus tumoraux</a></li>
             </ul>
             <p class="prix">Prix :</p>
@@ -32,9 +33,10 @@
                 <li>Plastifié : +10%</li>
             </ul>
             <section>
-                <a href="index.php"><button class="btn-retour">Voir d'autres
+                <a href="index.php" class="class-btn-retour"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                <button class="btn-ajouter-article" onclick="ajouterAuPanier('Pack Troisième Année', 'A5', 'Non')">Ajouter au
+                    panier</button>
             </section>
         </section>
     </article>

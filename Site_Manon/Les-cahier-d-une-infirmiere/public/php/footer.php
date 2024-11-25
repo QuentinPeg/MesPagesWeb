@@ -32,6 +32,33 @@
 <script src="../js/app.js"></script>
 <script src="../js/panier.js"></script>
 <script src="../js/precommande.js"></script>
+<script>
+    window.onload = function () {
+        let preferences = getCookie('preferences');
+        console.log('Cookie preferences:', preferences); // Affiche le cookie dans la console
+
+        if (!preferences) {
+            console.log('No cookie found, showing consent popup');
+            document.getElementById('cookie-consent-popup').style.display = 'block';
+        } else {
+            console.log('Cookie found, hiding consent popup');
+            document.getElementById('cookie-consent-popup').style.display = 'none';
+        }
+    };
+
+    // Fonction pour récupérer un cookie par son nom
+    function getCookie(name) {
+        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    }
+
+
+
+    function deleteCookie() {
+        document.cookie = 'preferences=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure; SameSite=Strict';
+        document.getElementById('cookie-consent').style.display = 'block'; // Réaffiche la bannière de consentement
+    }
+</script>
 
 <script>
     window.addEventListener("scroll", function () {

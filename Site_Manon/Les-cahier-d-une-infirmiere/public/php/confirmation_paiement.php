@@ -40,7 +40,13 @@
 
 
 </body>
-<script>window.addEventListener("scroll", function () {
+<script>
+document.addEventListener('DOMContentLoaded', envoyerMail());
+</script>
+
+
+<script>
+        window.addEventListener("scroll", function () {
         var header = document.querySelector("header");
         var h1 = document.querySelector("h1");
         var a = document.querySelector("#entcontact>a");
@@ -48,34 +54,19 @@
 
         if (window.scrollY > 50) {
             header.classList.add("shrink");
-            h1.classList.add("shrink");
-            a.classList.add("shrink");
-            imgipage.classList.add("shrink");
+        h1.classList.add("shrink");
+        a.classList.add("shrink");
+        imgipage.classList.add("shrink");
 
         } else {
             header.classList.remove("shrink");
-            h1.classList.remove("shrink");
-            a.classList.remove("shrink");
-            imgipage.classList.remove("shrink");
+        h1.classList.remove("shrink");
+        a.classList.remove("shrink");
+        imgipage.classList.remove("shrink");
 
         }
     });
 </script>
 
-<script>
-    // Attendre que le contenu de la page soit chargé
-    document.addEventListener("DOMContentLoaded", function () {
-        // Sélectionner la div à supprimer en utilisant un sélecteur CSS
-        var divASupprimer = document.querySelector('div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]');
-
-        // Vérifier si la div existe
-        if (divASupprimer) {
-            // Supprimer la div
-            divASupprimer.parentNode.removeChild(divASupprimer);
-        } else {
-            console.log("La div spécifiée n'existe pas.");
-        }
-    });
-</script>
 
 </php>

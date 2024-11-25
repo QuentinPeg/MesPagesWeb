@@ -34,7 +34,8 @@
             <section>
                 <a href="index.php"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                <button class="btn-ajouter-article" onclick="ajouterAuPanier('Pack Semestre 3', 'A5', 'Non')">Ajouter au
+                    panier</button>
             </section>
         </section>
     </article>

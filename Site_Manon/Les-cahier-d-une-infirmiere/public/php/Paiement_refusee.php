@@ -3,6 +3,10 @@
 <title>Les cahiers d'une infirmière</title>
 
 <main>
+    <h1>UNE ERREUR EST SURVENUE</h1>
+    <p>Aucun montant ne vous a été débité, en cas de doute, veuillez nous contacter avec le formulaire suivant.
+        (Erreur : <span id="error-message"><?php echo isset($_GET['error']) ? htmlspecialchars($_GET['error']) : 'Erreur inconnue'; ?></span>)
+    </p>
     <h1>Me suivre ou me contacter</h1>
     <form method="POST" class="contact-form">
         <h2>Via le formulaire</h2>
@@ -25,14 +29,6 @@
     <p class="contact-info">Si vous souhaitez nous contacter par e-mail, vous pouvez le faire à l'adresse suivante :
         <span class="mail-contact">lescahiersduneinfirmiere@gmail.com</span>
     </p>
-
-    <h2>Mes réseaux</h2>
-
-    <h3>Sur Instagram</h3>
-    <p class="contact-info">Si vous souhaitez nous contacter ou nous suivre sur Instagram, vous pouvez
-        <a href="https://www.instagram.com/lescahiersduneinfirmiere/" target="_blank">cliquer ici</a>.
-    </p>
-
 </main>
 
 <script>
@@ -45,10 +41,7 @@
         var email = document.querySelector("#email").value;
         var mess = document.querySelector("#message").value;
 
-
-
         var message = `Message de ${nom} ,
-    
         Adresse de contact du clent : ${email},
         message : ${mess}`;
 
@@ -66,10 +59,9 @@
                 alert("Message envoyé ! \n (Nous répondons généralement en moins d'une semaine)");
             })
             .catch(error => {
-                console.error("Une erreur est survenu lors de l'envoi ,\n Veuillez nous excuser si le problème persiste contacter le support par un autre moyen. \n Contact > adresse mail du support:", error);
+                console.error("Erreur lors de l'envoi :", error);
             });
     }
-
 </script>
 
 <?php include 'footer.php'; ?>

@@ -1,3 +1,4 @@
+/* VARIABLE */
 :root {
     --header-height: 110px;
     --main-bg-color: rgb(255, 246, 224);
@@ -14,6 +15,8 @@
     --button-cursor: pointer;
 }
 
+/* BODY */
+
 body {
     margin: 0;
     padding: 0;
@@ -21,6 +24,7 @@ body {
     background-color: var(--main-bg-color);
 }
 
+/* HEADER */
 header {
     width: 100%;
     height: calc(var(--header-height) - 20px);
@@ -61,101 +65,12 @@ header>h1 {
     transition: font-size 0.3s ease;
 }
 
-main {
-    position: relative;
-    top: var(--header-height);
+/* PANIER */
+
+.panier {
     padding: 20px;
-}
-
-main>p {
-    font-size: larger;
-    padding: 1%;
-    text-align: center;
-}
-
-.titre_partie {
-    text-align: center;
-    font-size: 150%;
-    text-decoration: underline;
-}
-
-#packs,
-#nonpacks {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-bottom: 100px;
-}
-
-article {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    padding: 15px;
-    width: 250px;
-}
-
-article>a {
-    text-decoration: none;
-}
-
-article>img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-article>ul {
-    padding: 0;
-}
-
-article>ul>li {
-    list-style: none;
-    text-align: center;
-}
-
-.btn-info {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 8px;
-    background-color: var(--button-bg-info);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-section>a {
-    text-decoration: none;
-}
-
-.btn-ajouter-panier {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 8px;
-    background-color: var(--button-bg-ajouter);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.solde-icon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #e74c3c;
-    color: #fff;
-    padding: 5px;
-    border-radius: 50%;
+    background-color: var(--header-bg-color);
+    color: #000;
 }
 
 .panier-fenetre {
@@ -169,7 +84,6 @@ section>a {
     overflow-y: auto;
     z-index: 1;
     display: none;
-    display: flex;
     flex-direction: column;
     align-items: center;
     opacity: 0.95;
@@ -178,13 +92,6 @@ section>a {
 
 .panier-fenetre.shrink {
     top: calc(110px - 40px);
-}
-
-
-.panier {
-    padding: 20px;
-    background-color: var(--header-bg-color);
-    color: #000;
 }
 
 .panier h2 {
@@ -230,71 +137,119 @@ section>a {
     border-radius: 50%;
     padding: 5px 8px;
     font-size: 10px;
-    display: none;
     transition: height 0.3s ease;
 }
 
-.nombre-articles-panier.shrink {
-    font-size: 8px;
+#cartModal {
+    position: fixed !important;
+    top: var(--header-height) !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 300px !important;
+    background-color: var(--header-bg-color) !important;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) !important;
+    overflow-y: auto !important;
+    z-index: 1 !important;
+    display: none;
+    left: auto !important;
+    transform: translate(0%, 0%) !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    opacity: 0.95 !important;
+    transition: height 0.3s ease !important;
+    border: none !important;
 }
 
-
-.btn-supprimer-article {
-    color: #000;
-    background-color: var(--header-bg-color);
-    border: solid 1px;
-    padding: 5px;
-    margin-left: 5px;
-    cursor: pointer;
-    border-radius: 5%;
+#cartModal.shrink {
+    top: calc(110px - 40px) !important;
 }
 
-.btn-supprimer-article:hover {
-    background-color: #df3939;
+#cartContent {
+    list-style-type: none;
+    padding: 0;
 }
 
-.btn-precommander {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 12px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-precommander:hover {
-    background-color: #2980b9;
-}
-
-.btn-supprimer-tout {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 8px;
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+#cartContent li {
     margin-bottom: 10px;
 }
 
-.btn-supprimer-tout:hover {
-    background-color: #ae2a1c;
+#cartContent li {
+    list-style-type: disc;
+
 }
 
-.boutons-panier {
+#panier-liste {
+    padding-left: 0;
+}
+
+#panier-liste ul {
+    padding-left: 5px;
+}
+
+/* MAIN */
+
+main {
+    position: relative;
+    top: var(--header-height);
+    padding: 20px;
+}
+
+main>p {
+    font-size: larger;
+    padding: 1%;
+    text-align: center;
+}
+
+.titre_partie {
+    text-align: center;
+    font-size: 150%;
+    text-decoration: underline;
+}
+
+#packs,
+#nonpacks {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 15px;
-    margin-top: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 100px;
 }
+
+/* ARTICLES */
+
+article {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 15px;
+    width: 250px;
+}
+
+article>a {
+    text-decoration: none;
+}
+
+article>img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+article>ul {
+    padding: 0;
+}
+
+article>ul>li {
+    list-style: none;
+    text-align: center;
+}
+
+/* PRECOMMANDE */
 
 .precommande-fenetre {
     display: none;
@@ -326,20 +281,21 @@ label {
     margin-bottom: 8px;
 }
 
-.precommande-contenu input {
+.prix-total-element {
+    width: 71px;
+}
+
+#recap-articles>* {
+    max-height: 255px;
+}
+
+.precommande-contenu input,
+#civilite {
     width: 100%;
+    height: 35px;
     padding: 8px;
     margin-bottom: 16px;
     box-sizing: border-box;
-}
-
-.precommande-contenu button {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 form>section {
@@ -371,19 +327,11 @@ form p {
 .grp {
     display: flex;
     flex-direction: column;
+    width: 180px;
+    height: 80px;
 }
 
-.btn-fermer {
-    background-color: red !important;
-    color: white;
-    padding: 10px;
-}
-
-.precommande-contenu button:hover {
-    background-color: #45a049;
-}
-
-#section-bouton{
+#section-bouton {
     margin-top: 10px;
 }
 
@@ -391,7 +339,6 @@ form p {
     max-height: 300px;
     overflow-y: auto;
 }
-
 
 /*FOOTER*/
 footer {
@@ -447,8 +394,248 @@ footer>div>span>img {
     padding-left: 65%;
 }
 
-/* Media Query pour les appareils mobiles */
+/* FORMMULAIRE CARTE STRIPE */
+
+.StripeElement {
+    box-sizing: border-box;
+    height: 40px;
+    width: 190.22px;
+    padding: 8px 12px;
+    /* Ajustez le padding pour correspondre à vos champs de saisie */
+    border: 1px solid black;
+    /* Ajoutez une bordure pour correspondre à vos champs de saisie */
+    background-color: white;
+    font-size: 16px;
+    color: #495057;
+    /* Ajustez la couleur du texte si nécessaire */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.StripeElement--focus {
+    border-color: black;
+    /* Ajustez la couleur de la bordure lorsqu'il est en focus */
+    box-shadow: 0 0 0 0.1rem black;
+    /* Ajustez l'ombre du focus */
+}
+
+.StripeElement--invalid {
+    border-color: red;
+    /* Ajustez la couleur de la bordure pour les saisies invalides */
+    box-shadow: 0 0 0 0.1rem red;
+    /* Ajustez l'ombre du focus */
+}
+
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+}
+
+#CarteBleu {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#card-number-element {
+    width: 400px;
+}
+
+#CB2 {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+/* BOUTONS */
+.btn-info {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: var(--button-bg-info);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+section>a {
+    text-decoration: none;
+}
+
+.btn-ajouter-panier {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: var(--button-bg-ajouter);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.nombre-articles-panier.shrink {
+    font-size: 8px;
+    right: 20px;
+}
+
+.btn-supprimer-article {
+    color: #000;
+    background-color: #df3939;
+    border: solid 1px;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 5%;
+}
+
+.btn-supprimer-article:hover {
+    background-color: #fe5353;
+}
+
+.btn-precommander {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-precommander:hover {
+    background-color: #2980b9;
+}
+
+.btn-supprimer-tout {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-supprimer-tout:hover {
+    background-color: #ae2a1c;
+}
+
+.boutons-panier {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-fermer {
+    background-color: red !important;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-fermer:hover {
+    background-color: rgb(180, 10, 10) !important;
+
+}
+
+.btn-quantite {
+    background-color: var(--header-bg-color);
+    /* Couleur de fond */
+    border: #000 solid 1px;
+    color: black;
+    /* Couleur du texte */
+    text-align: center;
+    /* Alignement du texte */
+
+    margin: 4px 2px;
+    /* Marge autour du bouton */
+    cursor: pointer;
+    /* Curseur pointeur */
+    border-radius: 4px;
+    /* Bordure arrondie */
+}
+
+.btn-quantite:hover {
+    background-color: var(--main-bg-color);
+    /* Couleur de fond au survol */
+}
+
+#cartModal button:hover {
+    background-color: #ddd;
+}
+
+.btn-payer {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-payer:hover {
+    background-color: #45a049;
+}
+
+/* AUTRE */
+
+.italique {
+    color: gray;
+    font-style: italic;
+    height: fit-content;
+    font-size: smaller;
+}
+
+.solde-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    /* Couleur de fond */
+    border-top: 16px solid #3498db;
+    /* Couleur du spinner */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-top: 50px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* APPAREIL MOBILE */
 @media only screen and (max-width: 600px) {
+
+    /* HEADER */
     header {
         flex-direction: row;
         justify-content: space-between;
@@ -464,14 +651,17 @@ footer>div>span>img {
         font-size: medium;
     }
 
+    /* MAIN */
     .titre_partie {
         font-size: 120%;
     }
 
+    /* ARTICLE */
     .articles {
         flex-direction: column;
     }
 
+    /* PANIER */
     .panier-fenetre {
         top: calc(var(--header-height) - 20px);
     }
@@ -505,6 +695,7 @@ footer>div>span>img {
         right: 15px;
     }
 
+    /* FOOTER */
     footer {
         margin-top: 25%;
     }
@@ -520,10 +711,10 @@ footer>div>span>img {
 
     #recap-articles {
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: column;
         max-height: none;
         gap: 10px;
+        padding-bottom: 50px;
         /* justify-content: center;*/
     }
 
@@ -538,6 +729,12 @@ footer>div>span>img {
 
     }
 
+    .premdiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     form>section {
         flex-direction: column;
     }
@@ -549,41 +746,21 @@ footer>div>span>img {
     form>section:last-child {
         flex-direction: row;
     }
-}
 
+    /* FORMMULAIRE CARTE STRIPE */
 
-/* formulaire carte Stripe */
+    .StripeElement {
+        width: 180px !important;
+    }
 
-/* formulaire carte Stripe */
+    #card-number-element {
+        width: 180px !important;
+    }
 
-.StripeElement {
-    box-sizing: border-box;
-    height: 40px;
-    padding: 8px 12px;
-    /* Ajustez le padding pour correspondre à vos champs de saisie */
-    border: 1px solid black;
-    /* Ajoutez une bordure pour correspondre à vos champs de saisie */
-    background-color: white;
-    font-size: 16px;
-    color: #495057;
-    /* Ajustez la couleur du texte si nécessaire */
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+    #CB2 {
+        display: flex;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
 
-.StripeElement--focus {
-    border-color: black;
-    /* Ajustez la couleur de la bordure lorsqu'il est en focus */
-    box-shadow: 0 0 0 0.1rem black;
-    /* Ajustez l'ombre du focus */
-}
-
-.StripeElement--invalid {
-    border-color: red;
-    /* Ajustez la couleur de la bordure pour les saisies invalides */
-    box-shadow: 0 0 0 0.1rem red;
-    /* Ajustez l'ombre du focus */
-}
-
-.StripeElement--webkit-autofill {
-    background-color: #fefde5 !important;
 }

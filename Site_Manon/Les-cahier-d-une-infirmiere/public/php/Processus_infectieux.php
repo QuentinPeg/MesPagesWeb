@@ -74,9 +74,11 @@
                 <li>Plastifié : +10%</li>
             </ul>
             <section>
-                <a href="index.php"><button class="btn-retour">Voir d'autres
+                <a href="index.php" class="class-btn-retour"><button class="btn-retour">Voir d'autres
                         articles</button></a>
-                <!--<button class="btn-precommander" onclick="afficherPrecommande()">Précommander</button>-->
+                <button class="btn-ajouter-article"
+                    onclick="ajouterAuPanier('Processus infectieux (UE 2.5 semestre 3)', 'A5', 'Non')">Ajouter au
+                    panier</button>
             </section>
         </section>
     </article>
