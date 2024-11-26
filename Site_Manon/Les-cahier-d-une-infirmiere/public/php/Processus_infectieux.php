@@ -83,5 +83,5 @@
         </section>
     </article>
 </main>
-
+<script src="../js/carroussel.js"></script>
 <?php include 'footer.php'; ?>
