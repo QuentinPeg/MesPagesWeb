@@ -192,6 +192,7 @@ main {
     position: relative;
     top: var(--header-height);
     padding: 20px;
+    
 }
 
 main>p {

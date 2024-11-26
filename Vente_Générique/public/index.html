@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; URL=./php/index.php">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Style pour le loader -->
+    <style>
+        #loader {
+            width: 10%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0;
+        }
+
+        .spinner {
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <a href="./php/index.php"><img class="ipage" src="./Images/LOGOSITE"
+                alt="Icon-page"></a>
+        <div id="vide"></div>
+        <h1>NOM SITE</h1>
+        <div id="entete">
+            <a href="Contact.php">CONTACT</a>
+        </div>
+        <span></span>
+    </header>
+
+    <main>
+        <!-- Loader -->
+
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;">
+            <p>Si la redirection ne se fait pas automatiquement, merci de cliquer sur le bouton suivant</p>
+            <a href="./php/index.php" style="width: min-content; margin : 10px;">
+                <button class="btn-info">Accueil</button>
+            </a>
+
+            <div class="spinner" style="margin: 10svh;"></div>
+
+            <a href="./php/index.php" style="width: min-content;margin: 10px;">
+                <img src="Images/LOGOSITE" alt="Logo du site" style="height: 50vh;">
+            </a>
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>Une petite note sur moi : ...</p>
+        <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
+        <div>
+            <a href="./php/conditions&mentions.php">
+                <p>Coder par Peguin Quentin</p>
+            </a>
+            <a href="./php/conditions&mentions.php">
+                <p>&copy; Tout droit d'auteur réservé</p>
+            </a>
+            <a href="./php/conditions&mentions.php">
+                <p>Conditions d'utilisation & Mentions légales</p>
+            </a>
+        </div>
+    </footer>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/panier.js"></script>
+    <script src="./js/precommande.js"></script>
+
+    <script>
+        window.addEventListener("scroll", function () {
+            var header = document.querySelector("header");
+            var h1 = document.querySelector("h1");
+            var a = document.querySelector("#entete>a");
+            var imgipage = document.querySelector("img");
+            var imgipanier = document.querySelector(".panier-link img");
+            var nb = document.querySelector(".nombre-articles-panier");
+            var panier = document.querySelector(".panier-fenetre");
+            var bulle = document.querySelector(".panier-bulle");
+
+            if (window.scrollY > 50) {
+                header.classList.add("shrink");
+                h1.classList.add("shrink");
+                a.classList.add("shrink");
+                imgipage.classList.add("shrink");
+                imgipanier.classList.add("shrink");
+                nb.classList.add("shrink");
+                panier.classList.add("shrink");
+                if (bulle !== null) {
+                    bulle.classList.add("shrink");
+                }
+            } else {
+                header.classList.remove("shrink");
+                h1.classList.remove("shrink");
+                a.classList.remove("shrink");
+                imgipage.classList.remove("shrink");
+                imgipanier.classList.remove("shrink");
+                nb.classList.remove("shrink");
+                panier.classList.remove("shrink");
+                if (bulle !== null) {
+                    bulle.classList.remove("shrink");
+                }
+            }
+        });
+
+        var carousel = document.getElementById('carousel');
+        var scrollAmount = 0;
+        var scrollTime = 10000; // Temps de défilement en millisecondes
+
+        function rotateImages() {
+            scrollAmount++;
+            if (scrollAmount >= carousel.childElementCount) {
+                scrollAmount = 0;
+            }
+            carousel.scrollTo({
+                top: 0,
+                left: scrollAmount * carousel.offsetWidth,
+                behavior: 'smooth'
+            });
+        }
+
+        setInterval(rotateImages, scrollTime);
+    </script>
+
+</body>
+
+</html>
