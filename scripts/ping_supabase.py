@@ -1,7 +1,7 @@
 import requests
 import os
 
-def ping_database(base_url, api_key, table_name="accounts"):
+def ping_database(base_url, api_key, table_name):
     """
     Ping une base de données Supabase et récupère les données d'une table.
 
@@ -36,10 +36,10 @@ if __name__ == "__main__":
     SUPABASE_URL2 = os.getenv("SUPABASE_URL2")
     SUPABASE_ANON_KEY2 = os.getenv("SUPABASE_ANON_KEY2")
 
-    # Ping base de données 1
-    print("=== Ping DB1 ===")
+    # Ping table "accounts" de la base de données 1
+    print("=== Ping DB1 (accounts) ===")
     ping_database(SUPABASE_URL, SUPABASE_ANON_KEY, table_name="accounts")
 
-    # Ping base de données 2
-    print("=== Ping DB2 ===")
-    ping_database(SUPABASE_URL2, SUPABASE_ANON_KEY2, table_name="users")  # Exemple avec une autre table
+    # Ping table "articles" de la base de données 2
+    print("=== Ping DB2 (articles) ===")
+    ping_database(SUPABASE_URL2, SUPABASE_ANON_KEY2, table_name="articles")
