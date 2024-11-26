@@ -31,4 +31,4 @@ if __name__ == "__main__":
     ping_database(SUPABASE_URL, SUPABASE_ANON_KEY, "accounts", "DB1")
 
     print("=== Ping DB2 (articles) ===")
-    ping_database(SUPABASE_URL_DB2, SUPABASE_ANON_KEY_DB2, "articles", "DB2")
+    ping_database(SUPABASE_URL_DB2, SUPABASE_ANON_KEY_DB2, "ping", "DB2")
