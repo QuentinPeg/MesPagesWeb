@@ -22,7 +22,7 @@ function togglePanier(e) {
 
 function rechargerPanierDepuisLocalStorage() {
     var panierListe = document.getElementById('panier-liste');
-    panierListe.innerHTML = ''; // Effacer l'affichage actuel du panier
+    panierListe.innerHTML = ''; 
 
     // Charger le panier à partir du localStorage
     var panierStocke = JSON.parse(localStorage.getItem('panier')) || [];
