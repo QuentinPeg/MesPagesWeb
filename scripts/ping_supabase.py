@@ -10,7 +10,7 @@ SUPABASE_ANON_KEY_DB2 = os.getenv("SUPABASE_ANON_KEY_DB2")
 
 def ping_database(url, anon_key, table_name, db_name):
     if not url or not anon_key:
-        print(f"Les informations de connexion pour la base {db_name} ne sont pas définies({url} et {anon_key}).")
+        print(f"Les informations de connexion pour la base {db_name} ne sont pas définies.")
         return
     
     headers = {
@@ -30,5 +30,5 @@ if __name__ == "__main__":
     print("=== Ping DB1 (accounts) ===")
     ping_database(SUPABASE_URL, SUPABASE_ANON_KEY, "accounts", "DB1")
 
-    print("=== Ping DB2 (articles) ===")
+    print("=== Ping DB2 (ping) ===")
     ping_database(SUPABASE_URL_DB2, SUPABASE_ANON_KEY_DB2, "ping", "DB2")
