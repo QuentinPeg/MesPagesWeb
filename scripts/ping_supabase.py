@@ -10,7 +10,7 @@ SUPABASE_ANON_KEY_DB2 = os.getenv("SUPABASE_ANON_KEY_DB2")
 
 def ping_database(url, anon_key, table_name, db_name):
     if not url or not anon_key:
-        print(f"Les informations de connexion pour la base {db_name} ne sont pas définies.")
+        print(f"Les informations de connexion pour la base {db_name} ne sont pas définies({url} et {anon_key}).")
         return
     
     headers = {
