@@ -16,7 +16,7 @@
     <h2>Merci de votre visite​​ ! A bientôt​​ !</h2>
     <div>
         <a href="../php/conditions&mentions.php">
-            <p>Coder par Peguin Quentin</p>
+            <p>Codé par Peguin Quentin</p>
         </a>
         <a href="../php/conditions&mentions.php">
             <p>&copy; Tout droit d'auteur réservé</p>
