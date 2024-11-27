@@ -18,5 +18,6 @@
 <div id="cookie-settings-icon" onclick="showCookieBanner()">
     <img src="../Images/cookie.png" alt="Cookie Settings" />
 </div>
-
+<script src="https://unpkg.com/@supabase/supabase-js" defer></script>
+<script src="../js/ajoutarticle.js" defer></script>
 <script src="../js/cookie.js"></script>
