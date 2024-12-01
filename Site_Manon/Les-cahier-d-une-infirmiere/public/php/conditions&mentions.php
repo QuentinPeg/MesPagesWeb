@@ -8,7 +8,7 @@
         <p id="plien">
             Les présentes conditions d'utilisation s'appliquent à tous les utilisateurs du site internet
             <a
-                href="https://les-cahiers-d-une-infirmiere.000webhostapp.com/">https://les-cahiers-d-une-infirmiere.000webhostapp.com/</a>.
+                href="https://les-cahiers-d-une-infirmiere.onrender.com/">https://les-cahiers-d-une-infirmiere.onrender.com/</a>.
             En utilisant ce site, vous acceptez ces conditions d'utilisation dans leur intégralité. Si vous
             n'acceptez pas ces conditions d'utilisation, n'utiliser pas ce site.
         </p>
@@ -45,7 +45,7 @@
         <h2>Webmaster</h2>
         <p>Quentin Peguin</p>
         <h2>Hébergeur</h2>
-        <p>000webhostapp.com</p>
+        <p>render.com</p>
         <h2>Adresse mail</h2>
         <p>lescahiersduneinfirmiere@gmail.com</p>
     </section>

@@ -28,13 +28,13 @@ if (typeof supabase === 'undefined') {
             if (!article.image_url) return; // Si pas d'image, on l'ignore
 
             const articleHTML = `
-            <div class="article" data-id="${article.id}">
-                <img src="${article.image_url}" class="img-article" alt="${article.nom}" data-id="${article.id}">
-                <h2 class="titre-article" data-id="${article.id}">${article.nom}</h2>
-                <span class="prix-article">${article.prix} €</span>
-                <button class="add-to-cart-btn" data-id="${article.id}">Ajouter au panier</button>
-            </div>
-            `;
+                <div class="article" data-id="${article.id}">
+                    <img src="${article.image_url}" class="img-article" alt="${article.nom}" data-id="${article.id}">
+                    <h2 class="titre-article" data-id="${article.id}">${article.nom}</h2>
+                    <span class="prix-article">${article.prix} €</span>
+                    <button class="add-to-cart-btn" data-id="${article.id}">Ajouter au panier</button>
+                </div>
+                `;
             main.insertAdjacentHTML('beforeend', articleHTML);
         });
 
@@ -129,25 +129,25 @@ if (typeof supabase === 'undefined') {
         panier.forEach(article => {
             const nouvelArticle = document.createElement('li');
             nouvelArticle.innerHTML = `
-                <span class="nom-article">${article.nom}</span> :
-                <button class="btn-quantite" onclick="modifierQuantite('${article.nom}', -1)">-</button>
-                <span class="quantite-article">${article.quantite}</span>
-                <button class="btn-quantite" onclick="modifierQuantite('${article.nom}', 1)">+</button>
-                <span class="prix-article">${(article.prix * article.quantite).toFixed(2)} €</span>
-                <button class="btn-supprimer-article" onclick="supprimerArticle('${article.nom}')">✖</button>
-            `;
+                    <span class="nom-article">${article.nom}</span> :
+                    <button class="btn-quantite" onclick="modifierQuantite('${article.nom}', -1)">-</button>
+                    <span class="quantite-article">${article.quantite}</span>
+                    <button class="btn-quantite" onclick="modifierQuantite('${article.nom}', 1)">+</button>
+                    <span class="prix-article">${(article.prix * article.quantite).toFixed(2)} €</span>
+                    <button class="btn-supprimer-article" onclick="supprimerArticle('${article.nom}')">✖</button>
+                `;
             panierListe.appendChild(nouvelArticle);
         });
     }
 
-    // Mettre à jour le nombre d'articles dans le panier
-    function mettreAJourNombreArticlesPanier(panier) {
-        const bullePanier = document.getElementById('panier-bulle');
-        const totalArticles = panier.reduce((total, article) => total + article.quantite, 0);
+        // Mettre à jour le nombre d'articles dans le panier
+        function mettreAJourNombreArticlesPanier(panier) {
+            const bullePanier = document.getElementById('panier-bulle');
+            const totalArticles = panier.reduce((total, article) => total + article.quantite, 0);
 
-        bullePanier.textContent = totalArticles;
-        bullePanier.style.display = totalArticles > 0 ? 'flex' : 'none';
-    }
+            bullePanier.textContent = totalArticles;
+            bullePanier.style.display = totalArticles > 0 ? 'flex' : 'none';
+        }
 
     // Fermer la modale
     document.querySelector('.close-modal').addEventListener('click', () => {
@@ -157,3 +157,32 @@ if (typeof supabase === 'undefined') {
     // Charger les articles dès que la page est prête
     document.addEventListener('DOMContentLoaded', fetchArticles);
 }
+// Modifier la quantité d'un article
+function modifierQuantite(nomArticle, delta) {
+    const article = panier.find(article => article.nom === nomArticle);
+    if (article) {
+        article.quantite += delta;
+        if (article.quantite < 1) article.quantite = 1; // Empêche la quantité de devenir inférieure à 1
+        localStorage.setItem('panier', JSON.stringify(panier));
+        rechargerPanierDepuisLocalStorage();
+    }
+}
+function supprimerArticle(nomArticle) {
+    // Supprimer l'article du panier
+    panier = panier.filter(article => article.nom !== nomArticle);
+    localStorage.setItem('panier', JSON.stringify(panier));
+    rechargerPanierDepuisLocalStorage(); // Recharge l'affichage du panier après suppression
+}
+// Charger le panier depuis le localStorage
+function chargerPanierDepuisLocalStorage() {
+    var panierStocke = localStorage.getItem('panier');
+    if (panierStocke) {
+        panier = JSON.parse(panierStocke); // Recharger les articles du panier depuis localStorage
+        mettreAJourNombreArticlesPanier();
+        panier.forEach(article => ajouterElementAuPanier(article)); // Ajouter chaque article au DOM
+        document.getElementById("prixTotal").innerHTML = getPrixPanier(); // Mettre à jour le prix total
+    }
+}
+
+// Exécuter au chargement de la page
+window.addEventListener('DOMContentLoaded', chargerPanierDepuisLocalStorage);
