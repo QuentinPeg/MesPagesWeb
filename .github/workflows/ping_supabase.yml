@@ -30,8 +30,8 @@ jobs:
           SUPABASE_URL_DB2: ${{ secrets.SUPABASE_URL_DB2 }}
           SUPABASE_ANON_KEY_DB2: ${{ secrets.SUPABASE_ANON_KEY_DB2 }}
         run: python scripts/ping_supabase.py
- 
- - name: Keep Render Site Active
+
+      - name: Keep Render Site Active
         env:
           RENDER_SITE_URL: ${{ secrets.RENDER_SITE_URL }}
         run: python scripts/ping_render_site.py
