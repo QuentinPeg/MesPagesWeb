@@ -102,6 +102,7 @@ article>a>iframe {
 
 .aiframe {
     height: calc(0.35* 100vh);
+    background-color: white;
 }
 
 /*Lire la suite*/
